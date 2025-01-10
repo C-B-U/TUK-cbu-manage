@@ -4,7 +4,7 @@
     <header>
         <div id="header-nav">
             <router-link to="/">
-                <img id="logo" src="../assets/logo.png" alt="로고이미지">
+                <img id="logo" src="../../assets/logo.png" alt="로고이미지">
             </router-link>
             
             <nav>

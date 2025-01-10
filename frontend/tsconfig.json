@@ -1,5 +1,28 @@
 {
-  "files": [],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "allowJs": true,    // JavaScript 파일 허용
+    "checkJs": false,   // JavaScript 타입 체크 비활성화
+    "noImplicitAny": false, // 암시적인 any 허용
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": ["vuetify"],
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.d.ts"
+  ],
+  "exclude": ["node_modules", "dist"],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }

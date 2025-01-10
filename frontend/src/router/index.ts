@@ -1,10 +1,10 @@
 import { createWebHistory, createRouter } from "vue-router";
 
 import Main from "../components/HelloWorld.vue";
-import MemManage from "../components/pages/MemManagePage.vue";
-import PassMemManage from "../components/pages/PassMemManagePage.vue";
-import TestLoginPage from "../components/pages/TestLoginPage.vue";
-import JoinPage from "../components/pages/JoinPage.vue";
+import MemManage from "../pages/MemManagePage.vue";
+import PassMemManage from "../pages/PassMemManagePage.vue";
+import TestLoginPage from "../pages/TestLoginPage.vue";
+import JoinPage from "../pages/JoinPage.vue";
 
 const routes = [
   {

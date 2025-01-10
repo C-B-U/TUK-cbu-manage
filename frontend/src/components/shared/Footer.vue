@@ -3,7 +3,7 @@
 <template>
     <footer>
         <router-link to="/">
-            <img id="footer-logo" src="../assets/logo.png" alt="로고이미지">
+            <img id="footer-logo" src="../../assets/logo.png" alt="로고이미지">
         </router-link>
             
         <div class="footer-info-area">
