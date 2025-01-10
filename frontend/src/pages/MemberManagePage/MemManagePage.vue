@@ -36,11 +36,7 @@
             <tbody>
                 <tr v-for="(item, index) in paginatedData" :key="index">
                     <td>
-                        <input
-                            type="checkbox"
-                            v-model="selectedItems"
-                            :value="item.id"
-                        />
+                        <input type="checkbox" v-model="selectedItems" :value="item.id" />
                     </td>
                     <td>{{ item.batch }}</td>
                     <td>{{ item.name }}</td>
@@ -64,7 +60,9 @@
             </div>
         </div>
 
-        <v-pagination v-model:currentPage="currentPage" :length="totalPages" class="pagination" />
+        <v-pagination v-model:currentPage="currentPage" :length="totalPages" class="pagination"
+            @update:modelValue="handlePageChange" />
+
     </div>
 </template>
 
@@ -73,7 +71,7 @@ import { ref, computed } from 'vue';
 
 // 드롭다운 상태 관리
 const dropdownVisible = ref(false);
-const batchFilter = ref(null);
+const batchFilter = ref<string | null>(null);
 
 // 드롭다운 열기/닫기
 const toggleDropdown = () => {
@@ -116,26 +114,16 @@ const paginatedData = computed(() => {
     return filteredData.value.slice(start, end);
 });
 
+const handlePageChange = (value: number) => {
+    currentPage.value = value;
+};
+
 // 선택된 아이템 관리
 const selectedItems = ref<number[]>([]);
-const selectAll = ref(false);
-
-// 현재 페이지의 모든 항목 선택/선택 취소
-const toggleSelectAll = () => {
-    if (selectAll.value) {
-        // 현재 페이지의 모든 ID 추가
-        selectedItems.value = paginatedData.value.map((item) => item.id);
-    } else {
-        // 현재 페이지의 ID 제거
-        selectedItems.value = selectedItems.value.filter(
-            (id) => !paginatedData.value.some((item) => item.id === id)
-        );
-    }
-};
 
 // 전체 선택 버튼
 const selectAllItems = () => {
-    selectedItems.value = data.map((item) => item.id);
+    selectedItems.value = paginatedData.value.map((item) => item.id);
 };
 
 // 선택 취소 버튼
@@ -144,14 +132,16 @@ const clearSelection = () => {
 };
 
 // 특정 기수로 필터링
-const filterByBatch = (batch) => {
+const filterByBatch = (batch: string) => {
     batchFilter.value = batch;
+    currentPage.value = 1; // 필터 변경 시 첫 페이지로 이동
     dropdownVisible.value = false;
 };
 
 // 필터 초기화
 const resetFilter = () => {
     batchFilter.value = null;
+    currentPage.value = 1; // 필터 초기화 시 첫 페이지로 이동
     dropdownVisible.value = false;
 };
 </script>
