@@ -16,29 +16,16 @@
     </div>
 </template>
 
-<script>
-import { loginUser } from '../../services/api.js';
+<script setup>
+import { ref } from 'vue';
+import { useLogin } from '../hooks/useLogin';
 
-export default {
-    data() {
-        return {
-            username: '',
-            password: '',
-            errorMessage: null
-        };
-    },
-    methods: {
-        async handleLogin() {
-            try {
-                const result = await loginUser(this.username, this.password);
-                // 로그인 성공 처리 (예: 토큰 저장 및 페이지 이동)
-                console.log('Login successful:', result);
-                this.$router.push('/dashboard'); // 로그인 후 대시보드로 이동
-            } catch (error) {
-                this.errorMessage = 'Login failed. Please try again.';
-            }
-        }
-    }
+const username = ref('');
+const password = ref('');
+const { errorMessage, handleLogin: login } = useLogin();
+
+const handleLogin = async () => {
+    await login({ username: username.value, password: password.value });
 };
 </script>
 
