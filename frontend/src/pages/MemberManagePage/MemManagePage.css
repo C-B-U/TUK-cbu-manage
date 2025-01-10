@@ -1,0 +1,145 @@
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+    align-items: center;
+}
+
+.left-header {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.total-count {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.sync-button {
+    background-color: #515151;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-input {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 4px;
+    width: 300px;
+    margin-left: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.filter-header {
+    position: relative;
+}
+
+.filter-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 14px;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    z-index: 10;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100px;
+    max-height: 150px; /* 최대 높이 설정 */
+    overflow-y: auto; /* 스크롤 추가 */
+}
+
+.dropdown-menu li {
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.dropdown-menu li:hover {
+    background-color: #f5f5f5;
+}
+
+.reset {
+    color: red;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+}
+
+.left-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.right-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    background-color: #515151;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-outline {
+    border: 1px solid #515151;
+    color: #515151;
+    padding: 10px 20px;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+}
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
