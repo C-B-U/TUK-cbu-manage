@@ -1,49 +1,39 @@
 <template>
-  <!-- 상위 컴포넌트에서 active, disabled로 스타일링 제어 -->
+  <!-- 버튼 속성과 클래스 동적 제어 -->
   <button :class="['custom-button', buttonClass]" :type="type">
     {{ buttonText }}
   </button>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue';
+<script lang="ts" setup>
 import { ButtonType, ButtonStatus } from '@/types';
+import { computed } from 'vue';
 
-export default defineComponent({
-  name: 'Button',
-  props: {
-    type: {
-      type: String as PropType<ButtonType>,
-      default: 'button',
-    },
-    status: {
-      type: String as PropType<ButtonStatus>,
-      default: 'default',
-    },
-  },
-  computed: {
-    buttonClass(): string {
-      switch (this.status) {
-        case 'active':
-          return 'custom-button--active';
-        case 'disabled':
-          return 'custom-button--disabled';
-        default:
-          return '';
-      }
-    },
-    buttonText(): string {
-      switch (this.status) {
-        case 'active':
-          return '동아리 지원하기';
-        case 'disabled':
-          return '신청기간이 아닙니다';
-        default:
-          return 'Error';
-      }
-    },
-  },
+// Props 정의 및 기본값 설정
+const props = withDefaults(defineProps<{
+  type?: ButtonType;
+  status?: ButtonStatus;
+}>(), {
+  type: 'button',
+  status: 'default',
 });
+
+// 클래스와 텍스트 동적 계산
+const buttonClass = computed(() =>
+  ({
+    active: 'custom-button--active',
+    disabled: 'custom-button--disabled',
+    default: '',
+  }[props.status] || '')
+);
+
+const buttonText = computed(() =>
+  ({
+    active: '동아리 지원하기',
+    disabled: '신청기간이 아닙니다',
+    default: 'Button',
+  }[props.status] || 'Button')
+);
 </script>
 
 <style scoped>
@@ -67,7 +57,6 @@ export default defineComponent({
 .custom-button--active:hover {
   border: 1px solid var(--mainHover);
   background-color: var(--mainHover);
-  color: white;
 }
 
 .custom-button--disabled {
