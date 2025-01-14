@@ -5,21 +5,24 @@
   </button>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, PropType } from 'vue';
+import { ButtonType, ButtonStatus } from '@/types';
+
+export default defineComponent({
   name: 'Button',
   props: {
     type: {
-      type: String,
+      type: String as PropType<ButtonType>,
       default: 'button',
     },
     status: {
-      type: String,
+      type: String as PropType<ButtonStatus>,
       default: 'default',
     },
   },
   computed: {
-    buttonClass() {
+    buttonClass(): string {
       switch (this.status) {
         case 'active':
           return 'custom-button--active';
@@ -29,8 +32,7 @@ export default {
           return '';
       }
     },
-
-    buttonText() {
+    buttonText(): string {
       switch (this.status) {
         case 'active':
           return '동아리 지원하기';
@@ -41,7 +43,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 
 <style scoped>
