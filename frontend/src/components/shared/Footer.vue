@@ -1,79 +1,88 @@
 <template>
     <footer>
         <router-link to="/">
-            <img id="footer-logo" src="@/assets/logo.png" alt="로고이미지" />
+            <img id="footer-logo" src="@/assets/footer-logo.png" alt="로고이미지" />
         </router-link>
 
         <div class="footer-info-area">
             <p class="footer-info" v-for="(info, index) in footerInfo" :key="index">
-                {{ info.title }}: {{ info.name }} ㅣ 이메일: {{ info.email }} ㅣ 번호: {{ info.phone }}
+                {{ info.title }} ㅣ {{ info.name }}
             </p>
         </div>
 
-        <div class="social-area">
-            <a v-for="(link, index) in socialLinks" :key="index" :href="link.url">
-                <img v-if="link.icon" :src="link.icon" alt="인스타그램" class="social-icon" />
-            </a>
+        <div class="footer-bottom">
+            <div class="social-area">
+                <a v-for="(link, index) in socialLinks" :key="index" :href="link.url">
+                    <img v-if="link.icon" :src="link.icon" alt="소셜아이콘" class="social-icon" />
+                </a>
+            </div>
+            <hr />
+            <p class="copyright">
+                Copyright ⓒ 2025 씨부엉 All rights reserved.
+            </p>
         </div>
 
-        <hr />
-        <p class="copyright">
-            Copyright ⓒ 2025 씨부엉 All rights reserved.
-        </p>
     </footer>
 </template>
 
 <script setup>
 import instagramIcon from '@/assets/instagram.svg';
+import githubIcon from '@/assets/github.svg';
 import { ref } from 'vue';
 
 // 연락처 정보 데이터
 const footerInfo = [
     {
-        title: '회장',
-        name: '정우혁',
-        email: '000@tukorea.ac.kr',
-        phone: '010-1234-5678',
+        title: '소속',
+        name: '한국공학대학교',
     },
     {
-        title: '부회장',
-        name: '정우혁',
-        email: '000@tukorea.ac.kr',
-        phone: '010-1234-5678',
+        title: '문의',
+        name: 'email@tukore.ac.kr',
     },
 ];
 
 // 소셜 링크 데이터
 const socialLinks = [
     { name: '인스타그램', url: 'https://www.instagram.com/tukorea_cbu', icon: instagramIcon },
-    { name: '한국공학대학교', url: '#' },
+    { name: '깃허브', url: 'https://github.com/C-B-U/TUK-cbu-manage', icon: githubIcon },
 ];
 </script>
 
 <style scoped>
 footer {
     width: 100%;
-    padding: 32px var(--entirePadding);
-    background-color: #eeeeee;
+    padding: 48px var(--entirePadding);
+    background-color: #555555;
+
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
 }
 
 #footer-logo {
     width: 132px;
     height: auto;
-    mix-blend-mode: darken;
 }
 
 footer .footer-info-area {
-    margin: 32px 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 4px;
 }
 
 .footer-info-area p {
     text-align: center;
     font-size: 14px;
-    color: #333;
+    color: white;
+}
+
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 12px;
 }
 
 .social-area {
@@ -82,26 +91,21 @@ footer .footer-info-area {
     justify-content: center;
 }
 
-.social-area a {
-    font-size: 14px;
-    color: #333;
-}
-
 .social-icon {
-    width: 25px;
-    height: 25px;
-    display: inline-block;
+    width: 24px;
+    height: 24px;
+    display: flex;
 }
 
-footer hr {
+.footer-bottom > hr {
     border: none;
+    width: 100%;
     height: 1px;
-    background-color: #cccccc;
-    margin: 12px 0;
+    background-color: var(--semiDarkText);
 }
 
-.copyright {
+.footer-bottom .copyright {
     font-size: 12px;
-    color: #888;
+    color: #CCCCCC;
 }
 </style>

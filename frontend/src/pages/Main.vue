@@ -43,7 +43,6 @@ export default {
 
 .contents p {
     font-size: 16px;
-    font-weight: 500;
     color: var(--semiDarkText);
 
     margin: 8px 0px 36px 0px;
