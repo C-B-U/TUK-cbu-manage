@@ -6,7 +6,6 @@
 
 // 공통 전역 스타일
 :root {
-    --line-height: 1.5;
     --mainColor: #95C674;
     --entirePadding: 9.375%;
 }
@@ -22,15 +21,13 @@
 body {
     min-width: 320px;
     min-height: 100vh;
+
+    line-height: 1.4;
+    letter-spacing: -0.025rem;
 }
 
 a {
     color: #333;
-}
-
-h1 {
-    font-size: 3.2em;
-    line-height: 1.1;
 }
 
 .card {
