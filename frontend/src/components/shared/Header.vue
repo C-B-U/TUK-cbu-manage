@@ -45,6 +45,7 @@ const utilItems = [
 
 <style scoped>
 header {
+    position: absolute;
     width: 100%;
 }
 
@@ -56,9 +57,13 @@ header {
     padding: 24px var(--entirePadding);
 }
 
+#header-nav > a {
+    display: flex;
+}
+
 #header-nav #logo {
-    width: 112px;
-    height: auto;
+    width: auto;
+    height: 32px;
 }
 
 #header-nav > nav ul,
