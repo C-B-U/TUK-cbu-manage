@@ -5,19 +5,21 @@
         <div class="contents">
             <h1 id="title">코딩 동아리 <span style="color:var(--mainColor)">씨부엉</span>에 오신 것을 환영합니다.</h1>
             <p>한국공학대학교 씨부엉 동아리의 효율적인 회원관리를 위한 웹사이트입니다</p>
-            <Button id="recruitment-button">신청기간이 아닙니다</Button>
+
+            <!-- 지원기간에 따라 status 변경 active/disabled -->
+            <Button id="recruitment-button" status="disabled"></Button>
         </div>
     </div>
-    
+
 </template>
 
 <script>
 import Button from '@/components/shared/Button.vue';
 
 export default {
-  components: {
-    Button,
-  },
+    components: {
+        Button,
+    },
 };
 </script>
 
@@ -40,10 +42,10 @@ export default {
 }
 
 .contents p {
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--semiDarkText);
-  
-  margin: 8px 0px 36px 0px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--semiDarkText);
+
+    margin: 8px 0px 36px 0px;
 }
 </style>
