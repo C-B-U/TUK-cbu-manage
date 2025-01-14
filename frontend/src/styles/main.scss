@@ -1,5 +1,5 @@
 // Vuetify 설정 가져오기
-@use 'vuetify/settings' with ($body-font-family: ('Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif),
+@use 'vuetify/settings' with ($body-font-family: ('pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif),
     $font-size-root: 16px);
 
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
@@ -8,6 +8,7 @@
 :root {
     --mainColor: #95C674;
     --entirePadding: 9.375%;
+    --darkText:#333333;
 }
 
 * {
@@ -16,6 +17,8 @@
     text-decoration: none;
     box-sizing: border-box;
     list-style: none;
+
+    font-family: 'pretendard';
 }
 
 body {
@@ -24,10 +27,6 @@ body {
 
     line-height: 1.4;
     letter-spacing: -0.025rem;
-}
-
-a {
-    color: #333;
 }
 
 .card {

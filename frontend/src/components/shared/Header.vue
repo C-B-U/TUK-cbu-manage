@@ -12,15 +12,17 @@
                     </li>
                 </ul>
             </nav>
+
+            <div id="util">
+                <ul>
+                    <li v-for="item in utilItems" :key="item.path">
+                        <router-link :to="item.path">{{ item.name }}</router-link>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <div id="util">
-            <ul>
-                <li v-for="item in utilItems" :key="item.path">
-                    <router-link :to="item.path">{{ item.name }}</router-link>
-                </li>
-            </ul>
-        </div>
+
     </header>
 </template>
 
@@ -32,8 +34,7 @@ const router = useRouter();
 
 // 네비게이션 항목 정의
 const navItems = [
-    { name: '회원 관리', path: '/manage-M' },
-    { name: '합격자 관리', path: '/manage-SA' },
+    { name: '회원 관리', path: '/manageMember' },
 ];
 
 const utilItems = [
@@ -45,55 +46,35 @@ const utilItems = [
 <style scoped>
 header {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px var(--entirePadding);
-}
-
-header a {
-    display: flex;
-    color: #333;
-    transition: all 0.3s;
-}
-
-header a:hover {
-    color: var(--mainColor);
 }
 
 #header-nav {
     display: flex;
     align-items: center;
-    gap: 200px;
+    justify-content: space-between;
+
+    padding: 24px var(--entirePadding);
 }
 
 #header-nav #logo {
-    width: 132px;
+    width: 112px;
     height: auto;
 }
 
-#header-nav nav ul {
+#header-nav > nav ul,
+#header-nav > #util ul {
     display: flex;
-    gap: 120px;
 }
 
-#header-nav nav ul li a {
-    font-size: 16px;
-    font-weight: 600;
-}
-
-#util {
-    display: flex;
-    gap: 24px;
-}
-
-#util ul {
-    display: flex;
-    gap: 24px;
-}
-
+nav a,
 #util a {
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--darkText);
 }
+
+#util ul{
+    gap: 24px;
+}
+
 </style>
