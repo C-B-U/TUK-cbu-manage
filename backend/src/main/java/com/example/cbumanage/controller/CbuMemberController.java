@@ -33,7 +33,6 @@ public class CbuMemberController {
     @PostMapping("/members/sync")
     public String memberSync(){                                     //스프레드시트 -> 데이터베이스 회원 데이터 주입 함수
         try{
-//            cbuMemberRepository.deleteAll();                        //데이터 주입 전 기존 데이터 전체 삭제: 삭제하기 전에 백업 한번 하는 함수 필요할 듯
             cbuMemberSyncService.syncMembersFromGoogleSheet();      //스프레드시트에서 데이터베이스로 데이터 값 주입
             return "멤버 저장 성공!";
         }catch (Exception e){                                       //오류가 났을 경우

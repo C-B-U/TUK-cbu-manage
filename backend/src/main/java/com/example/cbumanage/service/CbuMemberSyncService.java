@@ -29,34 +29,31 @@ public class CbuMemberSyncService {
     private static final String SheetName = "sheet";       //구글 스프레드 시트 시트 이름
 
     @Transactional
-    public void syncMembersFromGoogleSheet() {                    //스프레드 시트 -> 데이터베이스 유저 데이터 주입
-        List<CbuMember> sheetMembers = getMembersFromGoogleSheet();    //스프레드 시트에서 값을 가져와 members에 저장 후
-        List<CbuMember> dbMembers = cbuMemberRepository.findAll();
+    public void syncMembersFromGoogleSheet() {                        //스프레드 시트 -> 데이터베이스 유저 데이터 주입 함수
+        List<CbuMember> sheetMembers = getMembersFromGoogleSheet();   //스프레드시트와 데이터베이스에서 현재 데이터를 조회
+        List<CbuMember> dbMembers = cbuMemberRepository.findAll();    //스프레드시트와 데이터베이스에서 현재 데이터를 조회
 
-        Map<Long, CbuMember> dbMemberMap = new HashMap<>();
+        Map<Long, CbuMember> dbMemberMap = new HashMap<>();           //데이터베이스에 존재하는 회원들을 학번을 키로 이용한 Map으로 변환
         for (CbuMember member : dbMembers) {
             dbMemberMap.put(member.getStudentNumber(), member);
         }
-        List<CbuMember> toUpdate = new ArrayList<>();
-        List<CbuMember> toCreate = new ArrayList<>();
+        List<CbuMember> toUpdate = new ArrayList<>();                 //수정할 멤버 리스트 초기화
+        List<CbuMember> toCreate = new ArrayList<>();                 //추가할 멤버 리스트 초기화
 
-        for (CbuMember sheetMember : sheetMembers) {
+        for (CbuMember sheetMember : sheetMembers) {                  //스프레드시트의 각 멤버에 대해 처리
             CbuMember existingMember = dbMemberMap.get(sheetMember.getStudentNumber());
 
-            if (existingMember == null) {
-                // 새로운 멤버
-                toCreate.add(sheetMember);
-            } else if (hasChanged(existingMember, sheetMember)) {
-                // 기존 멤버 수정
-                updateMemberFields(existingMember, sheetMember);
+            if (existingMember == null) {                             //데이터베이스에 없는 새로운 멤버인 경우
+                toCreate.add(sheetMember);                            //데이터베이스에 새로 추가
+            } else if (hasChanged(existingMember, sheetMember)) {     //기존 멤버의 정보가 변경된 경우
+                updateMemberFields(existingMember, sheetMember);      //데이터베이스에 값 변경
                 toUpdate.add(existingMember);
             }
-            // 변경이 없는 경우 아무 작업도 하지 않음
-        }
+        }  //변경이 없을 경우 작업 X
 
-        List<CbuMember> toDelete = findDeletedMembers(dbMemberMap, sheetMembers);
+        List<CbuMember> toDelete = findDeletedMembers(dbMemberMap, sheetMembers);  //스프레드시트에서 삭제된 멤버 탐색
 
-        // 변경사항 저장
+        //스프레드시트에서 변경된 부분만 데이터베이스에 저장
         if (!toCreate.isEmpty()) {
             cbuMemberRepository.saveAll(toCreate);
         }
@@ -66,11 +63,9 @@ public class CbuMemberSyncService {
         if (!toDelete.isEmpty()) {
             cbuMemberRepository.deleteAll(toDelete);
         }
-
-//        cbuMemberRepository.saveAll(members);                     //레포지토리를 이용해 데이터베이스에 members에 저장
     }
 
-    private boolean hasChanged(CbuMember dbMember, CbuMember sheetMember) {
+    private boolean hasChanged(CbuMember dbMember, CbuMember sheetMember) {    //데이터베이스의 멤버와 스프레드시트의 멤버 정보를 비교해 변경 여부 확인
         return !Objects.equals(dbMember.getName(), sheetMember.getName()) ||
                 !Objects.equals(dbMember.getPhoneNumber(), sheetMember.getPhoneNumber()) ||
                 !Objects.equals(dbMember.getMajor(), sheetMember.getMajor()) ||
@@ -80,7 +75,7 @@ public class CbuMemberSyncService {
                 !Objects.equals(dbMember.getDue(), sheetMember.getDue());
     }
 
-    private void updateMemberFields(CbuMember existing, CbuMember updated) {
+    private void updateMemberFields(CbuMember existing, CbuMember updated) {   //기존 멤버의 정보를 새로운 정보로 업데이트
         existing.setName(updated.getName());
         existing.setPhoneNumber(updated.getPhoneNumber());
         existing.setMajor(updated.getMajor());
@@ -90,7 +85,7 @@ public class CbuMemberSyncService {
         existing.setDue(updated.getDue());
     }
 
-    private List<CbuMember> findDeletedMembers(Map<Long, CbuMember> dbMembers, List<CbuMember> sheetMembers) {
+    private List<CbuMember> findDeletedMembers(Map<Long, CbuMember> dbMembers, List<CbuMember> sheetMembers) {  //스프레드시트에서 삭제된 멤버 찾기
         Set<Long> sheetStudentNumbers = sheetMembers.stream()
                 .map(CbuMember::getStudentNumber)
                 .collect(Collectors.toSet());
