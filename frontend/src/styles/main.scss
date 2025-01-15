@@ -1,0 +1,53 @@
+// Vuetify 설정 가져오기
+@use 'vuetify/settings' with ($body-font-family: ('pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif),
+    $font-size-root: 16px);
+
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+// 공통 전역 스타일
+:root {
+    --mainColor: #95C674;
+    --mainHover: #7DAA5E;
+    --entirePadding: 9.375%;
+
+    --darkText:#333333;
+    --semiDarkText:#767676;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+    list-style: none;
+
+    font-family: 'pretendard';
+    font-weight: 500;
+}
+
+body {
+    min-width: 320px;
+    min-height: 100vh;
+
+    line-height: 1.4;
+    letter-spacing: -0.025rem;
+}
+
+.card {
+    padding: 2em;
+}
+
+#app {
+    text-align: center;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        color: #213547;
+        background-color: #ffffff;
+    }
+
+    a:hover {
+        color: #747bff;
+    }
+}
