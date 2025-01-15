@@ -21,12 +21,12 @@ public class CbuMemberSyncService {
     CbuMemberRepository cbuMemberRepository;
 
     @Value("${google.spreadSheet.key}")
-    private static String SheetKey;                        //구글 스프레드 시트 사용 api 키 값
+    private String SheetKey;                               //구글 스프레드 시트 사용 api 키 값
 
-    @Value("${google.spreadSheet.Id}")
-    private static String SheetId;                         //구글 스프레드 시트 아이디 값
-    private static final String SHEET_NAME = "시트 1";      //구글 스프레드 시트 시트 이름
-    private static final String API_KEY = SheetKey;
+    @Value("${google.spreadSheet.id}")
+    private String SheetId;                                //구글 스프레드 시트 아이디 값
+
+    private static final String SheetName = "sheet";       //구글 스프레드 시트 시트 이름
 
     @Transactional
     public void syncMembersFromGoogleSheet() {                    //스프레드 시트 -> 데이터베이스 유저 데이터 주입
@@ -60,8 +60,8 @@ public class CbuMemberSyncService {
     private URI getSheetUri() {       //api key, 스프레드 시트 아이디와 이름을 URI에 주입
         return UriComponentsBuilder
                 .fromUriString("https://sheets.googleapis.com/v4/spreadsheets/{sheetId}/values/{sheetName}")
-                .queryParam("key", API_KEY)
-                .buildAndExpand(SheetId, SHEET_NAME)
+                .queryParam("key", SheetKey)
+                .buildAndExpand(SheetId, SheetName)
                 .toUri();
     }
 
@@ -74,10 +74,8 @@ public class CbuMemberSyncService {
         member.setGrade((String) row.get(3));
         member.setStudentNumber(Long.parseLong(row.get(4).toString()));
         member.setGeneration(Long.parseLong(row.get(5).toString()));
-//        member.setOngoingStudy(row.get(6) != "" ? (String) row.get(6) : null);
-        member.setNote(row.get(7) != "" ? (String) row.get(7) : null);
-        member.setKakaoNoti(row.get(9) != "" ? (String) row.get(9) : null);
-        member.setKakaoChat(row.get(10) != "" ? (String) row.get(10) : null);
+        member.setNote(row.get(6) != "" ? (String) row.get(6) : null);
+        member.setDue(row.get(7) != "" ? (String) row.get(7) : null);
         return member;
     }
 }
