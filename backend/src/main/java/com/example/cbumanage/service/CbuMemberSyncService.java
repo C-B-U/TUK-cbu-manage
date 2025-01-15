@@ -31,6 +31,10 @@ public class CbuMemberSyncService {
     @Transactional
     public void syncMembersFromGoogleSheet() {                    //스프레드 시트 -> 데이터베이스 유저 데이터 주입
         List<CbuMember> members = getMembersFromGoogleSheet();    //스프레드 시트에서 값을 가져와 members에 저장 후
+
+        
+
+
         cbuMemberRepository.saveAll(members);                     //레포지토리를 이용해 데이터베이스에 members에 저장
     }
 
