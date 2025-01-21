@@ -3,7 +3,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Main from "../pages/Main.vue";
 import MemManagePage from "../pages/MemberManagePage/MemManagePage.vue";
 import PassMemManage from "../pages/PassMemManagePage.vue";
-import TestLoginPage from "../pages/TestLoginPage.vue";
+import LoginPage from "../pages/LoginPage.vue";
 import JoinPage from "../pages/JoinPage.vue";
 
 const routes = [
@@ -25,7 +25,7 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: TestLoginPage,
+    component: LoginPage,
   },
   {
     path: "/join",
