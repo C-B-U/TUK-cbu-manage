@@ -38,7 +38,11 @@ const isBlockHeader = computed(() => {
 
 // 네비게이션 항목 정의
 const navItems = [
+<<<<<<< HEAD
     { name: '회원 관리', path: '/memberManage' },
+=======
+    { name: '회원 관리', path: '/manage-M' },
+>>>>>>> 2630be6 (feat: 로그인 페이지 퍼블리싱 및 추가 디자인 적용)
 ];
 
 const utilItems = [
@@ -49,11 +53,17 @@ const utilItems = [
 
 <style scoped>
 header {
+<<<<<<< HEAD
   width: 100%;
 }
 
 .absolute-header {
   position: absolute;
+=======
+    position: absolute;
+    width: 100%;
+    height: 5%;
+>>>>>>> 2630be6 (feat: 로그인 페이지 퍼블리싱 및 추가 디자인 적용)
 }
 
 #header-nav {

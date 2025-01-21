@@ -2,7 +2,12 @@ import { createWebHistory, createRouter } from "vue-router";
 
 import Main from "../pages/Main.vue";
 import MemManagePage from "../pages/MemberManagePage/MemManagePage.vue";
+<<<<<<< HEAD
 import TestLoginPage from "../pages/TestLoginPage.vue";
+=======
+import PassMemManage from "../pages/PassMemManagePage.vue";
+import LoginPage from "../pages/LoginPage.vue";
+>>>>>>> 2630be6 (feat: 로그인 페이지 퍼블리싱 및 추가 디자인 적용)
 import JoinPage from "../pages/JoinPage.vue";
 
 const routes = [
@@ -19,7 +24,7 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: TestLoginPage,
+    component: LoginPage,
   },
   {
     path: "/join",
