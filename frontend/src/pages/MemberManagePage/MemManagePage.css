@@ -1,6 +1,14 @@
 .container {
+<<<<<<< HEAD
     margin: auto;
     padding: 120px var(--entirePadding);
+=======
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: auto;
+    padding: 5% 32px 3% 32px;
+>>>>>>> 2630be6 (feat: 로그인 페이지 퍼블리싱 및 추가 디자인 적용)
 }
 
 .header {
