@@ -55,7 +55,7 @@
                     <td>{{ item.nickname }}</td>
                     <td>{{ item.email }}</td>
                     <td :class="{ paid: item.paymentStatus, unpaid: !item.paymentStatus }">
-                        {{ item.paymentStatus ? "✔" : "✘" }}
+                        {{ item.paymentStatus ? "입금" : "미입금" }}
                     </td>
                     <td>{{ item.activityStatus }}</td>
                 </tr>
