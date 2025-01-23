@@ -1,5 +1,4 @@
 .container {
-    max-width: 1560px;
     margin: auto;
     padding: 120px var(--entirePadding);
 }
@@ -93,64 +92,83 @@
         color: #767676;
     }
 
+/*  */
 .table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-.table th,
-.table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
 }
 
 .table th {
+    padding:16px 12px;
     background-color: #f5f5f5;
-    font-weight: bold;
+    font-weight: 600;
+}
+    .table th:first-child {
+        border-radius: 8px 0px 0px 8px;
+    }
+    .table th:last-child {
+        border-radius: 0px 8px 8px 0px;
+    }
+
+.table td {
+    padding: 24px 12px;
+    text-align: center;
+    font-size: 14px;;
 }
 
+/*  */
 .filter-header {
     position: relative;
 }
 
-.filter-button {
-    background: none;
-    border: none;
+.filter-title {
+    position: relative;
     cursor: pointer;
-    margin-left: 5px;
-    font-size: 14px;
 }
 
-.dropdown {
-    position: relative;
+.filter-title::before {
+    content: url(@/assets/toggle.svg);
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(4px, -50%);
+    width: 20px;
+    height: 20px;
 }
 
 .dropdown-menu {
     position: absolute;
     top: 100%;
     left: 0;
+
     background: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+    border:1px solid #f9f9f9;
+    border-radius: 8px;
+
     z-index: 10;
     list-style: none;
     padding: 0;
-    margin: 0;
-    width: 100px;
-    max-height: 150px; /* 최대 높이 설정 */
-    overflow-y: auto; /* 스크롤 추가 */
+    margin-top:-8px;
+    width: 120px;
+    max-height: 200px;
+
+    overflow-y: auto;
+    -ms-overflow-style: none;
 }
+.dropdown-menu::-webkit-scrollbar{
+    display:none;
+  }
 
 .dropdown-menu li {
-    padding: 10px;
+    padding: 12px 0px;
+    font-size: 14px;
     cursor: pointer;
     text-align: center;
 }
 
 .dropdown-menu li:hover {
-    background-color: #f5f5f5;
+    background-color: #f9f9f9;
 }
 
 .reset {

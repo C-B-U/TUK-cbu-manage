@@ -12,9 +12,9 @@
 
                 <div class="search-input-area">
                     <img src="@/assets/search.svg" alt="검색 아이콘">
-                    <input type="text" placeholder="이름을 검색하세요."/>
+                    <input type="text" placeholder="이름을 검색하세요." />
                 </div>
-                
+
             </div>
         </header>
 
@@ -23,7 +23,8 @@
                 <tr>
                     <th>선택</th>
                     <th class="filter-header">
-                        기수 <button @click="toggleDropdown" class="filter-button">▼</button>
+                        <div class="filter-title" @click="toggleDropdown">기수</div>
+                        
                         <div class="dropdown">
                             <ul v-if="dropdownVisible" class="dropdown-menu">
                                 <li v-for="batch in batchList" :key="batch" @click="filterByBatch(batch)">
