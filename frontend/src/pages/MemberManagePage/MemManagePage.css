@@ -1,43 +1,97 @@
 .container {
-    max-width: 1200px;
+    max-width: 1560px;
     margin: auto;
-    padding: 20px;
+    padding: 120px var(--entirePadding);
 }
 
 .header {
     display: flex;
     justify-content: space-between;
-    margin: 1.5rem 0;
     align-items: center;
+
+    margin-bottom:24px;
 }
 
+/* 전체 부원 수 */
 .left-header {
     flex: 1;
     display: flex;
     align-items: center;
 }
 
-.total-count {
-    font-size: 1.5rem;
-    font-weight: bold;
+.left-header .total-count {
+    font-size: 28px;
+    font-weight: 600;
 }
 
-.sync-button {
-    background-color: #515151;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
+.left-header span {
+    color: var(--mainColor);
+}
+
+/* 우측 유틸 컨테이너 */
+.right-header {
+    display: flex;
+    gap: 20px;
+}
+
+.sync-button-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: fit-content;
+
+    background-color: var(--mainColor);
+    border:1px solid var(--mainColor);
+    
+    padding: 12px 24px 12px 20px;
+    border-radius: 999px;
     cursor: pointer;
 }
 
-.search-input {
+    .sync-button-area > img {
+        width: 20px;
+        height: auto;
+    }
+
+    .sync-button-area > button {
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+
+        background-color: transparent;
+        border: none;
+    }
+
+.search-input-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: fit-content;
+
     border: 1px solid #ccc;
-    padding: 8px 12px;
-    border-radius: 4px;
-    width: 300px;
-    margin-left: 20px;
+    padding: 12px 24px 12px 20px;
+    border-radius: 999px;
+    min-width: 300px;
 }
+
+    .search-input-area > img {
+        width: 20px;
+        height: auto;
+    }
+
+    .search-input-area > input {
+        border:none;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .search-input-area > input:focus {
+        outline: none;
+    }
+
+    .search-input-area > input::placeholder {
+        color: #767676;
+    }
 
 .table {
     width: 100%;

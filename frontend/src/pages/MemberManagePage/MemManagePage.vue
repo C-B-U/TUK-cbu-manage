@@ -2,11 +2,19 @@
     <div class="container">
         <header class="header">
             <div class="left-header">
-                <span class="total-count">전체 동아리 명부 {{ data.length }}명</span>
+                <p class="total-count">전체 동아리 회원 <span>{{ data.length }}명</span></p>
             </div>
             <div class="right-header">
-                <button class="sync-button">스프레드 시트 연동하기</button>
-                <input type="text" placeholder="이름을 검색하세요." class="search-input" />
+                <div class="sync-button-area">
+                    <img src="@/assets/download.svg" alt="다운로드 아이콘">
+                    <button>스프레드 시트 연동하기</button>
+                </div>
+
+                <div class="search-input-area">
+                    <img src="@/assets/search.svg" alt="검색 아이콘">
+                    <input type="text" placeholder="이름을 검색하세요."/>
+                </div>
+                
             </div>
         </header>
 
