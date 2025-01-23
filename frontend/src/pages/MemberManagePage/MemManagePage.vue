@@ -24,13 +24,13 @@
                     <th>선택</th>
                     <th class="filter-header">
                         <div class="filter-title" @click="toggleDropdown">기수</div>
-                        
+
                         <div class="dropdown">
                             <ul v-if="dropdownVisible" class="dropdown-menu">
+                                <li @click="resetFilter" class="reset">전체</li>
                                 <li v-for="batch in batchList" :key="batch" @click="filterByBatch(batch)">
                                     {{ batch }}
                                 </li>
-                                <li @click="resetFilter" class="reset">전체 보기</li>
                             </ul>
                         </div>
                     </th>
@@ -43,16 +43,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(item, index) in paginatedData" :key="index">
-                    <td>
-                        <input type="checkbox" v-model="selectedItems" :value="item.id" />
+                <tr v-for="(item, index) in paginatedData" :key="index"
+                    :class="{ selected: selectedItems.includes(item.id) }">
+                    <td class="checkbod-area">
+                        <input type="checkbox" v-model="selectedItems" :value="item.id" :id="'memberItem-' + item.id" />
+                        <label :for="'memberItem-' + item.id"></label>
                     </td>
                     <td>{{ item.batch }}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.studentId }}</td>
                     <td>{{ item.nickname }}</td>
                     <td>{{ item.email }}</td>
-                    <td>{{ item.paymentStatus ? "✔" : "✘" }}</td>
+                    <td :class="{ paid: item.paymentStatus, unpaid: !item.paymentStatus }">
+                        {{ item.paymentStatus ? "✔" : "✘" }}
+                    </td>
                     <td>{{ item.activityStatus }}</td>
                 </tr>
             </tbody>

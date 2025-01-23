@@ -113,7 +113,23 @@
 .table td {
     padding: 24px 12px;
     text-align: center;
-    font-size: 14px;;
+    font-size: 14px;
+    border-bottom:1px solid #eee;
+}
+
+tr {
+    transition: all .3s;
+}
+
+tr.selected {
+    background-color: rgba(149, 198, 116, 0.1);
+}
+
+.paid {
+    color: var(--mainColor)
+}
+.unpaid {
+    color: red;
 }
 
 /*  */
@@ -171,10 +187,44 @@
     background-color: #f9f9f9;
 }
 
-.reset {
-    color: red;
+/*  */
+table tbody .checkbod-area {
+    display: flex;
+    justify-content: center;
 }
 
+table tbody input {
+    display: none;
+}
+
+table tbody label {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #eeeeee;
+    border: 1px solid #eeeeee;
+    border-radius: 4px;
+    cursor: pointer;
+
+    transition: all .3s;
+    position: relative;
+}
+
+table tbody input[type="checkbox"]:checked + label {
+    background: var(--mainColor);
+    border: 1px solid var(--mainColor);
+}
+
+table tbody input[type="checkbox"]:checked + label::before {
+    content: url(@/assets/check.svg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+}
+
+/*  */
 .button-group {
     display: flex;
     gap: 10px;
