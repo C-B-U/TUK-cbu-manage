@@ -6,15 +6,16 @@
           <h2 class="login-title">로그인</h2>
           <v-card-text>
             <v-form @submit.prevent="handleLogin">
-              <v-text-field v-model="studentId" label="이름" placeholder="이름을 입력하세요" required variant="outlined"
+              <v-text-field v-model="name" label="이름" placeholder="이름을 입력하세요" required variant="outlined"
                 dense></v-text-field>
               <v-text-field v-model="studentId" label="학번" placeholder="학번을 입력하세요" required variant="outlined"
                 dense></v-text-field>
               <v-btn type="submit" block large class="mt-4 font-weight-bold custom-btn">
-                본인 인증하기
+                로그인
               </v-btn>
             </v-form>
           </v-card-text>
+          <h4 class="guide-text">동아리에 새로 가입하셨나요? &nbsp; <router-link to="/join" class="custom-link">회원가입</router-link></h4>
         </div>
       </v-col>
     </v-row>
@@ -26,13 +27,11 @@ import { ref } from "vue";
 
 const name = ref("");
 const studentId = ref("");
-const nickname = ref("");
 
 const handleLogin = () => {
   console.log("Login Attempt:", {
     name: name.value,
     studentId: studentId.value,
-    nickname: nickname.value,
   });
 };
 </script>
@@ -64,9 +63,23 @@ const handleLogin = () => {
   text-align: start;
 }
 
+.guide-text {
+  margin-top: 30px;
+}
+
+.custom-link {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.custom-link:hover {
+  text-decoration: none;
+}
+
 .custom-btn {
   background-color: #515151;
-  height: 45px;
+  height: 56px;
   color: #fff;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -78,5 +91,4 @@ const handleLogin = () => {
 .v-btn {
   letter-spacing: normal !important;
 }
-
 </style>
