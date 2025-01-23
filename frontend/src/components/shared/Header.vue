@@ -1,5 +1,5 @@
 <template>
-    <header>
+    <header :class="{ 'absolute-header': !isBlockHeader }">
         <div id="header-nav">
             <router-link to="/">
                 <img id="logo" src="@/assets/logo.png" alt="로고이미지" />
@@ -21,16 +21,20 @@
                 </ul>
             </div>
         </div>
-
-
     </header>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+<script lang="ts" setup>
+import { ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
 
-const router = useRouter();
+// 특정 URL 경로 Header Absolute Style 관리
+const route = useRoute();
+
+const isBlockHeader = computed(() => {
+  const blockPaths = ['/memberManage'];
+  return blockPaths.includes(route.path);
+});
 
 // 네비게이션 항목 정의
 const navItems = [
@@ -45,8 +49,11 @@ const utilItems = [
 
 <style scoped>
 header {
-    position: absolute;
-    width: 100%;
+  width: 100%;
+}
+
+.absolute-header {
+  position: absolute;
 }
 
 #header-nav {
