@@ -46,8 +46,8 @@
                             <v-row align-items="center" justify="space-between">
                                 <v-col cols="9">
                                     <v-text-field v-if="isVerificationSent" v-model="verificationCode" label="인증번호"
-                                        placeholder="인증번호를 입력하세요" required variant="outlined" dense
-                                        class="mt-4"></v-text-field>
+                                        placeholder="인증번호를 입력하세요" required variant="outlined" dense hide-details
+                                        ></v-text-field>
                                 </v-col>
                                 <v-col cols="3" class="email-btn-col">
                                     <v-btn v-if="isVerificationSent" class="custom-btn" block @click="handleCodeVerification">
