@@ -43,13 +43,23 @@
                             </v-row>
 
                             <!-- 인증번호 입력 필드 -->
-                            <v-text-field v-if="isVerificationSent" v-model="verificationCode" label="인증번호"
-                                placeholder="인증번호를 입력하세요" required variant="outlined" dense class="mt-4"></v-text-field>
+                            <v-row align-items="center" justify="space-between">
+                                <v-col cols="9">
+                                    <v-text-field v-if="isVerificationSent" v-model="verificationCode" label="인증번호"
+                                        placeholder="인증번호를 입력하세요" required variant="outlined" dense
+                                        class="mt-4"></v-text-field>
+                                </v-col>
+                                <v-col cols="3" class="email-btn-col">
+                                    <v-btn v-if="isVerificationSent" class="custom-btn" block @click="handleCodeVerification">
+                                        인증하기
+                                    </v-btn>
+                                </v-col>
+                                </v-row>
 
-                            <!-- 회원가입 버튼 -->
-                            <v-btn type="submit" block large class="mt-4 font-weight-bold custom-btn">
-                                회원가입
-                            </v-btn>
+                                <!-- 회원가입 버튼 -->
+                                <v-btn type="submit" block large class="mt-4 font-weight-bold custom-btn">
+                                    회원가입
+                                </v-btn>
                         </v-form>
                     </v-card-text>
                 </div>
@@ -78,6 +88,7 @@ const {
     isVerificationSent,
     validateEmail,
     sendEmailToServer,
+    verifyCodeWithServer,
 } = useVerifyEmail();
 
 // 이메일 인증 처리
@@ -115,6 +126,21 @@ const handleJoin = () => {
         studentEmail: studentEmail.value,
         verificationCode: verificationCode.value,
     });
+};
+
+// 인증코드 인증
+const handleCodeVerification = async () => {
+  if (!verificationCode.value) {
+    alert("인증번호를 입력해주세요.");
+    return;
+  }
+
+  const success = await verifyCodeWithServer(studentEmail.value, verificationCode.value);
+  if (success) {
+    alert("인증에 성공했습니다!");
+  } else {
+    alert("인증번호가 올바르지 않습니다. 다시 시도해주세요.");
+  }
 };
 
 </script>
