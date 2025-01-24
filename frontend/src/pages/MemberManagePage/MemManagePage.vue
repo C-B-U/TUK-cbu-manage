@@ -22,7 +22,8 @@
             <thead>
                 <tr>
                     <th class="entireChoice-button-area">
-                        <button class="entireChoice-button" :class="{ selected: isEntireSelected }" @click="entireSelectToggle"></button>
+                        <button class="entireChoice-button" :class="{ selected: isEntireSelected }"
+                            @click="entireSelectToggle"></button>
                     </th>
                     <th class="filter-header">
                         <div class="filter-title" @click="toggleDropdown">기수</div>
@@ -137,11 +138,11 @@ const selectedItems = ref<number[]>([]);
 
 // 전체 선택/취소 토글
 const isEntireSelected = ref(false);
-const entireSelectToggle = () => { 
+const entireSelectToggle = () => {
     if (selectedItems.value.length === paginatedData.value.length) {
         clearSelection();
     } else {
-        selectAllItems(); 
+        selectAllItems();
     }
 }
 
@@ -159,6 +160,7 @@ const filterByBatch = (batch: string) => {
     batchFilter.value = batch;
     currentPage.value = 1; // 필터 변경 시 첫 페이지로 이동
     dropdownVisible.value = false;
+    window.scrollTo(0, 0);
 };
 
 // 필터 초기화
@@ -166,6 +168,7 @@ const resetFilter = () => {
     batchFilter.value = null;
     currentPage.value = 1; // 필터 초기화 시 첫 페이지로 이동
     dropdownVisible.value = false;
+    window.scrollTo(0, 0);
 };
 </script>
 
