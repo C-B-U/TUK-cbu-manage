@@ -5,7 +5,6 @@ export default function useVerifyEmail() {
   const emailErrorMessage = ref(""); // 에러 메시지
   const isVerificationSent = ref(false); // 인증번호 입력창 표시 여부
 
-  const SERVER_URL = import.meta.env.VUE_APP_SERVER_URL;
   /**
    * 이메일 유효성 검사
    */
@@ -28,14 +27,13 @@ export default function useVerifyEmail() {
   /**
    * 서버로 이메일 인증 요청 전송
    */
-  const sendEmailToServer = async (email: string): Promise<boolean> => {
+  const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
+  const sendEmailToServer = async (mail: string): Promise<boolean> => {
     try {
-      const response = await fetch(`${SERVER_URL}/users/email/verify`, {
+      const encodedEmail = encodeURIComponent(mail);
+      const response = await fetch(`${SERVER_URL}/v1/sendMail?address=${encodedEmail}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
       });
 
       if (!response.ok) {
@@ -55,11 +53,43 @@ export default function useVerifyEmail() {
     }
   };
 
+  /**
+   * 서버로 인증번호 검증 요청
+   */
+  const verifyCodeWithServer = async (
+    email: string,
+    code: string
+  ): Promise<boolean> => {
+    try {
+      const encodedEmail = encodeURIComponent(email);
+      const response = await fetch(
+        `${SERVER_URL}/v1/verifyMail?address=${encodedEmail}&authCode=${code}`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("인증번호 검증 실패.");
+      }
+
+      const result = await response.json();
+      console.log("인증 성공:", result);
+      return true; // 성공 시 true 반환
+    } catch (error) {
+      console.error("서버 요청 에러:", error);
+      emailError.value = true;
+      emailErrorMessage.value = "인증번호 검증에 실패했습니다. 다시 시도해주세요.";
+      return false; // 실패 시 false 반환
+    }
+  };
+
   return {
     emailError,
     emailErrorMessage,
     isVerificationSent,
     validateEmail,
     sendEmailToServer,
+    verifyCodeWithServer,
   };
 }
