@@ -14,5 +14,5 @@ public interface CbuMemberRepository extends JpaRepository<CbuMember, Long> {
     @Query("SELECT m FROM CbuMember m WHERE m.cbuMemberId NOT IN (SELECT d.memberId FROM Dues d WHERE d.term = :term)")
     List<CbuMember> findAllWithoutDues(@Param("term") String term);
 
-
+    CbuMember findByStudentNumber(Long studentNumber);
 }
