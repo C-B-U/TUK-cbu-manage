@@ -39,10 +39,14 @@ const isBlockHeader = computed(() => {
 // 네비게이션 항목 정의
 const navItems = [
 <<<<<<< HEAD
+<<<<<<< HEAD
     { name: '회원 관리', path: '/memberManage' },
 =======
     { name: '회원 관리', path: '/manage-M' },
 >>>>>>> 2630be6 (feat: 로그인 페이지 퍼블리싱 및 추가 디자인 적용)
+=======
+    { name: '회원 관리', path: '/memberManage' },
+>>>>>>> e18f66a (fix: 헤더 nav 회원 관리 라우터 변경)
 ];
 
 const utilItems = [
