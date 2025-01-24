@@ -34,7 +34,7 @@ const router = useRouter();
 
 // 네비게이션 항목 정의
 const navItems = [
-    { name: '회원 관리', path: '/memberManage' },
+    { name: '회원 관리', path: '/manage-M' },
 ];
 
 const utilItems = [
@@ -47,6 +47,7 @@ const utilItems = [
 header {
     position: absolute;
     width: 100%;
+    height: 5%;
 }
 
 #header-nav {

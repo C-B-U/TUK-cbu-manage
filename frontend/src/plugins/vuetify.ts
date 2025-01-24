@@ -7,4 +7,11 @@ import * as directives from 'vuetify/directives';
 export default createVuetify({
     components,
     directives,
+    defaults: {
+        global: {
+            style: {
+                fontFamily: 'Pretendard, sans-serif', // 글로벌 폰트 설정
+            },
+        },
+    },
 });
