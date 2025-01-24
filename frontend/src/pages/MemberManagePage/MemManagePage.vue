@@ -21,7 +21,9 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>선택</th>
+                    <th class="entireChoice-button-area">
+                        <button class="entireChoice-button" :class="{ selected: isEntireSelected }" @click="entireSelectToggle"></button>
+                    </th>
                     <th class="filter-header">
                         <div class="filter-title" @click="toggleDropdown">기수</div>
 
@@ -64,12 +66,11 @@
 
         <div class="button-group">
             <div class="left-buttons">
-                <button class="btn" @click="selectAllItems">전체선택</button>
-                <button class="btn-outline" @click="clearSelection">선택취소</button>
+                <button class="btn">디스코드 일괄 초대링크 발송</button>
             </div>
             <div class="right-buttons">
                 <button class="btn">활동 상태 변경</button>
-                <button class="btn">디스코드 일괄 초대링크 발송</button>
+                
             </div>
         </div>
 
@@ -134,14 +135,23 @@ const handlePageChange = (value: number) => {
 // 선택된 아이템 관리
 const selectedItems = ref<number[]>([]);
 
-// 전체 선택 버튼
+// 전체 선택/취소 토글
+const isEntireSelected = ref(false);
+const entireSelectToggle = () => { 
+    if (selectedItems.value.length === paginatedData.value.length) {
+        clearSelection();
+    } else {
+        selectAllItems(); 
+    }
+}
+
 const selectAllItems = () => {
     selectedItems.value = paginatedData.value.map((item) => item.id);
+    isEntireSelected.value = true;
 };
-
-// 선택 취소 버튼
 const clearSelection = () => {
     selectedItems.value = [];
+    isEntireSelected.value = false;
 };
 
 // 특정 기수로 필터링

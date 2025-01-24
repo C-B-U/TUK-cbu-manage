@@ -59,6 +59,7 @@
 
         background-color: transparent;
         border: none;
+        cursor: pointer;
     }
 
 .search-input-area {
@@ -109,6 +110,33 @@
     .table th:last-child {
         border-radius: 0px 8px 8px 0px;
     }
+
+.entireChoice-button {
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+    transition: all .3s;
+    position: relative;
+
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.entireChoice-button-area button.selected {
+    background-color: var(--mainColor);
+    border: 1px solid var(--mainColor);
+}
+.entireChoice-button-area button.selected::before {
+    content: url(@/assets/check.svg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+}
 
 .table td {
     padding: 24px 12px;
@@ -227,35 +255,34 @@ table tbody input[type="checkbox"]:checked + label::before {
 /*  */
 .button-group {
     display: flex;
-    gap: 10px;
     justify-content: space-between;
-    margin: 1.5rem 0;
+    margin: 24px 0px;
 }
 
 .left-buttons {
     display: flex;
-    gap: 10px;
+    gap: 20px;
 }
 
 .right-buttons {
     display: flex;
-    gap: 10px;
+    gap: 20px;
 }
 
 .btn {
     background-color: #515151;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    padding: 12px 24px;
+    border-radius: 999px;
     cursor: pointer;
 }
 
 .btn-outline {
     border: 1px solid #515151;
     color: #515151;
-    padding: 10px 20px;
-    border-radius: 4px;
+    padding: 12px 24px;
+    border-radius: 999px;
     background: white;
     cursor: pointer;
 }
