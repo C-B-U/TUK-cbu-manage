@@ -45,6 +45,7 @@
     padding: 12px 24px 12px 20px;
     border-radius: 999px;
     cursor: pointer;
+    transition: all .3s;
 }
 
     .sync-button-area > img {
@@ -60,6 +61,11 @@
         background-color: transparent;
         border: none;
         cursor: pointer;
+    }
+
+    .sync-button-area:hover {
+        background-color: var(--mainHover);
+        border:1px solid var(--mainHover);
     }
 
 .search-input-area {
@@ -256,7 +262,7 @@ table tbody input[type="checkbox"]:checked + label::before {
 .button-group {
     display: flex;
     justify-content: space-between;
-    margin: 24px 0px;
+    margin: 24px 0px 48px 0px;
 }
 
 .left-buttons {
@@ -270,25 +276,39 @@ table tbody input[type="checkbox"]:checked + label::before {
 }
 
 .btn {
-    background-color: #515151;
+    width: fit-content;
     color: white;
-    border: none;
+    font-size: 14px;
+    font-weight: 600;
+
+    background-color: var(--mainColor);
+    border:1px solid var(--mainColor);
+    
     padding: 12px 24px;
     border-radius: 999px;
     cursor: pointer;
+    transition: all .3s;
 }
+    .btn:hover {
+        background-color: var(--mainHover);
+        border:1px solid var(--mainHover);
+    }
 
 .btn-outline {
-    border: 1px solid #515151;
-    color: #515151;
+    border: 1px solid #CCC;
+    color: #333333;
     padding: 12px 24px;
     border-radius: 999px;
     background: white;
     cursor: pointer;
+    transition: all .3s;
 }
+    .btn-outline:hover {
+        background-color: #EEE;
+    }
 
+/*  */
 .pagination {
-    margin-top: 20px;
     display: flex;
     justify-content: center;
 }

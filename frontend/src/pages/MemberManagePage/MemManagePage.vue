@@ -66,11 +66,11 @@
 
         <div class="button-group">
             <div class="left-buttons">
-                <button class="btn">디스코드 일괄 초대링크 발송</button>
+                <button class="btn-outline">활동 상태 변경</button>
             </div>
             <div class="right-buttons">
-                <button class="btn">활동 상태 변경</button>
-                
+                <button class="btn-outline">디스코드 일괄 초대링크 발송</button>
+                <button class="btn">입금 상태 변경</button>
             </div>
         </div>
 
