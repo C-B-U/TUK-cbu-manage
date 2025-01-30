@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class LoginService {
+public class TukAuthenticationService {
 
     public List<String> getKeys(String studentId, String studentPassword){
 
