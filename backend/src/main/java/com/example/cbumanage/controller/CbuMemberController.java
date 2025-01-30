@@ -47,7 +47,7 @@ public class CbuMemberController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Long postMember(@RequestBody @Valid MemberCreateDTO memberCreateDTO){
-        CbuMember member = cbuMemberManageService.createMember(1L, memberCreateDTO);
+        CbuMember member = cbuMemberManageService.createMember(memberCreateDTO);
         return member.getCbuMemberId();
     }
 

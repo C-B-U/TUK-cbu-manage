@@ -51,6 +51,7 @@ public class CbuMemberMapper {
 	public CbuMember map(MemberCreateDTO memberCreateDTO) {
 		CbuMember cbuMember = new CbuMember();
 
+		cbuMember.setRole(memberCreateDTO.getRole());
 		cbuMember.setName(memberCreateDTO.getName());
 		cbuMember.setPhoneNumber(memberCreateDTO.getPhoneNumber());
 		cbuMember.setMajor(memberCreateDTO.getMajor());

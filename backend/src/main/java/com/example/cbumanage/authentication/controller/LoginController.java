@@ -26,7 +26,7 @@ public class LoginController {
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public void login(@RequestHeader("email") @Email final String email, @RequestHeader("password") @Size(min = 8) final String password, HttpServletResponse res) {
+	public void login(@RequestHeader("email") final String email, @RequestHeader("password") final String password, HttpServletResponse res) {
 		AccessAndRefreshTokenDTO login = loginService.login(new EmailAndPasswordDTO(email, password));
 
 		Cookie[] cookies = loginService.generateCookie(login.getAccessToken(), login.getRefreshToken());

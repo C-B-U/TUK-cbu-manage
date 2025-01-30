@@ -19,14 +19,12 @@ public class AuthenticationConfiguration implements WebMvcConfigurer {
 
 	private final boolean enabled;
 	private final AuthenticationHandlerMethodArgumentResolver authenticationHandlerMethodArgumentResolver;
-	private final RefreshTokenRepository refreshTokenRepository;
 	private final LoginService loginService;
 	private final JwtProvider jwtProvider;
 
 	public AuthenticationConfiguration(@Value("${cbu.jwt.interceptor}") boolean enabled, RefreshTokenRepository refreshTokenRepository, LoginService loginService, JwtProvider jwtProvider) {
 		this.enabled = enabled;
 		authenticationHandlerMethodArgumentResolver = new AuthenticationHandlerMethodArgumentResolver();
-		this.refreshTokenRepository = refreshTokenRepository;
 		this.loginService = loginService;
 		this.jwtProvider = jwtProvider;
 	}
@@ -36,7 +34,9 @@ public class AuthenticationConfiguration implements WebMvcConfigurer {
 		if (!enabled) return;
 
 		for (Permission p : Permission.values()) {
-			InterceptorRegistration interceptorRegistration = registry.addInterceptor(new AuthenticationInterceptor(p, loginService, refreshTokenRepository, jwtProvider));
+			if (p.getPath().isEmpty()) continue;
+
+			InterceptorRegistration interceptorRegistration = registry.addInterceptor(new AuthenticationInterceptor(p, loginService, jwtProvider));
 			p.getPath().forEach(interceptorRegistration::addPathPatterns);
 			p.getExclusivePath().forEach(interceptorRegistration::excludePathPatterns);
 		}
