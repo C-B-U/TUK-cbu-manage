@@ -22,13 +22,11 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
 	private final Permission permission;
 	private final LoginService loginService;
-	private final RefreshTokenRepository refreshTokenRepository;
 	private final JwtProvider jwtProvider;
 
-	public AuthenticationInterceptor(Permission permission, LoginService loginService, RefreshTokenRepository refreshTokenRepository, JwtProvider jwtProvider) {
+	public AuthenticationInterceptor(Permission permission, LoginService loginService, JwtProvider jwtProvider) {
 		this.permission = permission;
 		this.loginService = loginService;
-		this.refreshTokenRepository = refreshTokenRepository;
 		this.jwtProvider = jwtProvider;
 	}
 
@@ -40,10 +38,13 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		// 기존에 파싱된 access 토큰이 없을 때 파싱
 		if (accessToken == null) {
 			Cookie cookie = null;
-			for (Cookie c : request.getCookies()) {
-				if (c.getName().equals("ACCESS_TOKEN")) {
-					cookie = c;
-					break;
+			Cookie[] cookies = request.getCookies();
+			if (cookies != null) {
+				for (Cookie c : cookies) {
+					if (c.getName().equals("ACCESS_TOKEN")) {
+						cookie = c;
+						break;
+					}
 				}
 			}
 			if (cookie != null) {
@@ -63,18 +64,21 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		if (accessToken == null) {
 			if (refreshToken == null) {
 				Cookie cookie = null;
-				for (Cookie c : request.getCookies()) {
-					if (c.getName().equals("REFRESH_TOKEN")) {
-						cookie = c;
+				Cookie[] cookies = request.getCookies();
+				if (cookies != null) {
+					for (Cookie c : cookies) {
+						if (c.getName().equals("REFRESH_TOKEN")) {
+							cookie = c;
+						}
 					}
 				}
 				if (cookie != null) {
 					AccessAndRefreshTokenObjectDTO accessAndRefreshTokenObjectDTO = loginService.reLogin(cookie.getValue());
 					accessToken = accessAndRefreshTokenObjectDTO.getAccessToken();
 					refreshToken = accessAndRefreshTokenObjectDTO.getRefreshToken();
-					Cookie[] cookies = loginService.generateCookie(accessAndRefreshTokenObjectDTO.getAccessTokenAsString(), accessAndRefreshTokenObjectDTO.getRefreshTokenAsString());
-					for (int i = 0; i < cookies.length; i++) {
-						response.addCookie(cookies[i]);
+					Cookie[] newCookies = loginService.generateCookie(accessAndRefreshTokenObjectDTO.getAccessTokenAsString(), accessAndRefreshTokenObjectDTO.getRefreshTokenAsString());
+					for (int i = 0; i < newCookies.length; i++) {
+						response.addCookie(newCookies[i]);
 					}
 					request.setAttribute("ACCESS_TOKEN", accessToken);
 					request.setAttribute("REFRESH_TOKEN", refreshToken);

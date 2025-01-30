@@ -50,9 +50,9 @@ public class CbuMemberManageService {
 	}
 
 	@Transactional
-	public CbuMember createMember(final Long adminMemberId, final MemberCreateDTO memberCreateDTO) {
-		CbuMember adminMember = memberRepository.findById(adminMemberId).orElseThrow(() -> new MemberNotExistsException("There is no admin Member"));
-		if (!adminMember.getRole().contains(Role.ADMIN)) throw new MemberDoesntHavePermissionException("admin member (adminMemberId) doesn't have admin permission");
+	public CbuMember createMember(final MemberCreateDTO memberCreateDTO) {
+//		CbuMember adminMember = memberRepository.findById(adminMemberId).orElseThrow(() -> new MemberNotExistsException("There is no admin Member"));
+//		if (!adminMember.getRole().contains(Role.ADMIN)) throw new MemberDoesntHavePermissionException("admin member (adminMemberId) doesn't have admin permission");
 
 		// 저장
 		CbuMember member = cbuMemberMapper.map(memberCreateDTO);
