@@ -131,11 +131,11 @@ public class LoginService {
 		if (!emailManager.validEmail(dto.getEmail())) throw new InvalidEmailException();
 
 		// Check if email is already in use
-		if (loginRepository.findByEmailEquals(dto.getEmail()).isPresent()) throw new MemberExistException();
+		if (loginRepository.findByEmailEquals(dto.getEmail()).isPresent()) throw new MemberExistException("The email is already in use");
 
 		// Check and get 'CbuMember' object
 		CbuMember cbuMember = cbuMemberRepository.findByStudentNumber(dto.getStudentNumber()).orElseThrow(() -> new MemberNotExistsException("No member exists with student number"));
-		if (!dto.getName().equals(cbuMember.getName())) throw new MemberNotExistsException("No member exists with the given name");
+		if (!dto.getName().equals(cbuMember.getName())) throw new MemberNotExistsException("No 'CbuMember' object exists with the given name");
 
 		LoginEntity entity = new LoginEntity(cbuMember.getCbuMemberId(), dto.getEmail(), hashUtil.hash(dto.getPassword() + salt), List.of(Permission.MEMBER));
 		entity = loginRepository.save(entity);
@@ -159,5 +159,10 @@ public class LoginService {
 	public void delete(final long userId) {
 		LoginEntity entity = loginRepository.findById(userId).orElseThrow(MemberNotExistsException::new);
 		loginRepository.delete(entity);
+	}
+
+	public void clearRefreshToken() {
+		List<RefreshToken> refreshTokens = refreshTokenRepository.findAllByExpLessThan(jwtProvider.currentTime());
+		refreshTokenRepository.deleteAll(refreshTokens);
 	}
 }

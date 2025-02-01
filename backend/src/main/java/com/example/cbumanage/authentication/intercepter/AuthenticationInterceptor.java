@@ -69,6 +69,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 					for (Cookie c : cookies) {
 						if (c.getName().equals("REFRESH_TOKEN")) {
 							cookie = c;
+							break;
 						}
 					}
 				}

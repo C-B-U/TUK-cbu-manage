@@ -7,6 +7,7 @@ import com.example.cbumanage.authentication.service.LoginService;
 import com.example.cbumanage.utils.JwtProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.List;
 
 @Configuration
+@EnableScheduling
 public class AuthenticationConfiguration implements WebMvcConfigurer {
 
 	private final boolean enabled;
