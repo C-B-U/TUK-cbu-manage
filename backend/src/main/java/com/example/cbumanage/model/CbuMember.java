@@ -4,6 +4,7 @@ package com.example.cbumanage.model;
 import com.example.cbumanage.model.converter.MemberRoleConverter;
 import com.example.cbumanage.model.enums.Role;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "cbu_member")
 public class CbuMember {
     @Id
