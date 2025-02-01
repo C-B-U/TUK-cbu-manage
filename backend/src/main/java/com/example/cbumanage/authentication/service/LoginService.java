@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -66,6 +67,7 @@ public class LoginService {
 		Long exp = jwtProvider.currentTime() + 86400000;
 		RefreshToken refreshToken = new RefreshToken(login.getUserId(), exp);
 		AccessToken accessToken = new AccessToken(login.getUserId(), login.getEmail(), cbuMember.getRole(), login.getPermissions());
+		refreshTokenRepository.save(refreshToken);
 		return generateToken(accessToken, refreshToken);
 	}
 
@@ -74,11 +76,11 @@ public class LoginService {
 	 */
 	@Transactional
 	public AccessAndRefreshTokenObjectDTO reLogin(final String refreshToken) {
-		// Validation check
+		// Jwt validation check
 		Map<String, Object> tokenInfo = jwtProvider.parseJwt(refreshToken, Map.of("uuid", UUID.class));
 
 		Long exp = jwtProvider.currentTime() + 86400000;
-		RefreshToken refresh = refreshTokenRepository.findById(((UUID) tokenInfo.get("uuid"))).orElseThrow();
+		RefreshToken refresh = refreshTokenRepository.findById(((UUID) tokenInfo.get("uuid"))).orElseThrow(() -> new NoSuchElementException("There is no refresh token"));
 		LoginEntity login = loginRepository.findById(refresh.getUserId()).orElseThrow(MemberNotExistsException::new);
 		CbuMember cbuMember = cbuMemberRepository.findById(refresh.getUserId()).orElseThrow(MemberNotExistsException::new);
 		AccessToken access = new AccessToken(login.getUserId(), login.getEmail(), cbuMember.getRole(), login.getPermissions());
@@ -158,7 +160,10 @@ public class LoginService {
 	@Transactional
 	public void delete(final long userId) {
 		LoginEntity entity = loginRepository.findById(userId).orElseThrow(MemberNotExistsException::new);
+		List<RefreshToken> refreshTokens = refreshTokenRepository.findAllByUserId(userId);
+
 		loginRepository.delete(entity);
+		refreshTokenRepository.deleteAll(refreshTokens);
 	}
 
 	public void clearRefreshToken() {
