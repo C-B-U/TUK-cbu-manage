@@ -62,16 +62,15 @@ public class CbuMemberManageService {
 	}
 
 	@Transactional
-	public boolean updateUser(Long adminMemberId, MemberUpdateDTO memberUpdateDTO) {
+	public void updateUser(MemberUpdateDTO memberUpdateDTO) {
 		CbuMember cbuMember = memberRepository.findById(memberUpdateDTO.getCbuMemberId()).orElseThrow(MemberNotExistsException::new);
-		CbuMember adminMember = memberRepository.findById(adminMemberId).orElseThrow(() -> new MemberNotExistsException("No admin member"));
-
-		// 권한 확인
-		if (!adminMember.getRole().contains(Role.ADMIN)) throw new MemberDoesntHavePermissionException("Member doesn't have admin permission");
 
 		// 업데이트
 		cbuMemberMapper.map(memberUpdateDTO, cbuMember);
+	}
 
-		return true;
+	@Transactional
+	public void deleteMember(final Long memberId) {
+		memberRepository.deleteById(memberId);
 	}
 }

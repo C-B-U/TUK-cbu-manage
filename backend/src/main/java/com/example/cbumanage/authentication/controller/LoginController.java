@@ -66,13 +66,13 @@ public class LoginController {
 	private void checkToken(final HttpServletRequest request, final HttpServletResponse response, final Long userId) {
 		try {
 			authenticationInterceptor.preHandle(request, response, null);
-			AccessToken accessToken = ((AccessToken) request.getAttribute("ACCESS_TOKEN"));
-			if (accessToken == null || !accessToken.getUserId().equals(userId)) {
-				throw new InvalidJwtException();
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new AuthenticationException("");
+			throw new AuthenticationException(e.getClass().getName() + " / " + e.getMessage());
+		}
+		AccessToken accessToken = ((AccessToken) request.getAttribute("ACCESS_TOKEN"));
+		if (accessToken == null || !accessToken.getUserId().equals(userId)) {
+			throw new InvalidJwtException();
 		}
 	}
 }

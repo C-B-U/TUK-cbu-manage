@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, UUID> {
 	public List<RefreshToken> findAllByExpLessThan(Long exp);
+	public List<RefreshToken> findAllByUserId(Long userId);
 }

@@ -16,6 +16,7 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Component
 public class JwtProvider {
@@ -48,7 +49,15 @@ public class JwtProvider {
 		for (String key : claims.keySet()) {
 			Class<?> type = claims.get(key);
 			Object value = payload.get(key);
-			if (!type.isAssignableFrom(value.getClass())) throw new TypeMismatchException("Cannot cast data (" + value + ") to " + type.getName() + "type.");
+			if (value.getClass().isAssignableFrom(Integer.class) && type == Long.class) {
+				result.put(key, payload.getLong(key));
+				continue;
+			}
+			if (type == UUID.class) {
+				result.put(key, UUID.fromString(payload.getString(key)));
+				continue;
+			}
+			if (!value.getClass().isAssignableFrom(type)) throw new TypeMismatchException("Cannot cast data (" + value + ", " + value.getClass() + ") to " + type.getName() + " type.");
 			if (type.isAssignableFrom(JSONArray.class)) {
 				result.put(key, payload.getJSONArray(key));
 				continue;
