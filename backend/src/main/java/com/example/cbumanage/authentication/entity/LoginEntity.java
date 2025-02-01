@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 public class LoginEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
 	@Column(unique = true, nullable = false)
 	private String email;
