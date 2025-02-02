@@ -8,6 +8,7 @@ class CbuManageApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

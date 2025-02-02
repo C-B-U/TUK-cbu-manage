@@ -16,6 +16,6 @@ public class AuthenticationHandlerMethodArgumentResolver implements HandlerMetho
 
 	@Override
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-		return ((ServletRequest) webRequest).getAttribute("ACCESS_TOKEN");
+		return ((ServletRequest) webRequest.getNativeRequest()).getAttribute("ACCESS_TOKEN");
 	}
 }
