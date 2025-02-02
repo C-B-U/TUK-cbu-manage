@@ -6,7 +6,7 @@ import java.security.Permissions;
 import java.util.*;
 
 public enum Permission {
-	MEMBER(Set.of("/api/v1/*"), Set.of("/api/v1/login")),
+	MEMBER(Set.of("/api/v1/**"), Set.of("/api/v1/login")),
 	ADMIN(Set.of(), Set.of())
 	;
 

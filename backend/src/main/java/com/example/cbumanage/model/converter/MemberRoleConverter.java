@@ -14,7 +14,7 @@ public class MemberRoleConverter implements AttributeConverter<List<Role>, Long>
 
 		for (Role role : attribute) {
 			long v = 1L << (role.value-1);
-			result = result | v;
+			result |= v;
 		}
 
 		return result;
@@ -26,7 +26,7 @@ public class MemberRoleConverter implements AttributeConverter<List<Role>, Long>
 
 		for (Role role : Role.values()) {
 			long v = 1L << (role.value-1);
-			if ((dbData ^ v) != 0) {
+			if ((dbData & v) > 0) {
 				result.add(role);
 			}
 		}

@@ -26,10 +26,8 @@ public class MemberCreateDTO {
 	@NotEmpty
 	private String grade;
 	@NotNull
-	@NotEmpty
 	private Long studentNumber;
 	@NotNull
-	@NotEmpty
 	private Long generation;
 	@NotNull
 	private String note;

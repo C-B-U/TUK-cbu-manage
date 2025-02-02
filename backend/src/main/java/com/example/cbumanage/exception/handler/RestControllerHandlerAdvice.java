@@ -18,7 +18,6 @@ public class RestControllerHandlerAdvice {
 	}
 
 	public ExceptionMessage runtimeException(RuntimeException e, Integer status) {
-		e.printStackTrace();
 		return new ExceptionMessage(e.getClass().getName(), e.getMessage(), status);
 	}
 }
