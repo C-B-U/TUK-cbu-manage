@@ -1,11 +1,6 @@
 .container {
     margin: auto;
     padding: 120px var(--entirePadding);
-    display: flex;
-    flex-direction: column;
-    max-width: 1200px;
-    margin: auto;
-    padding: 5% 32px 3% 32px;
 }
 
 .header {
@@ -300,11 +295,16 @@ table tbody input[type="checkbox"]:checked + label::before {
     }
 
 .btn-outline {
-    border: 1px solid #CCC;
+    width: fit-content;
     color: #333333;
+    font-size: 14px;
+    font-weight: 600;
+
+    border: 1px solid #CCC;
+    background: white;
+
     padding: 12px 24px;
     border-radius: 999px;
-    background: white;
     cursor: pointer;
     transition: all .3s;
 }
