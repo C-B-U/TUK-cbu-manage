@@ -1,22 +1,26 @@
 package com.example.cbumanage.controller;
 
+import com.example.cbumanage.authentication.dto.AccessToken;
+import com.example.cbumanage.authentication.exceptions.AuthenticationException;
 import com.example.cbumanage.dto.MemberCreateDTO;
 import com.example.cbumanage.dto.MemberDTO;
 import com.example.cbumanage.dto.MemberUpdateDTO;
 import com.example.cbumanage.model.CbuMember;
+import com.example.cbumanage.model.enums.Role;
 import com.example.cbumanage.repository.CbuMemberRepository;
 import com.example.cbumanage.service.CbuMemberManageService;
 import com.example.cbumanage.service.CbuMemberSyncService;
 import com.example.cbumanage.utils.CbuMemberMapper;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClientException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/member")
 public class CbuMemberController {
     private final CbuMemberSyncService cbuMemberSyncService;
     private final CbuMemberManageService cbuMemberManageService;
@@ -30,76 +34,51 @@ public class CbuMemberController {
         this.cbuMemberMapper = cbuMemberMapper;
     }
 
-    @PostMapping("/members/sync")
-    public String memberSync(){                                     //스프레드시트 -> 데이터베이스 회원 데이터 주입 함수
-        try{
-            cbuMemberSyncService.syncMembersFromGoogleSheet();      //스프레드시트에서 데이터베이스로 데이터 값 주입
-            return "멤버 저장 성공!";
-        }catch (Exception e){                                       //오류가 났을 경우
-            return String.valueOf(e);                               //오류 값 리턴
-        }
+    @PostMapping("s/sync")
+    public String memberSync() {
+        cbuMemberSyncService.syncMembersFromGoogleSheet();      //스프레드시트에서 데이터베이스로 데이터 값 주입
+        return "멤버 저장 성공!";
     }
 
-    @GetMapping("/member/{id}")
-    public ResponseEntity<?> getMember(@PathVariable Long id){
-        try{
-            Optional<CbuMember> _member = cbuMemberRepository.findById(id);
-            if (!_member.isPresent()) return ResponseEntity.notFound().build();
-            return ResponseEntity.ok(cbuMemberMapper.map(_member.get()));
-        } catch (Exception e){
-            return ResponseEntity.internalServerError().body(null);
-        }
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public MemberDTO getMember(@PathVariable Long id, AccessToken accessToken) {
+        if (!accessToken.getRole().contains(Role.ADMIN)) throw new AuthenticationException("You don't have permission");
+        CbuMember cbuMember = cbuMemberRepository.findById(id).orElseThrow();
+        return cbuMemberMapper.map(cbuMember);
     }
 
-    @PostMapping("/member")
-    public ResponseEntity<String> postMember(@RequestBody MemberCreateDTO memberCreateDTO){
-        try{
-            CbuMember member = cbuMemberManageService.createUser(1L, memberCreateDTO);
-            if (member == null) return ResponseEntity.internalServerError().body("멤버 저장 실패!");
-            return ResponseEntity.status(HttpStatus.CREATED).body("멤버 저장 성공!");
-        } catch (Exception e){
-            return ResponseEntity.internalServerError().body("멤버 저장 실패!");
-        }
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Long postMember(@RequestBody @Valid MemberCreateDTO memberCreateDTO, AccessToken accessToken){
+//        accessToken.
+        CbuMember member = cbuMemberManageService.createMember(memberCreateDTO);
+        return member.getCbuMemberId();
     }
 
+    // TODO : MemberUpdateDTO validation 추가
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void patchMember(@RequestBody MemberUpdateDTO memberDTO) {
-        Long adminMemberId = 1L;
-        cbuMemberManageService.updateUser(adminMemberId, memberDTO);
+    public void patchMember(@RequestBody MemberUpdateDTO memberDTO, AccessToken accessToken) {
+        if (!accessToken.getRole().contains(Role.ADMIN)) throw new AuthenticationException("You don't have permission");
+        cbuMemberManageService.updateUser(memberDTO);
     }
 
-    @DeleteMapping("/member/{id}")
+    @DeleteMapping("/{id}")
     public void deleteMember(@PathVariable Long id) {
-        cbuMemberRepository.deleteById(id);
+        cbuMemberManageService.deleteMember(id);
     }
 
-    @GetMapping("/members")
-    public ResponseEntity<List<MemberDTO>> getMembers(
-            @RequestParam(name = "page", required = false) Integer page
-    ){
-        try{
-            if (page == null) page = 0;
-            return ResponseEntity.ok(cbuMemberMapper.map(cbuMemberManageService.getMembers(page)));
-        } catch (Exception e){
-            return ResponseEntity.internalServerError().body(List.of());
-        }
+    @GetMapping("s")
+    public ResponseEntity<List<MemberDTO>> getMembers(@RequestParam(name = "page", required = false) Integer page, final AccessToken accessToken) {
+        if (!accessToken.getRole().contains(Role.ADMIN)) throw new AuthenticationException("You don't have permission");
+        if (page == null) page = 0;
+        return ResponseEntity.ok(cbuMemberMapper.map(cbuMemberManageService.getMembers(page)));
     }
 
-//    @GetMapping("/members/dues")
-//    public ResponseEntity<?> getMembersByDues(
-//            @RequestParam("term") String term,
-//            @RequestParam(name = "paid", required = false) Boolean paid
-////            @RequestParam(name = "page", required = false) Integer page
-//    ){
-//        try{
-//            if(paid != null && paid) {
-//                return ResponseEntity.internalServerError().body("Not implemented yet");
-//            }
-//            return ResponseEntity.ok(cbuMemberMapper.map(cbuMemberManageService.getMembersWithoutDues(term)));
-//        } catch (Exception e){
-//            return ResponseEntity.internalServerError().body(null);
-//        }
-//    }
-
+    @ExceptionHandler(RestClientException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String restClientException(RestClientException e) {
+        return "Fail to request data while RestTemplate";
+    }
 }

@@ -53,7 +53,9 @@ header {
 }
 
 .absolute-header {
-  position: absolute;
+    position: absolute;
+    width: 100%;
+    height: 5%;
 }
 
 #header-nav {
