@@ -41,6 +41,29 @@ body {
     text-align: center;
 }
 
+// Pagination
+.pagination button {
+    cursor: pointer;
+}
+.pagination li.v-pagination__item {
+    border-radius: 4px;
+    font-size: 14px;
+}
+.pagination li.v-pagination__item--is-active {
+    background-color: var(--mainColor);
+    color: white;
+}
+.pagination li.v-pagination__item:not(li.v-pagination__item--is-active):hover {
+    background-color: #f9f9f9;
+}
+
+.pagination li.v-pagination__item .v-btn__content {
+    font-size: 14px;
+}
+.v-btn--variant-text .v-btn__overlay {
+    background-color: transparent !important;
+}
+
 @media (prefers-color-scheme: light) {
     :root {
         color: #213547;

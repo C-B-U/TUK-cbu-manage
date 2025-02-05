@@ -76,7 +76,7 @@
         </div>
 
         <v-pagination v-model:currentPage="currentPage" :length="totalPages" class="pagination"
-            @update:modelValue="handlePageChange" />
+            @update:modelValue="handlePageChange"/>
 
     </div>
 </template>
