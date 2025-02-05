@@ -13,13 +13,13 @@ public class EmailController {
     private final EmailService emailService;
 
     // 인증번호 전송
-    @GetMapping("/mail")
+    @PostMapping("/sendMail")
     public EmailAuthResponseDTO sendAuthCode(@RequestParam String address) {
         return emailService.sendEmail(address);
     }
 
     // 인증번호 검증
-    @PostMapping("/mail")
+    @PostMapping("/verifyMail")
     public EmailAuthResponseDTO checkAuthCode(@RequestParam String address, @RequestParam String authCode) {
         return emailService.validateAuthCode(address, authCode);
     }

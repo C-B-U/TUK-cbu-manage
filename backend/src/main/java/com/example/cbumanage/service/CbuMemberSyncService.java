@@ -151,20 +151,6 @@ public class CbuMemberSyncService {
         String value = getStringValue(row, index);
         return value != null ? Long.parseLong(value) : null;
     }
-
-//    private CbuMember mapRowToMember(List<Object> row) {     //멤버 데이터값을 String 값으로 변환해 매핑 (스프레드시트에 빈칸이 있으면 작동이 멈춤 해결방법 찾는중,,,)
-//        CbuMember member = new CbuMember();
-//        member.setName((String) row.get(0));
-//        member.setRole(List.of());
-//        member.setPhoneNumber((String) row.get(1));
-//        member.setMajor((String) row.get(2));
-//        member.setGrade((String) row.get(3));
-//        member.setStudentNumber(Long.parseLong(row.get(4).toString()));
-//        member.setGeneration(Long.parseLong(row.get(5).toString()));
-//        member.setNote(row.get(6) != "" ? (String) row.get(6) : null);
-//        member.setDue(row.get(7) != "" ? (String) row.get(7) : null);
-//        return member;
-//    }
 }
 
 @Getter

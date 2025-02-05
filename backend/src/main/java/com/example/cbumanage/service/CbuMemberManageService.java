@@ -1,11 +1,11 @@
 package com.example.cbumanage.service;
 
+
 import com.example.cbumanage.dto.MemberCreateDTO;
 import com.example.cbumanage.dto.MemberUpdateDTO;
+import com.example.cbumanage.exception.MemberDoesntHavePermissionException;
+import com.example.cbumanage.exception.MemberNotExistsException;
 import com.example.cbumanage.model.CbuMember;
-import com.example.cbumanage.model.Log;
-import com.example.cbumanage.model.enums.LogDataType;
-import com.example.cbumanage.model.enums.LogType;
 import com.example.cbumanage.model.enums.Role;
 import com.example.cbumanage.repository.CbuMemberRepository;
 import com.example.cbumanage.repository.DuesRepository;
@@ -19,9 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CbuMemberManageService {
@@ -47,59 +45,32 @@ public class CbuMemberManageService {
 		return memberPage.getContent();
 	}
 	@Transactional
-	public List<CbuMember> getMembersWithoutDues(String term) {
+	public List<CbuMember> getMembersWithoutDues(final String term) {
 		return memberRepository.findAllWithoutDues(term);
 	}
 
 	@Transactional
-	public CbuMember createUser(Long adminMemberId, MemberCreateDTO memberCreateDTO) {
-		Optional<CbuMember> _adminMember = memberRepository.findById(adminMemberId);
-		CbuMember adminMember = _adminMember.orElseThrow();
-		if (!adminMember.getRole().contains(Role.ADMIN)) throw new RuntimeException("You don't have permission");
+	public CbuMember createMember(final MemberCreateDTO memberCreateDTO) {
+//		CbuMember adminMember = memberRepository.findById(adminMemberId).orElseThrow(() -> new MemberNotExistsException("There is no admin Member"));
+//		if (!adminMember.getRole().contains(Role.ADMIN)) throw new MemberDoesntHavePermissionException("admin member (adminMemberId) doesn't have admin permission");
 
-		CbuMember member = cbuMemberMapper.map(memberCreateDTO, true);
-		if (member == null) {
-			return null;
-		}
-		Log log = new Log(adminMemberId, LogType.CREATE, LogDataType.USER_ENTITY, "Create:cbu_member(" + member + ")");
-
+		// 저장
+		CbuMember member = cbuMemberMapper.map(memberCreateDTO);
 		memberRepository.save(member);
-		logRepository.save(log);
 
 		return member;
 	}
 
 	@Transactional
-	public boolean updateUser(Long adminMemberId, MemberUpdateDTO memberUpdateDTO) {
-		Optional<CbuMember> _member = memberRepository.findById(memberUpdateDTO.getCbuMemberId());
-		CbuMember member = _member.orElseThrow();
+	public void updateUser(MemberUpdateDTO memberUpdateDTO) {
+		CbuMember cbuMember = memberRepository.findById(memberUpdateDTO.getCbuMemberId()).orElseThrow(MemberNotExistsException::new);
 
-		Optional<CbuMember> _adminMember = memberRepository.findById(adminMemberId);
-		CbuMember adminMember = _adminMember.orElseThrow();
-		if (!adminMember.getRole().contains(Role.ADMIN)) return false;
+		// 업데이트
+		cbuMemberMapper.map(memberUpdateDTO, cbuMember);
+	}
 
-		// role
-		if (memberUpdateDTO.getRole() != null) {
-			List<Role> oldRole = new ArrayList<>(member.getRole());
-			member.setRole(memberUpdateDTO.getRole());
-			Log log = new Log(adminMember.getCbuMemberId(),
-					LogType.UPDATE,
-					LogDataType.USER_ROLE,
-					"Update:cbu_member.role(" + oldRole + " -> " + memberUpdateDTO.getRole() + ")");
-			logRepository.save(log);
-		}
-
-		// name
-		if (memberUpdateDTO.getName() != null) {
-			String oldName = member.getName();
-			member.setName(memberUpdateDTO.getName());
-			Log log = new Log(adminMember.getCbuMemberId(),
-					LogType.UPDATE,
-					LogDataType.USER_NAME,
-					"Update:cbu_member.name(" + oldName + " -> " + memberUpdateDTO.getName() + ")");
-			logRepository.save(log);
-		}
-
-		return true;
+	@Transactional
+	public void deleteMember(final Long memberId) {
+		memberRepository.deleteById(memberId);
 	}
 }
