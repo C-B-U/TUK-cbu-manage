@@ -20,7 +20,7 @@ import org.springframework.web.client.RestClientException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/member")
+@RequestMapping("/api/v1/")
 public class CbuMemberController {
     private final CbuMemberSyncService cbuMemberSyncService;
     private final CbuMemberManageService cbuMemberManageService;
@@ -34,21 +34,21 @@ public class CbuMemberController {
         this.cbuMemberMapper = cbuMemberMapper;
     }
 
-    @PostMapping("s/sync")
+    @PostMapping("members/sync")
     public String memberSync() {
         cbuMemberSyncService.syncMembersFromGoogleSheet();      //스프레드시트에서 데이터베이스로 데이터 값 주입
         return "멤버 저장 성공!";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("member/{id}")
     @ResponseStatus(HttpStatus.OK)
     public MemberDTO getMember(@PathVariable Long id, AccessToken accessToken) {
-        if (!accessToken.getRole().contains(Role.ADMIN)) throw new AuthenticationException("You don't have permission");
+//        if (!accessToken.getRole().contains(Role.ADMIN)) throw new AuthenticationException("You don't have permission");
         CbuMember cbuMember = cbuMemberRepository.findById(id).orElseThrow();
         return cbuMemberMapper.map(cbuMember);
     }
 
-    @PostMapping
+    @PostMapping("member")
     @ResponseStatus(HttpStatus.CREATED)
     public Long postMember(@RequestBody @Valid MemberCreateDTO memberCreateDTO, AccessToken accessToken){
 //        accessToken.
@@ -57,19 +57,19 @@ public class CbuMemberController {
     }
 
     // TODO : MemberUpdateDTO validation 추가
-    @PatchMapping
+    @PatchMapping("member")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void patchMember(@RequestBody MemberUpdateDTO memberDTO, AccessToken accessToken) {
         if (!accessToken.getRole().contains(Role.ADMIN)) throw new AuthenticationException("You don't have permission");
         cbuMemberManageService.updateUser(memberDTO);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("member/{id}")
     public void deleteMember(@PathVariable Long id) {
         cbuMemberManageService.deleteMember(id);
     }
 
-    @GetMapping("s")
+    @GetMapping("members")
     public ResponseEntity<List<MemberDTO>> getMembers(@RequestParam(name = "page", required = false) Integer page, final AccessToken accessToken) {
         if (!accessToken.getRole().contains(Role.ADMIN)) throw new AuthenticationException("You don't have permission");
         if (page == null) page = 0;

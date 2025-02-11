@@ -2,11 +2,13 @@ package com.example.cbumanage.authentication.authorization;
 
 import lombok.Getter;
 
-import java.security.Permissions;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public enum Permission {
-	MEMBER(Set.of("/api/v1/**"), Set.of("/api/v1/login")),
+	MEMBER(Set.of("/api/v1/*"), Set.of("/api/v1/login")),
+//	MEMBER(Set.of(), Set.of()),
 	ADMIN(Set.of(), Set.of())
 	;
 
