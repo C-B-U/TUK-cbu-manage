@@ -4,8 +4,6 @@ import com.example.cbumanage.authentication.authorization.Permission;
 import com.example.cbumanage.authentication.dto.AccessAndRefreshTokenObjectDTO;
 import com.example.cbumanage.authentication.dto.AccessToken;
 import com.example.cbumanage.authentication.entity.RefreshToken;
-import com.example.cbumanage.authentication.intercepter.annotations.TokenId;
-import com.example.cbumanage.authentication.repository.RefreshTokenRepository;
 import com.example.cbumanage.authentication.service.LoginService;
 import com.example.cbumanage.model.enums.Role;
 import com.example.cbumanage.utils.JwtProvider;
@@ -14,12 +12,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.UUID;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
