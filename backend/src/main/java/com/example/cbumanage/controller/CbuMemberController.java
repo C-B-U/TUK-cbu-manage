@@ -11,6 +11,8 @@ import com.example.cbumanage.repository.CbuMemberRepository;
 import com.example.cbumanage.service.CbuMemberManageService;
 import com.example.cbumanage.service.CbuMemberSyncService;
 import com.example.cbumanage.utils.CbuMemberMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/")
+@Tag(name = "동아리 회원 관리 컨트롤러", description = "회원 정보를 다루는 컨트롤러입니다.")
 public class CbuMemberController {
     private final CbuMemberSyncService cbuMemberSyncService;
     private final CbuMemberManageService cbuMemberManageService;
@@ -35,12 +38,14 @@ public class CbuMemberController {
     }
 
     @PostMapping("members/sync")
+    @Operation(summary = "스프레드시트 -> 데이터베이스 데이터 연동", description = "스프레드시트의 데이터를 데이터베이스에 주입합니다.")
     public String memberSync() {
         cbuMemberSyncService.syncMembersFromGoogleSheet();      //스프레드시트에서 데이터베이스로 데이터 값 주입
         return "멤버 저장 성공!";
     }
 
     @GetMapping("member/{id}")
+    @Operation(summary = "원하는 id에 따른 회원정보 취득", description = "id 하나하나에 따른 회원정보를 받아옵니다.")
     @ResponseStatus(HttpStatus.OK)
     public MemberDTO getMember(@PathVariable Long id, AccessToken accessToken) {
 //        if (!accessToken.getRole().contains(Role.ADMIN)) throw new AuthenticationException("You don't have permission");
@@ -49,6 +54,7 @@ public class CbuMemberController {
     }
 
     @PostMapping("member")
+    @Operation(summary = "회원 추가", description = "회원 정보를 데이터베이스에 추가합니다.(데이터베이스 -> 스프레드시트 연동 기능 추가 예정)")
     @ResponseStatus(HttpStatus.CREATED)
     public Long postMember(@RequestBody @Valid MemberCreateDTO memberCreateDTO, AccessToken accessToken){
 //        accessToken.
@@ -58,6 +64,7 @@ public class CbuMemberController {
 
     // TODO : MemberUpdateDTO validation 추가
     @PatchMapping("member")
+    @Operation(summary = "데이터베이스의 회원 정보를 변경", description = "데이터베이스의 회원 정보를 변경합니다.(데이터베이스 -> 스프레드시트 연동 기능 추가 예정)")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void patchMember(@RequestBody MemberUpdateDTO memberDTO, AccessToken accessToken) {
         if (!accessToken.getRole().contains(Role.ADMIN)) throw new AuthenticationException("You don't have permission");
@@ -65,11 +72,13 @@ public class CbuMemberController {
     }
 
     @DeleteMapping("member/{id}")
+    @Operation(summary = "회원 정보 삭제", description = "데이터베이스의 회원 정보를 삭제합니다.(데이터베이스 -> 스프레드시트 연동 기능 추가 예정)")
     public void deleteMember(@PathVariable Long id) {
         cbuMemberManageService.deleteMember(id);
     }
 
     @GetMapping("members")
+    @Operation(summary = "전체 회원 정보 취득", description = "데이터베이스의 모든 회원정보를 받아옵니다.")
     public ResponseEntity<List<MemberDTO>> getMembers(@RequestParam(name = "page", required = false) Integer page, final AccessToken accessToken) {
         if (!accessToken.getRole().contains(Role.ADMIN)) throw new AuthenticationException("You don't have permission");
         if (page == null) page = 0;
