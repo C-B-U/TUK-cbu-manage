@@ -20,7 +20,7 @@ public class TukAuthenticationController {
     public List<String> getLoginKey(@RequestBody HashMap<String, Object> map){      //학교 로그인 키 전달 함수
         String studentId = (String) map.get("studentId");                           //클라이언트로부터 받아온 아이디
         String studentPw = (String) map.get("studentPw");                           //비밀번호를 학교 api로 요청을 보내 키값을 받아와
-        return tukAuthenticationService.getKeys(studentId, studentPw);                          //클라이언트에게 전달
+        return tukAuthenticationService.getKeys(studentId, studentPw);              //클라이언트에게 전달
     }
 
 }

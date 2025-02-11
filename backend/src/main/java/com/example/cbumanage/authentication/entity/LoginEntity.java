@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "site_member")
 public class LoginEntity {
 	@Id
 	private Long userId;
