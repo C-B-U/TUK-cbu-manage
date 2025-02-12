@@ -7,10 +7,11 @@ import com.example.cbumanage.authentication.entity.RefreshToken;
 import com.example.cbumanage.authentication.exceptions.InvalidEmailException;
 import com.example.cbumanage.authentication.exceptions.InvalidPasswordException;
 import com.example.cbumanage.authentication.exceptions.MemberExistException;
+import com.example.cbumanage.authentication.repository.LoginRepository;
 import com.example.cbumanage.authentication.repository.RefreshTokenRepository;
 import com.example.cbumanage.exception.MemberNotExistsException;
-import com.example.cbumanage.authentication.repository.LoginRepository;
 import com.example.cbumanage.model.CbuMember;
+import com.example.cbumanage.model.enums.Role;
 import com.example.cbumanage.repository.CbuMemberRepository;
 import com.example.cbumanage.utils.HashUtil;
 import com.example.cbumanage.utils.JwtProvider;
@@ -19,10 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class LoginService {
@@ -62,13 +60,23 @@ public class LoginService {
 		LoginEntity login = loginRepository.findByEmailEquals(dto.getEmail()).orElseThrow(MemberNotExistsException::new);
 		if (!login.getPassword().equals(hashUtil.hash(dto.getPassword() + salt))) throw new InvalidPasswordException();
 
-		// generate access token and refresh token
-		CbuMember cbuMember = cbuMemberRepository.findById(login.getUserId()).orElseThrow(() -> new MemberNotExistsException("LoginEntity is exists, but CbuMember isn't exist"));
-		Long exp = jwtProvider.currentTime() + 86400000;
-		RefreshToken refreshToken = new RefreshToken(login.getUserId(), exp);
-		AccessToken accessToken = new AccessToken(login.getUserId(), login.getEmail(), cbuMember.getRole(), login.getPermissions());
-		refreshTokenRepository.save(refreshToken);
-		return generateToken(accessToken, refreshToken);
+		List<Role> adminRoles = List.of(Role.ADMIN);
+
+		if(Objects.equals(dto.getEmail(), "cbuAdmin@tukorea.ac.kr")){
+			Long exp = jwtProvider.currentTime() + 86400000;
+			RefreshToken refreshToken = new RefreshToken(login.getUserId(), exp);
+			AccessToken accessToken = new AccessToken(login.getUserId(), login.getEmail(), adminRoles, login.getPermissions());
+			refreshTokenRepository.save(refreshToken);
+			return generateToken(accessToken, refreshToken);
+		}else{
+			// generate access token and refresh token
+			CbuMember cbuMember = cbuMemberRepository.findById(login.getUserId()).orElseThrow(() -> new MemberNotExistsException("LoginEntity is exists, but CbuMember isn't exist"));
+			Long exp = jwtProvider.currentTime() + 86400000;
+			RefreshToken refreshToken = new RefreshToken(login.getUserId(), exp);
+			AccessToken accessToken = new AccessToken(login.getUserId(), login.getEmail(), cbuMember.getRole(), login.getPermissions());
+			refreshTokenRepository.save(refreshToken);
+			return generateToken(accessToken, refreshToken);
+		}
 	}
 
 	/**
