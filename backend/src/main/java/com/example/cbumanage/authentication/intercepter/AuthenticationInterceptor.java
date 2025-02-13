@@ -27,7 +27,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 		this.loginService = loginService;
 		this.jwtProvider = jwtProvider;
 	}
-
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 //		response.setHeader("DEBUG", "DEBUG: " + (handler == null ? "null" : ((HandlerMethod) handler).getMethod().getName()));
