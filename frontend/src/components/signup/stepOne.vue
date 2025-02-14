@@ -3,7 +3,7 @@
     <!-- 학번 입력 -->
     <v-text-field
       class="rounded-input"
-      v-model="studentId"
+      v-model="studentNumber"
       label="학번"
       placeholder="학번을 입력하세요"
       required
@@ -35,25 +35,24 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import useVerifyUser from '@/hooks/useVerifyUser';
+import useVerifyUser, { UserInfo } from '@/hooks/useVerifyUser';
+import { useUserStore } from '@/stores/userStore';
 
 // 학번과 닉네임 입력값 관리
-const studentId = ref('');
+const studentNumber = ref('');
 const nickname = ref('');
 
-// 합격자 확인을 위한 hook (원래 함수 인자가 name, studentId, nickname이었다면
-// 이제 studentId와 nickname으로 수정하거나 내부에서 name을 반환하도록 수정)
-const { verifyUser } = useVerifyUser();
+const emit = defineEmits<{ (e: 'verified', data: UserInfo): void }>();
 
-// 부모에게 인증 성공 시 이름을 전달할 이벤트 emit
-const emit = defineEmits<{ (e: 'verified', name: string): void }>();
+const { verifyUser } = useVerifyUser();
+const userStore = useUserStore();
 
 const handleUserVerification = async () => {
-  // verifyUser 함수가 성공 시 합격자의 이름(문자열)을 반환한다고 가정합니다.
-  const result = await verifyUser(studentId.value, nickname.value);
-  if (result && typeof result === 'string') {
-    console.log('닉네임 인증 성공!');
-    // 인증 성공 시 부모 컴포넌트에 이름 전달 후 2단계로 전환
+  const result = await verifyUser(studentNumber.value, nickname.value);
+  if (result) {
+    // 반환된 사용자 정보를 Pinia 스토어에 저장
+    userStore.setUser(result);
+    console.log('닉네임 인증 성공!', result);
     emit('verified', result);
   } else {
     console.log('닉네임 인증 실패.');
