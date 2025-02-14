@@ -40,7 +40,7 @@ public class AuthenticationConfiguration implements WebMvcConfigurer {
 
 			InterceptorRegistration interceptorRegistration = registry.addInterceptor(new AuthenticationInterceptor(p, loginService, jwtProvider));
 			p.getPath().forEach(interceptorRegistration::addPathPatterns);
-			interceptorRegistration.excludePathPatterns("/api/v1/validate", "/api/v1/login");
+			interceptorRegistration.excludePathPatterns("/api/v1/validate", "/api/v1/login", "/api/v1/sendMail", "/api/v1/verifyMail");
 			p.getExclusivePath().forEach(interceptorRegistration::excludePathPatterns);
 		}
 	}
