@@ -24,9 +24,6 @@ export default function useVerifyEmail() {
     return true;
   };
 
-  /**
-   * 서버로 이메일 인증 요청 전송
-   */
   const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
   const sendEmailToServer = async (mail: string): Promise<boolean> => {
@@ -34,6 +31,10 @@ export default function useVerifyEmail() {
       const encodedEmail = encodeURIComponent(mail);
       const response = await fetch(`${SERVER_URL}/v1/sendMail?address=${encodedEmail}`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "accept": "*/*",
+        },
       });
 
       if (!response.ok) {

@@ -12,8 +12,15 @@
           <h2 class="join-title">회원가입</h2>
           <v-card-text>
             <!-- currentStep에 따라 StepOne 혹은 StepTwo 컴포넌트를 렌더링 -->
-            <component :is="currentComponent" v-bind="componentProps" @verified="handleVerified" />
+            <component :is="currentComponent" @verified="handleVerified" />
           </v-card-text>
+          <h4>
+            지원 시 닉네임 기억이 나지 않는다면? &nbsp;
+            <a href="https://www.instagram.com/tukorea_cbu/#" class="custom-link" target="_blank"
+              rel="noopener noreferrer">
+              합격자 발표 확인해보기 (클릭!)
+            </a>
+          </h4>
         </div>
       </v-col>
     </v-row>
@@ -28,23 +35,18 @@ import StepTwo from '../components/signup/stepTwo.vue';
 // 현재 단계 상태 (초기값은 1단계)
 const currentStep = ref(1);
 // StepOne에서 합격자 인증 후 반환된 이름을 저장
-const verifiedName = ref('');
+const verifiedData = ref(null);
 
 // 현재 단계에 따른 컴포넌트 선택
 const currentComponent = computed(() => {
   return currentStep.value === 1 ? StepOne : StepTwo;
 });
 
-// StepTwo에 전달할 prop (합격자 이름) — 2단계일 때만 전달
-const componentProps = computed(() => {
-  return currentStep.value === 2 ? { name: verifiedName.value } : {};
-});
-
-// StepOne에서 인증에 성공하면 'verified' 이벤트로 이름을 전달받아 2단계로 전환
-const handleVerified = (name: string) => {
-  verifiedName.value = name;
+const handleVerified = (data: any) => {
+  verifiedData.value = data;
   currentStep.value = 2;
 };
+
 </script>
 
 <style scoped>
@@ -121,5 +123,15 @@ const handleVerified = (name: string) => {
 .email-btn-col {
   display: flex;
   align-items: flex-start;
+}
+
+.custom-link {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.custom-link:hover {
+  text-decoration: none;
 }
 </style>
