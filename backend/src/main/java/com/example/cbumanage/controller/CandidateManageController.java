@@ -6,10 +6,7 @@ import com.example.cbumanage.service.CandidateManageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -19,7 +16,7 @@ public class CandidateManageController {
     @Autowired
     CandidateManageService candidateManageService;
 
-    @GetMapping("validate")
+    @PostMapping("validate")
     @Operation(summary = "학번과 닉네임을 통한 1차 인증", description = "학번과 닉네임을 가지고 합격자 명단과 일치하는지 확인합니다.")
     public SuccessCandidate validateCandidate(@RequestBody SuccessCandidateDTO successCandidateDTO) {
         SuccessCandidate successCandidate = candidateManageService.validateCandidate(successCandidateDTO);
