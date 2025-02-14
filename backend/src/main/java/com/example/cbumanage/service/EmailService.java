@@ -32,7 +32,8 @@ public class EmailService {
             mailSender.send(emailForm);
             return new EmailAuthResponseDTO(true, "인증번호가 메일로 전송되었습니다.");
         } catch (MessagingException | MailSendException e) {
-            return new EmailAuthResponseDTO(false, "메일 전송 중 오류가 발생하였습니다. 다시 시도해주세요.");
+            String errorr = e.getMessage();
+            return new EmailAuthResponseDTO(false, errorr);
         }
     }
 
