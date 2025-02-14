@@ -7,12 +7,11 @@ export default function useVerifyUser() {
     const SERVER_URL = import.meta.env.VUE_APP_SERVER_URL;
 
     const verifyUser = async (
-        name: string,
         studentId: string,
         nickname: string
     ): Promise<boolean> => {
         // 필드 값이 비어 있는지 확인
-        if (!name || !studentId || !nickname) {
+        if (!studentId || !nickname) {
             verificationError.value = true;
             verificationErrorMessage.value = "모든 필드를 입력해주세요.";
             alert("이름과 학번을 입력해주세요.");
