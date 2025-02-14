@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface SuccessCandidateRepository extends JpaRepository<SuccessCandidate, Long> {
     List<SuccessCandidate> findByNickNameIn(List<String> nickNames);
+
+    SuccessCandidate findByStudentNumber(Long studentNumber);
 }
