@@ -5,6 +5,12 @@ import com.example.cbumanage.authentication.exceptions.AuthenticationException;
 import com.example.cbumanage.authentication.exceptions.InvalidJwtException;
 import com.example.cbumanage.authentication.intercepter.AuthenticationInterceptor;
 import com.example.cbumanage.authentication.service.LoginService;
+import com.example.cbumanage.dto.MemberCreateDTO;
+import com.example.cbumanage.model.SuccessCandidate;
+import com.example.cbumanage.model.enums.Role;
+import com.example.cbumanage.repository.CbuMemberRepository;
+import com.example.cbumanage.repository.SuccessCandidateRepository;
+import com.example.cbumanage.service.CbuMemberManageService;
 import com.example.cbumanage.utils.JwtProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,9 +19,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 @Validated
@@ -26,6 +36,14 @@ public class LoginController {
 	private final LoginService loginService;
 
 	private final AuthenticationInterceptor authenticationInterceptor;
+
+	@Autowired
+	SuccessCandidateRepository successCandidateRepository;
+
+	@Autowired
+	CbuMemberManageService cbuMemberManageService;
+	@Autowired
+	CbuMemberRepository cbuMemberRepository;
 
 	public LoginController(LoginService loginService, JwtProvider jwtProvider) {
 		this.loginService = loginService;
@@ -48,8 +66,25 @@ public class LoginController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@Operation(summary = "회원가입", description = "json 형식으로 email, password, name, studentNumber, nickname을 넣어 요청")
-	public void register(@RequestBody @Valid SignUpRequestDTO dto) {
+	public String register(@RequestBody @Valid SignUpRequestDTO dto) throws IOException {
+		SuccessCandidate successCandidate = successCandidateRepository.findByStudentNumber(dto.getStudentNumber());
+		MemberCreateDTO cbuMember = new MemberCreateDTO();
+		List<Role> adminRoles = List.of(Role.MEMBER);
+		cbuMember.setName(successCandidate.getName());
+		cbuMember.setStudentNumber(successCandidate.getStudentNumber());
+		cbuMember.setRole(adminRoles);
+		cbuMember.setPhoneNumber(successCandidate.getPhoneNumber());
+		cbuMember.setMajor(successCandidate.getMajor());
+		cbuMember.setGeneration(23L);
+		cbuMember.setNote("");
+		cbuMember.setGrade(successCandidate.getGrade());
+
+		if(cbuMemberRepository.findByStudentNumber(successCandidate.getStudentNumber()).isEmpty()){
+			cbuMemberManageService.createMember(cbuMember);
+		}
+
 		loginService.create(dto);
+		return "회원가입 성공!";
 	}
 
 	@PatchMapping("/password")

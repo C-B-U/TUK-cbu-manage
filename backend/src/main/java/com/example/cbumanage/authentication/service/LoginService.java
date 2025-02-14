@@ -11,15 +11,20 @@ import com.example.cbumanage.authentication.repository.LoginRepository;
 import com.example.cbumanage.authentication.repository.RefreshTokenRepository;
 import com.example.cbumanage.exception.MemberNotExistsException;
 import com.example.cbumanage.model.CbuMember;
+import com.example.cbumanage.model.SuccessCandidate;
 import com.example.cbumanage.model.enums.Role;
 import com.example.cbumanage.repository.CbuMemberRepository;
+import com.example.cbumanage.repository.SuccessCandidateRepository;
+import com.example.cbumanage.service.CandidateAppendService;
 import com.example.cbumanage.utils.HashUtil;
 import com.example.cbumanage.utils.JwtProvider;
 import jakarta.servlet.http.Cookie;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -30,6 +35,12 @@ public class LoginService {
 	private final CbuMemberRepository cbuMemberRepository;
 	private final LoginRepository loginRepository;
 	private final RefreshTokenRepository refreshTokenRepository;
+
+	@Autowired
+	SuccessCandidateRepository successCandidateRepository;
+
+	@Autowired
+	CandidateAppendService candidateAppendService;
 
 	private final JwtProvider jwtProvider;
 	private final HashUtil hashUtil;
@@ -136,7 +147,7 @@ public class LoginService {
 	 * @throws MemberExistException When member exist match with email;
 	 */
 	@Transactional
-	public LoginEntity create(SignUpRequestDTO dto) {
+	public LoginEntity create(SignUpRequestDTO dto) throws IOException {
 		// Check email (domain check)
 		if (!emailManager.validEmail(dto.getEmail())) throw new InvalidEmailException();
 
@@ -149,6 +160,9 @@ public class LoginService {
 
 		LoginEntity entity = new LoginEntity(cbuMember.getCbuMemberId(), dto.getEmail(), hashUtil.hash(dto.getPassword() + salt), List.of(Permission.MEMBER));
 		entity = loginRepository.save(entity);
+
+		SuccessCandidate successCandidate = successCandidateRepository.findByStudentNumber(dto.getStudentNumber());
+		candidateAppendService.appendSuccessCandidateToGoogleSheet(successCandidate);
 
 		return entity;
 	}

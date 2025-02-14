@@ -11,7 +11,6 @@ public class CandidateManageService {
 
     @Autowired
     CandidateManageRepository candidateManageRepository;
-
     public SuccessCandidate validateCandidate(SuccessCandidateDTO successCandidateDTO){
         return candidateManageRepository.findByStudentNumberAndNickName(successCandidateDTO.getStudentNumber(), successCandidateDTO.getNickName());
     }
