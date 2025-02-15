@@ -48,7 +48,6 @@ public class CbuMemberController {
     @Operation(summary = "원하는 id에 따른 회원정보 취득", description = "id 하나하나에 따른 회원정보를 받아옵니다.")
     @ResponseStatus(HttpStatus.OK)
     public MemberDTO getMember(@PathVariable Long id, AccessToken accessToken) {
-//        if (!accessToken.getRole().contains(Role.ADMIN)) throw new AuthenticationException("You don't have permission");
         CbuMember cbuMember = cbuMemberRepository.findById(id).orElseThrow();
         return cbuMemberMapper.map(cbuMember);
     }
@@ -57,7 +56,6 @@ public class CbuMemberController {
     @Operation(summary = "회원 추가", description = "회원 정보를 데이터베이스에 추가합니다.(데이터베이스 -> 스프레드시트 연동 기능 추가 예정)")
     @ResponseStatus(HttpStatus.CREATED)
     public Long postMember(@RequestBody @Valid MemberCreateDTO memberCreateDTO, AccessToken accessToken){
-//        accessToken.
         CbuMember member = cbuMemberManageService.createMember(memberCreateDTO);
         return member.getCbuMemberId();
     }
