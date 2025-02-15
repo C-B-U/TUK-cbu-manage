@@ -9,8 +9,8 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 @EnableJpaAuditing
 @Configuration
 public class Config {
-	@Bean
-	public JavaMailSender javaMailSender() {
-		return new JavaMailSenderImpl();
-	}
+//	@Bean
+//	public JavaMailSender javaMailSender() {
+//		return new JavaMailSenderImpl();
+//	}
 }
