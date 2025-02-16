@@ -70,19 +70,18 @@ public class LoginController {
 	 * 로그인 후, Access와 Refresh 토큰을 쿠키에 설정하여 반환합니다.
 	 * 헤더에 이메일과 비밀번호를 포함하여 요청합니다.
 	 *
-	 * @param email 로그인에 사용할 이메일 (유효성 검증: Email 형식)
 	 * @param password 로그인 비밀번호
 	 * @param res HttpServletResponse를 사용하여 쿠키를 추가합니다.
 	 */
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	@Operation(summary = "로그인 후 쿠키에 토큰 반환", description = "헤더에 이메일과 비밀번호를 넣어 요청")
+	@Operation(summary = "로그인 후 쿠키에 토큰 반환", description = "헤더에 학번과 비밀번호를 넣어 요청")
 	public void login(
-			@RequestHeader("email") @Email final String email,
+			@RequestHeader("studentNumber") final Long studentNumber,
 			@RequestHeader("password") final String password,
 			HttpServletResponse res) {
 		// LoginService의 login 메서드를 호출하여 Access 및 Refresh 토큰을 생성합니다.
-		AccessAndRefreshTokenDTO login = loginService.login(new EmailAndPasswordDTO(email, password));
+		AccessAndRefreshTokenDTO login = loginService.login(new StudentNumberAndPasswordDTO(studentNumber, password));
 
 		// 토큰 문자열을 포함하는 쿠키 배열을 생성합니다.
 		Cookie[] cookies = loginService.generateCookie(login.getAccessToken(), login.getRefreshToken());

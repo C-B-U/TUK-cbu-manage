@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class EmailAndPasswordDTO {
-	private String email;
+public class StudentNumberAndPasswordDTO {
+	private Long studentNumber;
 	private String password;
 }
