@@ -10,6 +10,7 @@ import com.example.cbumanage.model.enums.Role;
 import com.example.cbumanage.repository.CbuMemberRepository;
 import com.example.cbumanage.service.CbuMemberManageService;
 import com.example.cbumanage.service.CbuMemberSyncService;
+import com.example.cbumanage.service.CreateLoginEntity;
 import com.example.cbumanage.utils.CbuMemberMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,12 +30,14 @@ public class CbuMemberController {
     private final CbuMemberManageService cbuMemberManageService;
     private final CbuMemberRepository cbuMemberRepository;
     private final CbuMemberMapper cbuMemberMapper;
+    private final CreateLoginEntity createLoginEntity;
 
-    public CbuMemberController(CbuMemberSyncService cbuMemberSyncService, CbuMemberManageService cbuMemberManageService, CbuMemberRepository cbuMemberRepository, CbuMemberMapper cbuMemberMapper) {
+    public CbuMemberController(CbuMemberSyncService cbuMemberSyncService, CbuMemberManageService cbuMemberManageService, CbuMemberRepository cbuMemberRepository, CbuMemberMapper cbuMemberMapper, CreateLoginEntity createLoginEntity) {
         this.cbuMemberSyncService = cbuMemberSyncService;         //서비스 참조 선언
         this.cbuMemberManageService = cbuMemberManageService;     //서비스 참조 선언
         this.cbuMemberRepository = cbuMemberRepository;           //레포지토리 참조 선언
         this.cbuMemberMapper = cbuMemberMapper;
+        this.createLoginEntity = createLoginEntity;
     }
 
     @PostMapping("members/sync")
@@ -87,5 +90,12 @@ public class CbuMemberController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String restClientException(RestClientException e) {
         return "Fail to request data while RestTemplate";
+    }
+
+    @PostMapping("member/createAccount")
+    @Operation(summary = "임의 계정 생성", description = "데이터베이스를 기반으로 모든 회원에 대한 임시 계정을 생성합니다.")
+    public String createLoginEntity(){
+        createLoginEntity.initializeLoginEntities();
+        return ("임시 계정 생성 성공!");
     }
 }

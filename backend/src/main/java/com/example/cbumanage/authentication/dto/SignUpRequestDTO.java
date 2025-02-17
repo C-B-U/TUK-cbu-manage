@@ -19,8 +19,6 @@ public class SignUpRequestDTO {
 	 * - @NotNull, @NotEmpty: null이나 빈 문자열이 허용되지 않습니다.
 	 */
 	@Email
-	@NotNull
-	@NotEmpty
 	private String email;
 
 	/**
