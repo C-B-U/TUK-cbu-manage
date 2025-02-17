@@ -21,6 +21,7 @@
             </v-col>
         </v-row>
 
+<<<<<<< HEAD
         <!-- 이메일 입력 + 이메일 인증 버튼 -->
         <v-row align-items="center" justify="space-between">
             <v-col cols="9">
@@ -28,6 +29,14 @@
                 suffix="@tukorea.ac.kr"
                     placeholder="학교 이메일을 입력해주세요." required variant="outlined" dense
                     :error="emailError"
+=======
+
+        <!-- 이메일 입력 + 이메일 인증 버튼 -->
+        <v-row align-items="center" justify="space-between">
+            <v-col cols="9">
+                <v-text-field class="rounded-input" v-model="studentEmail" label="이메일 (@tukorea.ac.kr)"
+                    placeholder="학교 이메일을 입력해주세요.(@tukorea.ac.kr)" required variant="outlined" dense :error="emailError"
+>>>>>>> origin/main
                     :error-messages="emailErrorMessage"></v-text-field>
             </v-col>
             <v-col cols="3" class="email-btn-col">
@@ -40,6 +49,7 @@
         <!-- 인증번호 입력 필드 (이메일 전송 후 표시) -->
         <v-row v-if="isVerificationSent" align-items="center" justify="space-between">
             <v-col cols="9">
+<<<<<<< HEAD
                 <v-text-field 
                     class="rounded-input"
                     v-model="verificationCode"
@@ -64,6 +74,8 @@
                         </span>
                     </template>
                 </v-text-field>
+=======
+>>>>>>> origin/main
                 <v-text-field class="rounded-input" v-model="verificationCode" label="인증번호" placeholder="인증번호를 입력하세요"
                     required variant="outlined" dense hide-details></v-text-field>
             </v-col>
@@ -89,11 +101,14 @@ import { useUserStore } from '@/stores/userStore';
 // 이메일 및 인증번호 입력값 관리
 const studentEmail = ref('');
 const verificationCode = ref('');
+<<<<<<< HEAD
 
 // 추가: 인증 상태를 관리 ('' 또는 'success' 또는 'error')
 const verificationStatus = ref<'success' | 'error' | ''>('');
 const verificationMessage = ref('');
 
+=======
+>>>>>>> origin/main
 const userStore = useUserStore();
 
 // 이메일 인증 관련 hook
@@ -101,11 +116,21 @@ const {
     emailError,
     emailErrorMessage,
     isVerificationSent,
+<<<<<<< HEAD
+=======
+    validateEmail,
+>>>>>>> origin/main
     sendEmailToServer,
     verifyCodeWithServer,
 } = useVerifyEmail();
 
 const handleEmailVerification = async () => {
+<<<<<<< HEAD
+=======
+    if (!validateEmail(studentEmail.value)) {
+        return;
+    }
+>>>>>>> origin/main
     const success = await sendEmailToServer(studentEmail.value);
     if (success) {
         alert('메일이 전송되었습니다!\n인증번호를 입력해주세요!');
@@ -114,6 +139,7 @@ const handleEmailVerification = async () => {
 
 const handleCodeVerification = async () => {
     if (!verificationCode.value) {
+<<<<<<< HEAD
 
         verificationStatus.value = 'error';
         verificationMessage.value = "인증번호를 입력해주세요.";
@@ -128,6 +154,8 @@ const handleCodeVerification = async () => {
         verificationStatus.value = 'error';
         verificationMessage.value = "서버 응답 오류";
 
+=======
+>>>>>>> origin/main
         alert('인증번호를 입력해주세요.');
         return;
     }
@@ -136,7 +164,10 @@ const handleCodeVerification = async () => {
         alert('인증에 성공했습니다!');
     } else {
         alert('인증번호가 올바르지 않습니다. 다시 시도해주세요.');
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
     }
 };
 
@@ -174,6 +205,7 @@ const handleJoin = () => {
     border-radius: 10px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 /* 성공 시: 초록색 테두리 및 안내 메시지 */
 .success-field .v-field__outline {
@@ -195,6 +227,9 @@ const handleJoin = () => {
     font-weight: bold;
 }
 </style>
+=======
+</style>
+>>>>>>> origin/main
 =======
 </style>
 >>>>>>> origin/main
