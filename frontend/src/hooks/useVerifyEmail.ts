@@ -48,7 +48,7 @@ export default function useVerifyEmail() {
   };
 
   /**
-     * 서버로 인증번호 검증 요청  
+     * 서버로 인증번호 검증 요청
      * 서버 응답의 responseMessage를 그대로 사용
      */
   const verifyCodeWithServer = async (
