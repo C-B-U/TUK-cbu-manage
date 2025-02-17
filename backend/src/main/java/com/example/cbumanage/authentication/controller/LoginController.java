@@ -76,8 +76,8 @@ public class LoginController {
 	@ResponseStatus(HttpStatus.OK)
 	@Operation(summary = "로그인 후 쿠키에 토큰 반환", description = "헤더에 학번과 비밀번호를 넣어 요청")
 	public void login(
-			@RequestHeader("studentNumber") final Long studentNumber,
-			@RequestHeader("password") final String password,
+			@RequestHeader(name = "studentNumber") final Long studentNumber,
+			@RequestHeader(name = "password") final String password,
 			HttpServletResponse res) {
 		// LoginService의 login 메서드를 호출하여 Access 및 Refresh 토큰을 생성합니다.
 		AccessAndRefreshTokenDTO login = loginService.login(new StudentNumberAndPasswordDTO(studentNumber, password));
