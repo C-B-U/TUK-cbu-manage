@@ -38,7 +38,7 @@ const footerInfo = [
     },
     {
         title: '문의',
-        name: 'ray@tukorea.ac.kr',
+        name: 'email@tukore.ac.kr',
     },
 ];
 
