@@ -64,6 +64,8 @@
                         </span>
                     </template>
                 </v-text-field>
+                <v-text-field class="rounded-input" v-model="verificationCode" label="인증번호" placeholder="인증번호를 입력하세요"
+                    required variant="outlined" dense hide-details></v-text-field>
             </v-col>
             <v-col cols="3" class="email-btn-col">
                 <v-btn class="custom-btn" block @click="handleCodeVerification">
@@ -112,6 +114,7 @@ const handleEmailVerification = async () => {
 
 const handleCodeVerification = async () => {
     if (!verificationCode.value) {
+
         verificationStatus.value = 'error';
         verificationMessage.value = "인증번호를 입력해주세요.";
         return;
@@ -124,6 +127,16 @@ const handleCodeVerification = async () => {
     } else {
         verificationStatus.value = 'error';
         verificationMessage.value = "서버 응답 오류";
+
+        alert('인증번호를 입력해주세요.');
+        return;
+    }
+    const success = await verifyCodeWithServer(studentEmail.value, verificationCode.value);
+    if (success) {
+        alert('인증에 성공했습니다!');
+    } else {
+        alert('인증번호가 올바르지 않습니다. 다시 시도해주세요.');
+
     }
 };
 
@@ -160,6 +173,7 @@ const handleJoin = () => {
 ::v-deep .rounded-input .v-field__outline {
     border-radius: 10px;
 }
+<<<<<<< HEAD
 
 /* 성공 시: 초록색 테두리 및 안내 메시지 */
 .success-field .v-field__outline {
@@ -181,3 +195,6 @@ const handleJoin = () => {
     font-weight: bold;
 }
 </style>
+=======
+</style>
+>>>>>>> origin/main
