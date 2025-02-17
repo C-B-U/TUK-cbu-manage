@@ -3,3 +3,9 @@ backend/src/main/resources/application.properties
 backend/src/main/resources/application.yml
 
 backend/src/main/resources/
+
+backend/src/main/java/com/example/cbumanage/authentication/config/AuthenticationConfiguration.java
+
+backend/src/main/java/com/example/cbumanage/authentication/controller/LoginController.java
+
+backend/src/main/java/com/example/cbumanage/authentication/service/LoginService.java
