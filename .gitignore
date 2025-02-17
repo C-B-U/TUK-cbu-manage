@@ -9,3 +9,9 @@ backend/src/main/java/com/example/cbumanage/authentication/config/Authentication
 backend/src/main/java/com/example/cbumanage/authentication/controller/LoginController.java
 
 backend/src/main/java/com/example/cbumanage/authentication/service/LoginService.java
+
+backend/src/main/java/com/example/cbumanage/authentication/dto/StudentNumberAndPasswordDTO.java
+
+backend/src/main/java/com/example/cbumanage/controller/CbuMemberController.java
+
+backend/src/main/java/com/example/cbumanage/service/CreateLoginEntity.java
