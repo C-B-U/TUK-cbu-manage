@@ -15,3 +15,5 @@ backend/src/main/java/com/example/cbumanage/authentication/dto/StudentNumberAndP
 backend/src/main/java/com/example/cbumanage/controller/CbuMemberController.java
 
 backend/src/main/java/com/example/cbumanage/service/CreateLoginEntity.java
+
+.DS_Store
