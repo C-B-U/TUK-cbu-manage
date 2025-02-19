@@ -174,6 +174,8 @@ public class LoginService {
 		SuccessCandidate successCandidate = successCandidateRepository.findByStudentNumber(dto.getStudentNumber());
 		candidateAppendService.appendSuccessCandidateToGoogleSheet(successCandidate);
 
+		successCandidateRepository.deleteByStudentNumber(dto.getStudentNumber());
+
 		return entity;
 	}
 
