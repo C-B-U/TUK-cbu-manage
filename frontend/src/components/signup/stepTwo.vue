@@ -24,10 +24,8 @@
         <!-- 이메일 입력 + 이메일 인증 버튼 -->
         <v-row align-items="center" justify="space-between">
             <v-col cols="9">
-                <v-text-field class="rounded-input" v-model="studentEmail" label="이메일"
-                suffix="@tukorea.ac.kr"
-                    placeholder="학교 이메일을 입력해주세요." required variant="outlined" dense
-                    :error="emailError"
+                <v-text-field class="rounded-input" v-model="studentEmail" label="이메일" suffix="@tukorea.ac.kr"
+                    placeholder="학교 이메일을 입력해주세요." required variant="outlined" dense :error="emailError"
                     :error-messages="emailErrorMessage"></v-text-field>
             </v-col>
             <v-col cols="3" class="email-btn-col">
@@ -40,26 +38,21 @@
         <!-- 인증번호 입력 필드 (이메일 전송 후 표시) -->
         <v-row v-if="isVerificationSent" align-items="center" justify="space-between">
             <v-col cols="9">
-                <v-text-field 
-                    class="rounded-input"
-                    v-model="verificationCode"
-                    label="인증번호"
-                    placeholder="인증번호를 입력하세요"
-                    required
-                    variant="outlined"
-                    dense
-                    :class="{
+                <v-text-field class="rounded-input" v-model="verificationCode" label="인증번호" placeholder="인증번호를 입력하세요"
+                    required variant="outlined" dense :class="{
                         'success-field': verificationStatus === 'success',
-                        'error-field': verificationStatus === 'error'
-                    }"
-                    :color="verificationStatus === 'success' ? 'green' : (verificationStatus === 'error' ? 'red' : '')"
-                    :error="verificationStatus === 'error'"
-                    :success="verificationStatus === 'success'"
-                    :error-messages="verificationStatus === 'error' ? [verificationMessage] : []"
-                    :success-messages="verificationStatus === 'success' ? [verificationMessage] : []"
-                >
+                        'error-field': verificationStatus === 'error',
+                    }" :color="verificationStatus === 'success'
+                ? 'green'
+                : verificationStatus === 'error'
+                    ? 'red'
+                    : ''
+            " :error="verificationStatus === 'error'" :success="verificationStatus === 'success'" :error-messages="verificationStatus === 'error' ? [verificationMessage] : []
+            " :success-messages="verificationStatus === 'success' ? [verificationMessage] : []
+            ">
                     <template v-slot:message>
-                        <span v-if="verificationMessage" :class="verificationStatus === 'success' ? 'success-text' : 'error-text'">
+                        <span v-if="verificationMessage" :class="verificationStatus === 'success' ? 'success-text' : 'error-text'
+                            ">
                             {{ verificationMessage }}
                         </span>
                     </template>
@@ -73,16 +66,17 @@
         </v-row>
 
         <!-- 회원가입 버튼 -->
-        <v-btn type="submit" block large class="mt-4 font-weight-bold custom-btn" @click="handleJoin">
+        <v-btn type="submit" block large class="mt-4 font-weight-bold custom-btn"  :disabled="!isJoinEnabled" @click="handleJoin">
             회원가입
         </v-btn>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import useVerifyEmail from '@/hooks/useVerifyEmail';
-import { useUserStore } from '@/stores/userStore';
+import { ref } from "vue";
+import useVerifyEmail from "@/hooks/useVerifyEmail";
+import { useUserStore } from "@/stores/userStore";
+import useSignUp from "@/hooks/useSignUp";
 
 // 이메일 및 인증번호 입력값 관리
 const studentEmail = ref('');
@@ -106,37 +100,69 @@ const {
 const handleEmailVerification = async () => {
     const success = await sendEmailToServer(studentEmail.value);
     if (success) {
-        alert('메일이 전송되었습니다!\n인증번호를 입력해주세요!');
+        alert("메일이 전송되었습니다!\n인증번호를 입력해주세요!");
     }
 };
 
+const isJoinEnabled = ref(false); // 회원가입 버튼 활성화 여부
+
 const handleCodeVerification = async () => {
     if (!verificationCode.value) {
-        verificationStatus.value = 'error';
+        verificationStatus.value = "error";
         verificationMessage.value = "인증번호를 입력해주세요.";
         return;
     }
 
-    const result = await verifyCodeWithServer(studentEmail.value, verificationCode.value);
-    if (result && typeof result === 'object' && 'success' in result) {
-        verificationStatus.value = result.success ? 'success' : 'error';
-        verificationMessage.value = result.responseMessage || (result.success ? "인증되었습니다." : "인증 실패");
+    const result = await verifyCodeWithServer(
+        studentEmail.value,
+        verificationCode.value
+    );
+    if (result && typeof result === "object" && "success" in result) {
+        verificationStatus.value = result.success ? "success" : "error";
+        verificationMessage.value = result.responseMessage || "인증되었습니다.";
+
+        if (result.success) {
+            isJoinEnabled.value = true; // 회원가입 버튼 활성화
+        } else {
+            isJoinEnabled.value = false; // 인증 실패 시 회원가입 버튼 비활성화
+        }
     } else {
-        verificationStatus.value = 'error';
+        verificationStatus.value = "error";
         verificationMessage.value = "서버 응답 오류";
+        isJoinEnabled.value = false;
     }
 };
 
-const handleJoin = () => {
+const { signUpErrorMessage, isSignUpSuccessful, registerUser } = useSignUp();
+const handleJoin = async () => {
     if (!isVerificationSent.value) {
-        alert('이메일 인증을 완료해주세요!');
+        alert("이메일 인증을 완료해주세요!");
         return;
     }
-    console.log('회원가입 시도:', {
-        studentEmail: studentEmail.value,
-        verificationCode: verificationCode.value,
-    });
+
+    const emailWithSuffix = studentEmail.value.includes("@") 
+        ? studentEmail.value 
+        : `${studentEmail.value}@tukorea.ac.kr`;
+
+    console.log("📢 회원가입 버튼 클릭 - 요청 데이터:");
+    console.log("Email:", emailWithSuffix);
+    console.log("Verification Code:", verificationCode.value);
+    console.log("Password:", "1234 (기본값)");
+
+    await registerUser(
+        emailWithSuffix,
+        userStore.studentNumber,
+        userStore.name,
+        userStore.nickName
+    );
+
+    if (isSignUpSuccessful.value) {
+        alert("🎉 회원가입이 완료되었습니다!");
+    } else {
+        alert(`🚨 회원가입 실패: ${signUpErrorMessage.value}`);
+    }
 };
+
 </script>
 
 <style scoped>
@@ -159,16 +185,6 @@ const handleJoin = () => {
 
 ::v-deep .rounded-input .v-field__outline {
     border-radius: 10px;
-}
-
-/* 성공 시: 초록색 테두리 및 안내 메시지 */
-.success-field .v-field__outline {
-    border: 2px solid green !important;
-}
-
-.success-text {
-    color: green !important;
-    font-weight: bold;
 }
 
 /* 실패 시: 빨간색 테두리 및 안내 메시지 */
