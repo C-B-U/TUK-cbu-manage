@@ -16,4 +16,7 @@ public interface CbuMemberRepository extends JpaRepository<CbuMember, Long> {
     List<CbuMember> findAllWithoutDues(@Param("term") String term);
 
     Optional<CbuMember> findByStudentNumber(Long studentNumber);
+
+    @Query("select cbuMember.name from CbuMember cbuMember WHERE cbuMember.studentNumber = :studentNumber")
+    Optional<CbuMember> findNameByStudentNumber(@Param("studentNumber") Long studentNumber);
 }
