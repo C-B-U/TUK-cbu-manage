@@ -1,5 +1,18 @@
-
 backend/src/main/resources/application.properties
 backend/src/main/resources/application.yml
 
 backend/src/main/resources/
+
+backend/src/main/java/com/example/cbumanage/authentication/config/AuthenticationConfiguration.java
+
+backend/src/main/java/com/example/cbumanage/authentication/controller/LoginController.java
+
+backend/src/main/java/com/example/cbumanage/authentication/service/LoginService.java
+
+backend/src/main/java/com/example/cbumanage/authentication/dto/StudentNumberAndPasswordDTO.java
+
+backend/src/main/java/com/example/cbumanage/controller/CbuMemberController.java
+
+backend/src/main/java/com/example/cbumanage/service/CreateLoginEntity.java
+
+.DS_Store
