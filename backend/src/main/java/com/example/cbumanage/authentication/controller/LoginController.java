@@ -6,7 +6,6 @@ import com.example.cbumanage.authentication.exceptions.InvalidJwtException;
 import com.example.cbumanage.authentication.intercepter.AuthenticationInterceptor;
 import com.example.cbumanage.authentication.service.LoginService;
 import com.example.cbumanage.dto.MemberCreateDTO;
-import com.example.cbumanage.model.CbuMember;
 import com.example.cbumanage.model.SuccessCandidate;
 import com.example.cbumanage.model.enums.Role;
 import com.example.cbumanage.repository.CbuMemberRepository;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * LoginController는 로그인, 회원가입, 비밀번호 변경, 회원 탈퇴와 같은 사용자 인증 관련 엔드포인트를 제공하는 REST 컨트롤러입니다.
@@ -78,7 +76,7 @@ public class LoginController {
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	@Operation(summary = "로그인 후 쿠키에 토큰 반환", description = "헤더에 학번과 비밀번호를 넣어 요청")
-	public Optional<CbuMember> login(
+	public String login(
 			@RequestHeader(name = "studentNumber") final Long studentNumber,
 			@RequestHeader(name = "password") final String password,
 			HttpServletResponse res) {
@@ -91,7 +89,7 @@ public class LoginController {
 		for (Cookie cookie : cookies) {
 			res.addCookie(cookie);
 		}
-		Optional<CbuMember> cbuMember = cbuMemberRepository.findNameByStudentNumber(studentNumber);
+		String cbuMember = cbuMemberRepository.findNameByStudentNumber(studentNumber);
 		return cbuMember;
 	}
 
