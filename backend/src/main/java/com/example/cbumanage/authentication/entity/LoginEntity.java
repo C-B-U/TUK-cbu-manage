@@ -32,7 +32,7 @@ public class LoginEntity {
 	 * @Column: 데이터베이스 컬럼 설정 - 유일(unique)하며, null 값을 허용하지 않습니다.
 	 */
 	@Column(unique = true, nullable = false)
-	private String email;
+	private Long studentNumber;
 
 	/**
 	 * 사용자 비밀번호.
@@ -40,6 +40,9 @@ public class LoginEntity {
 	 */
 	@Column(nullable = false)
 	private String password;
+
+	@Column(unique = true)
+	private String email;
 
 	/**
 	 * 사용자의 권한 목록.
