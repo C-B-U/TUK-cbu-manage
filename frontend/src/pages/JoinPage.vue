@@ -3,7 +3,6 @@
     <v-row align-items="center" justify="center" class="join-row">
       <v-col cols="12" sm="8" md="6" lg="6">
         <div class="join-wrapper">
-          <!-- 단계 표시: 회원가입 제목 바로 위에 위치 -->
           <div class="step-indicator">
             <div :class="['step', { active: currentStep === 1 }]"></div>
             <div :class="['step', { active: currentStep === 2 }]"></div>
@@ -11,33 +10,36 @@
 
           <h2 class="join-title">회원가입</h2>
           <v-card-text>
-            <!-- currentStep에 따라 StepOne 혹은 StepTwo 컴포넌트를 렌더링 -->
-            <component :is="currentComponent" @verified="handleVerified" />
+            <component :is="currentComponent" @completed="showModal = true" @verified="handleVerified" />
           </v-card-text>
           <h4>
             지원 시 닉네임 기억이 나지 않는다면? &nbsp;
-            <a href="https://www.instagram.com/tukorea_cbu/#" class="custom-link" target="_blank"
-              rel="noopener noreferrer">
+            <a href="https://www.instagram.com/tukorea_cbu/#" class="custom-link" target="_blank" rel="noopener noreferrer">
               합격자 발표 확인해보기 (클릭!)
             </a>
           </h4>
+          <br />
+          <v-btn class="custom-btn" block type="submit" @click="syncMembers">싱크 확인</v-btn>
         </div>
       </v-col>
     </v-row>
-  </v-container>
+    <!-- 회원가입 완료 모달 -->
+    <SignupCompleteModal :showModal="showModal" @close="showModal = false" />
+    </v-container>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import StepOne from '../components/signup/stepOne.vue';
 import StepTwo from '../components/signup/stepTwo.vue';
+import SignupCompleteModal from "../components/signup/signupCompleteModal.vue";
+import axios from 'axios';
 
-// 현재 단계 상태 (초기값은 1단계)
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const currentStep = ref(1);
-// StepOne에서 합격자 인증 후 반환된 이름을 저장
 const verifiedData = ref(null);
+const showModal = ref(false);
 
-// 현재 단계에 따른 컴포넌트 선택
 const currentComponent = computed(() => {
   return currentStep.value === 1 ? StepOne : StepTwo;
 });
@@ -45,6 +47,17 @@ const currentComponent = computed(() => {
 const handleVerified = (data: any) => {
   verifiedData.value = data;
   currentStep.value = 2;
+};
+
+const syncMembers = async () => {
+  try {
+    const response = await axios.post(`${SERVER_URL}/v1/candidate/sync`);
+    if (response.status === 200) {
+      alert("서버 연동 완료!");
+    }
+  } catch (error) {
+    console.error('싱크 요청 실패:', error);
+  }
 };
 
 </script>
@@ -104,7 +117,6 @@ const handleVerified = (data: any) => {
   background-color: var(--mainColor);
 }
 
-/* 버튼 스타일 */
 .custom-btn {
   background-color: var(--mainColor);
   height: 56px;
@@ -114,15 +126,6 @@ const handleVerified = (data: any) => {
   font-size: 1rem;
   text-transform: uppercase;
   transition: transform 0.2s ease;
-}
-
-.v-btn {
-  letter-spacing: normal !important;
-}
-
-.email-btn-col {
-  display: flex;
-  align-items: flex-start;
 }
 
 .custom-link {

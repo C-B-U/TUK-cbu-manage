@@ -1,49 +1,25 @@
 <template>
-  <div>
-    <v-row>
-      <v-col cols="6">
-        <v-text-field
-          class="rounded-input"
-          v-model="userStore.name"
-          label="이름"
-          disabled
-          variant="outlined"
-          dense
-        ></v-text-field>
-      </v-col>
-      <v-col cols="6">
-        <v-text-field
-          class="rounded-input"
-          v-model="userStore.studentNumber"
-          label="학번"
-          disabled
-          variant="outlined"
-          dense
-        ></v-text-field>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="6">
-        <v-text-field
-          class="rounded-input"
-          v-model="userStore.major"
-          label="학과"
-          disabled
-          variant="outlined"
-          dense
-        ></v-text-field>
-      </v-col>
-      <v-col cols="6">
-        <v-text-field
-          class="rounded-input"
-          v-model="userStore.grade"
-          label="학년"
-          disabled
-          variant="outlined"
-          dense
-        ></v-text-field>
-      </v-col>
-    </v-row>
+    <div>
+        <v-row>
+            <v-col cols="6">
+                <v-text-field class="rounded-input" v-model="userStore.name" label="이름" disabled variant="outlined"
+                    dense></v-text-field>
+            </v-col>
+            <v-col cols="6">
+                <v-text-field class="rounded-input" v-model="userStore.studentNumber" label="학번" disabled
+                    variant="outlined" dense></v-text-field>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col cols="6">
+                <v-text-field class="rounded-input" v-model="userStore.major" label="학과" disabled variant="outlined"
+                    dense></v-text-field>
+            </v-col>
+            <v-col cols="6">
+                <v-text-field class="rounded-input" v-model="userStore.grade" label="학년" disabled variant="outlined"
+                    dense></v-text-field>
+            </v-col>
+        </v-row>
 
         <!-- 이메일 입력 + 이메일 인증 버튼 -->
         <v-row align-items="center" justify="space-between">
@@ -67,13 +43,13 @@
                         'success-field': verificationStatus === 'success',
                         'error-field': verificationStatus === 'error',
                     }" :color="verificationStatus === 'success'
-                ? 'green'
-                : verificationStatus === 'error'
-                    ? 'red'
-                    : ''
-            " :error="verificationStatus === 'error'" :success="verificationStatus === 'success'" :error-messages="verificationStatus === 'error' ? [verificationMessage] : []
-            " :success-messages="verificationStatus === 'success' ? [verificationMessage] : []
-            ">
+                        ? 'green'
+                        : verificationStatus === 'error'
+                            ? 'red'
+                            : ''
+                        " :error="verificationStatus === 'error'" :success="verificationStatus === 'success'" :error-messages="verificationStatus === 'error' ? [verificationMessage] : []
+                " :success-messages="verificationStatus === 'success' ? [verificationMessage] : []
+                ">
                     <template v-slot:message>
                         <span v-if="verificationMessage" :class="verificationStatus === 'success' ? 'success-text' : 'error-text'
                             ">
@@ -90,14 +66,15 @@
         </v-row>
 
         <!-- 회원가입 버튼 -->
-        <v-btn type="submit" block large class="mt-4 font-weight-bold custom-btn"  :disabled="!isJoinEnabled" @click="handleJoin">
+        <v-btn type="submit" block large class="mt-4 font-weight-bold custom-btn" :disabled="!isJoinEnabled"
+            @click="handleJoin">
             회원가입
         </v-btn>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, defineEmits } from "vue";
 import useVerifyEmail from "@/hooks/useVerifyEmail";
 import { useUserStore } from "@/stores/userStore";
 import useSignUp from "@/hooks/useSignUp";
@@ -111,14 +88,15 @@ const verificationStatus = ref<"success" | "error" | "">("");
 const verificationMessage = ref("");
 
 const userStore = useUserStore();
+const emit = defineEmits(["completed"]);
 
 // 이메일 인증 관련 hook
 const {
-  emailError,
-  emailErrorMessage,
-  isVerificationSent,
-  sendEmailToServer,
-  verifyCodeWithServer,
+    emailError,
+    emailErrorMessage,
+    isVerificationSent,
+    sendEmailToServer,
+    verifyCodeWithServer,
 } = useVerifyEmail();
 
 const handleEmailVerification = async () => {
@@ -164,14 +142,14 @@ const handleJoin = async () => {
         return;
     }
 
-    const emailWithSuffix = studentEmail.value.includes("@") 
-        ? studentEmail.value 
+    const emailWithSuffix = studentEmail.value.includes("@")
+        ? studentEmail.value
         : `${studentEmail.value}@tukorea.ac.kr`;
 
     console.log("📢 회원가입 버튼 클릭 - 요청 데이터:");
     console.log("Email:", emailWithSuffix);
     console.log("Verification Code:", verificationCode.value);
-    console.log("Password:", "1234 (기본값)");
+    console.log("Password:", "12345678 (기본값)");
 
     await registerUser(
         emailWithSuffix,
@@ -181,7 +159,7 @@ const handleJoin = async () => {
     );
 
     if (isSignUpSuccessful.value) {
-        alert("🎉 회원가입이 완료되었습니다!");
+        emit("completed");
     } else {
         alert(`🚨 회원가입 실패: ${signUpErrorMessage.value}`);
     }
@@ -191,33 +169,33 @@ const handleJoin = async () => {
 
 <style scoped>
 .email-btn-col {
-  display: flex;
-  align-items: flex-start;
+    display: flex;
+    align-items: flex-start;
 }
 
 .custom-btn {
-  background-color: var(--mainColor);
-  height: 56px;
-  color: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  font-size: 1rem;
-  text-transform: uppercase;
-  transition: transform 0.2s ease;
-  letter-spacing: 0;
+    background-color: var(--mainColor);
+    height: 56px;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    text-transform: uppercase;
+    transition: transform 0.2s ease;
+    letter-spacing: 0;
 }
 
 ::v-deep .rounded-input .v-field__outline {
-  border-radius: 10px;
+    border-radius: 10px;
 }
 
 /* 실패 시: 빨간색 테두리 및 안내 메시지 */
 .error-field .v-field__outline {
-  border: 2px solid red !important;
+    border: 2px solid red !important;
 }
 
 .error-text {
-  color: red !important;
-  font-weight: bold;
+    color: red !important;
+    font-weight: bold;
 }
 </style>

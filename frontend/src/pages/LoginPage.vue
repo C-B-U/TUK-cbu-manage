@@ -5,10 +5,10 @@
         <div class="login-wrapper">
           <h2 class="login-title">로그인</h2>
           <v-card-text>
-            <v-form @submit.prevent="handleLogin">
-              <v-text-field v-model="name" label="이름" placeholder="이름을 입력하세요" required variant="outlined"
+            <v-form @submit.prevent="login">
+              <v-text-field v-model="studentId" label="아이디" placeholder="아이디를 입력하세요" required variant="outlined"
                 dense></v-text-field>
-              <v-text-field v-model="studentId" label="학번" placeholder="학번을 입력하세요" required variant="outlined"
+              <v-text-field v-model="password" label="비밀번호" placeholder="비밀번호를 입력하세요" required variant="outlined"
                 dense></v-text-field>
               <v-btn type="submit" block large class="mt-4 font-weight-bold custom-btn">
                 로그인
@@ -24,16 +24,22 @@
 
 <script setup>
 import { ref } from "vue";
+import { useLogin } from "@/hooks/useLogin";
 
-const name = ref("");
 const studentId = ref("");
+const password = ref("");
+const { handleLogin, errorMessage, isLoggedIn, userInfo } = useLogin();
 
-const handleLogin = () => {
-  console.log("Login Attempt:", {
-    name: name.value,
-    studentId: studentId.value,
-  });
+const login = async () => {
+  await handleLogin({ studentId: studentId.value, password: password.value });
+
+  if (isLoggedIn.value) {
+    alert(`✅ 로그인 성공! ${userInfo.value}님 환영합니다.`);
+  } else {
+    alert(`❌ 로그인 실패: ${errorMessage.value}`);
+  }
 };
+
 </script>
 
 <style scoped>

@@ -1,5 +1,4 @@
 import { ref } from "vue";
-// import { useUserStore } from "../stores/userStore";
 
 export default function useSignUp() {
     const signUpError = ref(false);
@@ -15,11 +14,11 @@ export default function useSignUp() {
     ) => {
         try {
             const payload = {
-                email: email,
-                password: "1234", // 기본 비밀번호 1234로 고정
-                name: name,
-                studentNumber: studentNumber,
-                nickname: nickname,
+                email,
+                password: "12345678", // 기본 비밀번호 1234로 고정
+                name,
+                studentNumber,
+                nickname,
             };
 
             console.log("📩 서버에 보낼 데이터:", JSON.stringify(payload, null, 2));
@@ -32,10 +31,12 @@ export default function useSignUp() {
                 body: JSON.stringify(payload),
             });
 
-            const result = await response.json();
-            console.log("📩 서버 응답:", result);
-
-            if (!response.ok) {
+            let result;
+            if (response.ok) {
+                result = await response.text(); // 200일 때는 텍스트 반환
+                console.log("✅ 회원가입 성공:", result);
+            } else {
+                result = await response.json(); // 에러일 때는 JSON 반환
                 throw new Error(result.error || "회원가입 요청 실패");
             }
 
@@ -57,4 +58,3 @@ export default function useSignUp() {
         registerUser,
     };
 }
-
