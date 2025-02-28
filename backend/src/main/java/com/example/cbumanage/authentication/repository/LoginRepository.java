@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface LoginRepository extends JpaRepository<LoginEntity, Long> {
 	Optional<LoginEntity> findByEmailEquals(String email);
+
+	Optional<LoginEntity> findBystudentNumber(Long studentNumber);
 }

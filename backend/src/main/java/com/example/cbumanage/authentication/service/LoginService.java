@@ -184,7 +184,7 @@ public class LoginService {
 	 */
 	@Transactional
 	public void editPassword(final Long studentNumber, final String password) {
-		LoginEntity entity = loginRepository.findById(studentNumber).orElseThrow(MemberNotExistsException::new);
+		LoginEntity entity = loginRepository.findBystudentNumber(studentNumber).orElseThrow(MemberNotExistsException::new);
 		entity.setPassword(hashUtil.hash(password + this.salt));
 	}
 
