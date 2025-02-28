@@ -1,25 +1,33 @@
 <template>
     <v-container class="change-password-page">
         <v-card class="password-change-container">
-            <v-card-title class="text-h5" style="margin-bottom: 10px; font-weight: 700;">비밀번호 변경 안내</v-card-title>
-            <v-card-subtitle style="margin-bottom: 20px;">보안을 위해 비밀번호를 변경해주세요.</v-card-subtitle>
+            <v-card-title class="text-h5 title">비밀번호 변경 안내</v-card-title>
+            <v-card-subtitle class="subtitle">보안을 위해 비밀번호를 변경해주세요.</v-card-subtitle>
 
             <v-card-text>
                 <v-form>
-                    <v-text-field label="새 비밀번호" v-model="newPassword" :type="showPassword ? 'text' : 'password'"
-                        placeholder="새 비밀번호 입력" outlined dense class="password-input">
-                        <template v-slot:append>
-                            <v-icon @click="showPassword = !showPassword">
+                    <v-text-field 
+                        label="새 비밀번호" 
+                        v-model="newPassword" 
+                        :type="showPassword ? 'text' : 'password'"
+                        placeholder="새 비밀번호 입력" 
+                        variant="outlined" dense class="password-input">
+                        <template v-slot:append-inner>
+                            <v-icon @click="showPassword = !showPassword" class="password-toggle-icon">
                                 {{ showPassword ? 'mdi-eye-off' : 'mdi-eye' }}
                             </v-icon>
                         </template>
                     </v-text-field>
                     <small class="password-hint">🔹 8자 이상, 영어+숫자+특수문자 중 2개 이상 포함</small>
 
-                    <v-text-field label="새 비밀번호 확인" v-model="confirmPassword"
-                        :type="showConfirmPassword ? 'text' : 'password'" placeholder="새 비밀번호 확인" outlined dense>
-                        <template v-slot:append>
-                            <v-icon @click="showConfirmPassword = !showConfirmPassword">
+                    <v-text-field 
+                        label="새 비밀번호 확인" 
+                        v-model="confirmPassword"
+                        :type="showConfirmPassword ? 'text' : 'password'" 
+                        placeholder="새 비밀번호 확인" 
+                        variant="outlined" dense class="password-input">
+                        <template v-slot:append-inner>
+                            <v-icon @click="showConfirmPassword = !showConfirmPassword" class="password-toggle-icon">
                                 {{ showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye' }}
                             </v-icon>
                         </template>
@@ -28,8 +36,8 @@
             </v-card-text>
 
             <v-card-actions>
-                <v-btn color="primary" block :disabled="!isPasswordValid || newPassword !== confirmPassword"
-                    @click="changePassword" class="large-button">
+                <v-btn block :disabled="!isPasswordValid || newPassword !== confirmPassword"
+                    @click="changePassword" class="custom-btn">
                     비밀번호 변경
                 </v-btn>
             </v-card-actions>
@@ -62,11 +70,6 @@ const isPasswordValid = computed(() => {
 
 const changePassword = async () => {
     if (isPasswordValid.value && newPassword.value === confirmPassword.value) {
-        console.log("📢 비밀번호 변경 요청 시작");
-        console.log("👉 서버로 보낼 studentNumber:", studentNumber.value);
-        console.log("👉 서버로 보낼 password:", newPassword.value);
-        // ✅ "cbu" 접두사를 제거한 학번 추출
-        
         try {
             const response = await fetch(`${SERVER_URL}/v1/login/password`, {
                 method: "PATCH",
@@ -102,18 +105,33 @@ const changePassword = async () => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
-    padding: 0;
+    min-height: 100vh;
+    padding: 16px;
     box-sizing: border-box;
 }
 
 .password-change-container {
     padding: 40px;
-    width: 90%;
+    width: 80%;
     text-align: center;
     background-color: #fff;
     box-shadow: none;
+}
+
+.title {
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.subtitle {
+    margin-bottom: 20px;
+}
+
+.password-input {
+    width: 100%;
+    margin-bottom: 15px;
 }
 
 .password-hint {
@@ -121,17 +139,28 @@ const changePassword = async () => {
     text-align: left;
     color: #555;
     font-size: 14px;
-    margin-top: -30px;
-    margin-bottom: 40px;
+    margin-top: -20px;
+    margin-bottom: 30px;
 }
 
-.password-input {
-    width: 100%;
-    margin-bottom: 20px;
+.password-toggle-icon {
+    cursor: pointer;
+    font-size: 22px;
 }
-.large-button {
-    font-size: 18px;
-    padding: 14px;
-    letter-spacing: normal;
+
+.custom-btn {
+    background-color: var(--mainColor);
+    height: 50px;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    transition: transform 0.2s ease;
+    letter-spacing: 0;
+}
+
+.custom-btn:hover {
+    transform: scale(1.02);
 }
 </style>

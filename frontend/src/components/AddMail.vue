@@ -1,5 +1,5 @@
 <template>
-    <v-container class="change-password-page">
+    <v-container class="changea-mail-page">
         <v-card class="password-change-container">
             <v-card-title class="text-h5" style="margin-bottom: 10px; font-weight: 700;">비밀번호 변경 안내</v-card-title>
             <v-card-subtitle style="margin-bottom: 20px;">보안을 위해 비밀번호를 변경해주세요.</v-card-subtitle>
