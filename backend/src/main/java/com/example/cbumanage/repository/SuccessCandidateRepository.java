@@ -11,4 +11,6 @@ public interface SuccessCandidateRepository extends JpaRepository<SuccessCandida
     List<SuccessCandidate> findByNickNameIn(List<String> nickNames);
 
     SuccessCandidate findByStudentNumber(Long studentNumber);
+
+    void deleteByStudentNumber(Long studentNumber);
 }

@@ -141,8 +141,8 @@ public class LoginController {
 	@PatchMapping("/password")
 	@Operation(summary = "비밀번호 변경")
 	@ResponseStatus(HttpStatus.OK)
-	public void editPassword(@RequestBody @Valid UserIdAndPasswordDTO dto) {
-		loginService.editPassword(dto.getUserId(), dto.getPassword());
+	public void editPassword(@RequestBody @Valid StudentNumberAndPasswordDTO dto) {
+		loginService.editPassword(dto.getStudentNumber(), dto.getPassword());
 	}
 
 	/**

@@ -174,6 +174,8 @@ public class LoginService {
 		SuccessCandidate successCandidate = successCandidateRepository.findByStudentNumber(dto.getStudentNumber());
 		candidateAppendService.appendSuccessCandidateToGoogleSheet(successCandidate);
 
+		successCandidateRepository.deleteByStudentNumber(dto.getStudentNumber());
+
 		return entity;
 	}
 
@@ -181,8 +183,8 @@ public class LoginService {
 	 * @throws MemberNotExistsException No member match with 'userId'
 	 */
 	@Transactional
-	public void editPassword(final Long userId, final String password) {
-		LoginEntity entity = loginRepository.findById(userId).orElseThrow(MemberNotExistsException::new);
+	public void editPassword(final Long studentNumber, final String password) {
+		LoginEntity entity = loginRepository.findById(studentNumber).orElseThrow(MemberNotExistsException::new);
 		entity.setPassword(hashUtil.hash(password + this.salt));
 	}
 
