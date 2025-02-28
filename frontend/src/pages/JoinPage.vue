@@ -1,7 +1,7 @@
 <template>
   <v-container class="join-page">
     <v-row align-items="center" justify="center" class="join-row">
-      <v-col cols="12" sm="8" md="6" lg="6">
+      <v-col cols="12" sm="10" md="10" lg="8">
         <div class="join-wrapper">
           <div class="step-indicator">
             <div :class="['step', { active: currentStep === 1 }]"></div>
@@ -19,7 +19,6 @@
             </a>
           </h4>
           <br />
-          <v-btn class="custom-btn" block type="submit" @click="syncMembers">싱크 확인</v-btn>
         </div>
       </v-col>
     </v-row>
@@ -33,9 +32,7 @@ import { ref, computed } from 'vue';
 import StepOne from '../components/signup/stepOne.vue';
 import StepTwo from '../components/signup/stepTwo.vue';
 import SignupCompleteModal from "../components/signup/signupCompleteModal.vue";
-import axios from 'axios';
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const currentStep = ref(1);
 const verifiedData = ref(null);
 const showModal = ref(false);
@@ -47,17 +44,6 @@ const currentComponent = computed(() => {
 const handleVerified = (data: any) => {
   verifiedData.value = data;
   currentStep.value = 2;
-};
-
-const syncMembers = async () => {
-  try {
-    const response = await axios.post(`${SERVER_URL}/v1/candidate/sync`);
-    if (response.status === 200) {
-      alert("서버 연동 완료!");
-    }
-  } catch (error) {
-    console.error('싱크 요청 실패:', error);
-  }
 };
 
 </script>
@@ -74,7 +60,7 @@ const syncMembers = async () => {
 }
 
 .join-row {
-  width: 130%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -67,7 +67,7 @@ const defaultPassword = computed(() => "12345678");
 
 // 비밀번호 변경 페이지 이동
 const goToChangePassword = () => {
-    router.push("/changePassword");
+    router.push("/private");
 };
 
 // 로그인 페이지 이동

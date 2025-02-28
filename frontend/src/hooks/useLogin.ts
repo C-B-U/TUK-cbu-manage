@@ -47,7 +47,8 @@ export function useLogin() {
                 errorMessage.value = null;
 
                 console.log("✅ 로그인 성공! 사용자 이름:", userInfo.value);
-                alert(`🎉 로그인 성공! ${userInfo.value}님 환영합니다.`);
+                alert(`✅ 로그인 성공! ${userInfo.value}님 환영합니다.`);
+
             } else {
                 const errorData = await response.json();
                 errorMessage.value = errorData.message || "로그인 실패";

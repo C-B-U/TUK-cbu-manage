@@ -4,6 +4,7 @@ import Main from "../pages/Main.vue";
 import MemManagePage from "../pages/MemberManagePage/MemManagePage.vue";
 import LoginPage from "../pages/LoginPage.vue";
 import JoinPage from "../pages/JoinPage.vue";
+import GuidePage from "../pages/FirstGuidePage.vue"
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: "/join",
     name: "join",
     component: JoinPage,
+  },
+  {
+    path: "/private",
+    name: "guide",
+    component: GuidePage,
   },
 ];
 
