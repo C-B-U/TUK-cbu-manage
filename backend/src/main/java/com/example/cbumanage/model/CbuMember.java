@@ -35,5 +35,5 @@ public class CbuMember {
     private Long    studentNumber;                //학번
     private Long    generation;                   //기수
     private String  note;                         //비고
-    private String  due;
+    private Boolean  due;
 }
