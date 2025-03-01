@@ -136,7 +136,12 @@ public class CbuMemberSyncService {
         member.setStudentNumber(getLongValue(row, 4));
         member.setGeneration(getLongValue(row, 5));
         member.setNote(getStringValue(row, 6));
-        member.setDue(getStringValue(row, 7));
+
+        if(Objects.equals(getStringValue(row, 7), "O")){
+            member.setDue(true);
+        }else{
+            member.setDue(false);
+        }
         return member;
     }
 
