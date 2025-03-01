@@ -16,4 +16,6 @@ public interface LoginRepository extends JpaRepository<LoginEntity, Long> {
 	@Query("select siteMember.email from LoginEntity siteMember WHERE siteMember.studentNumber = :studentNumber")
 	String findEmailBystudentNumber(Long studentNumber);
 
+	LoginEntity findLoginEntityByStudentNumber(Long studentNumber);
+
 }

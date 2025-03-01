@@ -29,7 +29,7 @@ public enum Permission {
 	 */
 	ADMIN(
 			Set.of(), // 인증이 필요한 경로(비어 있음)
-			Set.of()  // 인증이 필요하지 않은 경로(비어 있음)
+			Set.of("/api/*")  // 인증이 필요하지 않은 경로(비어 있음)
 	);
 
 	@Getter

@@ -2,10 +2,8 @@ package com.example.cbumanage.service;
 
 import com.example.cbumanage.dto.MemberCreateDTO;
 import com.example.cbumanage.dto.MemberUpdateDTO;
-import com.example.cbumanage.exception.MemberDoesntHavePermissionException;
 import com.example.cbumanage.exception.MemberNotExistsException;
 import com.example.cbumanage.model.CbuMember;
-import com.example.cbumanage.model.enums.Role;
 import com.example.cbumanage.repository.CbuMemberRepository;
 import com.example.cbumanage.repository.DuesRepository;
 import com.example.cbumanage.repository.LogRepository;
@@ -127,4 +125,6 @@ public class CbuMemberManageService {
 		// 회원 ID에 해당하는 엔티티 삭제
 		memberRepository.deleteById(memberId);
 	}
+
+
 }
