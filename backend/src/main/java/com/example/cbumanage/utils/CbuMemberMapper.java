@@ -59,7 +59,7 @@ public class CbuMemberMapper {
 		return cbuMember;
 	}
 	public MemberDTO map(CbuMember cbuMember) {
-		MemberDTO memberDTO = new MemberDTO(cbuMember.getCbuMemberId(), cbuMember.getRole(), cbuMember.getName(), cbuMember.getPhoneNumber(), cbuMember.getMajor(), cbuMember.getGrade(), cbuMember.getStudentNumber(), cbuMember.getGeneration(), cbuMember.getNote());
+		MemberDTO memberDTO = new MemberDTO(cbuMember.getCbuMemberId(), cbuMember.getRole(), cbuMember.getName(), cbuMember.getPhoneNumber(), cbuMember.getMajor(), cbuMember.getGrade(), cbuMember.getStudentNumber(), cbuMember.getGeneration(), cbuMember.getNote(), cbuMember.getDue());
 		return memberDTO;
 	}
 	public List<MemberDTO> map(List<CbuMember> cbuMember) {

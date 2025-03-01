@@ -18,4 +18,5 @@ public class MemberDTO {
 	private Long studentNumber;
 	private Long generation;
 	private String note;
+	private Boolean due;
 }
