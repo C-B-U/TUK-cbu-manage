@@ -5,13 +5,10 @@ import com.example.cbumanage.dto.MemberDTO;
 import com.example.cbumanage.dto.MemberUpdateDTO;
 import com.example.cbumanage.exception.InvalidMapperSetupException;
 import com.example.cbumanage.model.CbuMember;
-import com.example.cbumanage.model.enums.Role;
-import jakarta.persistence.Column;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
