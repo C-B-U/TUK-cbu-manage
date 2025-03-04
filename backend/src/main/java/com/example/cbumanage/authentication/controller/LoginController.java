@@ -78,19 +78,14 @@ public class LoginController {
 	 * 로그인 후, Access와 Refresh 토큰을 쿠키에 설정하여 반환합니다.
 	 * 헤더에 이메일과 비밀번호를 포함하여 요청합니다.
 	 *
-	 * @param password 로그인 비밀번호
-	 * @param res      HttpServletResponse를 사용하여 쿠키를 추가합니다.
 	 * @return
 	 */
-	@GetMapping
+	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
 	@Operation(summary = "로그인 후 쿠키에 토큰 반환", description = "헤더에 학번과 비밀번호를 넣어 요청")
-	public Map<String, String> login(
-			@RequestHeader(name = "studentNumber") final Long studentNumber,
-			@RequestHeader(name = "password") final String password,
-			HttpServletResponse res) {
+	public Map<String, String> login(@RequestBody StudentNumberAndPasswordDTO studentNumberAndPasswordDTO,HttpServletResponse res) {
 		// LoginService의 login 메서드를 호출하여 Access 및 Refresh 토큰을 생성합니다.
-		AccessAndRefreshTokenDTO login = loginService.login(new StudentNumberAndPasswordDTO(studentNumber, password));
+		AccessAndRefreshTokenDTO login = loginService.login(new StudentNumberAndPasswordDTO(studentNumberAndPasswordDTO.getStudentNumber(), studentNumberAndPasswordDTO.getPassword()));
 
 		// 토큰 문자열을 포함하는 쿠키 배열을 생성합니다.
 		Cookie[] cookies = loginService.generateCookie(login.getAccessToken(), login.getRefreshToken());
@@ -98,8 +93,8 @@ public class LoginController {
 		for (Cookie cookie : cookies) {
 			res.addCookie(cookie);
 		}
-		String cbuMember = cbuMemberRepository.findNameByStudentNumber(studentNumber);
-		String memberEmail = String.valueOf(loginRepository.findEmailBystudentNumber(studentNumber));
+		String cbuMember = cbuMemberRepository.findNameByStudentNumber(studentNumberAndPasswordDTO.getStudentNumber());
+		String memberEmail = String.valueOf(loginRepository.findEmailBystudentNumber(studentNumberAndPasswordDTO.getStudentNumber()));
 
 		Map<String, String> response = new HashMap<>();
 		response.put("name", cbuMember);
@@ -117,7 +112,7 @@ public class LoginController {
 	 * @return "회원가입 성공!" 문자열
 	 * @throws IOException 예외 발생 시 처리
 	 */
-	@PostMapping
+	@PostMapping("/signup")
 	@ResponseStatus(HttpStatus.CREATED)
 	@Operation(summary = "회원가입", description = "json 형식으로 email, password, name, studentNumber, nickname을 넣어 요청")
 	public String register(@RequestBody @Valid SignUpRequestDTO dto) throws IOException {

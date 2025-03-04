@@ -1,14 +1,19 @@
 package com.example.cbumanage.service;
 
+import com.example.cbumanage.authentication.entity.LoginEntity;
+import com.example.cbumanage.authentication.repository.LoginRepository;
 import com.example.cbumanage.dto.EmailAuthResponseDTO;
+import com.example.cbumanage.dto.MemberMailUpdateDTO;
 import com.example.cbumanage.utils.RedisUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -21,6 +26,9 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
     private final RedisUtil redisUtil;
+
+    @Autowired
+    LoginRepository loginRepository;
 
     public EmailAuthResponseDTO sendEmail(String toEmail) {
         if (redisUtil.existData(toEmail)) {
@@ -72,4 +80,14 @@ public class EmailService {
             return new EmailAuthResponseDTO(false, "인증번호가 일치하지 않습니다.");
         }
     }
+
+    @Transactional
+    public void updateUserMail(MemberMailUpdateDTO memberMailUpdateDTO){
+        LoginEntity loginEntity = loginRepository.findLoginEntityByStudentNumber(memberMailUpdateDTO.getStudentNumber());
+
+        loginEntity.setEmail(memberMailUpdateDTO.getEmail());
+        loginRepository.save(loginEntity);
+
+    }
+
 }
