@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AccessToken {
 	private Long userId;
-	private String email;
+	private Long studentNumber;
 	private List<Role> role;
 	private List<Permission> permission;
 }

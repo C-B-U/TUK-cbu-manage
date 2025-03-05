@@ -86,14 +86,14 @@ public class LoginService {
 			List<Role> adminRoles = List.of(Role.ADMIN);
 			Long exp = jwtProvider.currentTime() + 86400000;
 			RefreshToken refreshToken = new RefreshToken(login.getUserId(), exp);
-			AccessToken accessToken = new AccessToken(login.getUserId(), login.getEmail(), adminRoles, login.getPermissions());
+			AccessToken accessToken = new AccessToken(login.getUserId(), login.getStudentNumber(), adminRoles, login.getPermissions());
 			refreshTokenRepository.save(refreshToken);
 			return generateToken(accessToken, refreshToken);
 		} else {
 			// 일반 회원 처리: cbuMember의 역할 정보를 사용
 			Long exp = jwtProvider.currentTime() + 86400000;
 			RefreshToken refreshToken = new RefreshToken(login.getUserId(), exp);
-			AccessToken accessToken = new AccessToken(login.getUserId(), login.getEmail(), cbuMember.getRole(), login.getPermissions());
+			AccessToken accessToken = new AccessToken(login.getUserId(), login.getStudentNumber(), cbuMember.getRole(), login.getPermissions());
 			refreshTokenRepository.save(refreshToken);
 			return generateToken(accessToken, refreshToken);
 		}
@@ -112,7 +112,7 @@ public class LoginService {
 		RefreshToken refresh = refreshTokenRepository.findById(((UUID) tokenInfo.get("uuid"))).orElseThrow(() -> new NoSuchElementException("There is no refresh token"));
 		LoginEntity login = loginRepository.findById(refresh.getUserId()).orElseThrow(MemberNotExistsException::new);
 		CbuMember cbuMember = cbuMemberRepository.findById(refresh.getUserId()).orElseThrow(MemberNotExistsException::new);
-		AccessToken access = new AccessToken(login.getUserId(), login.getEmail(), cbuMember.getRole(), login.getPermissions());
+		AccessToken access = new AccessToken(login.getUserId(), login.getStudentNumber(), cbuMember.getRole(), login.getPermissions());
 		refresh.setExp(exp);
 
 		AccessAndRefreshTokenDTO accessAndRefreshTokenDTO = generateToken(access, refresh);
@@ -123,7 +123,7 @@ public class LoginService {
 		return new AccessAndRefreshTokenDTO(
 				jwtProvider.generateJwt("JWT", Map.of(
 						"user_id", accessToken.getUserId(),
-						"email", accessToken.getEmail(),
+						"student_number", accessToken.getStudentNumber(),
 						"role", accessToken.getRole(),
 						"permissions", accessToken.getPermission()
 				)),
