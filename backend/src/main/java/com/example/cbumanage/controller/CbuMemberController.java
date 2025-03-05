@@ -72,10 +72,10 @@ public class CbuMemberController {
         cbuMemberManageService.updateUser(memberDTO);
     }
 
-    @DeleteMapping("member/{id}")
+    @DeleteMapping("member/{studentNumber}")
     @Operation(summary = "회원 정보 삭제", description = "데이터베이스의 회원 정보를 삭제합니다.(데이터베이스 -> 스프레드시트 연동 기능 추가 예정)")
-    public void deleteMember(@PathVariable Long id) {
-        cbuMemberManageService.deleteMember(id);
+    public void deleteMember(@PathVariable Long studentNumber) {
+        cbuMemberManageService.deleteMember(studentNumber);
     }
 
     @GetMapping("members")
