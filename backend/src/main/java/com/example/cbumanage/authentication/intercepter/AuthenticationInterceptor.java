@@ -92,7 +92,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 				// 파싱된 정보를 바탕으로 AccessToken 객체를 생성합니다.
 				accessToken = new AccessToken(
 						((Long) tokenInfo.get("user_id")),
-						((String) tokenInfo.get("email")),
+						((Long) tokenInfo.get("student_number")),
 						// Role 목록을 JSONArray에서 List<Role>로 변환합니다.
 						((JSONArray) tokenInfo.get("role")).toList().stream()
 								.map(role -> Role.getValue(role.toString()))
