@@ -118,12 +118,12 @@ public class CbuMemberManageService {
 	/**
 	 * deleteMember 메서드는 주어진 회원 ID에 해당하는 회원 정보를 데이터베이스에서 삭제합니다.
 	 *
-	 * @param memberId 삭제할 회원의 ID
+	 * @param studentNumber 삭제할 회원의 ID
 	 */
 	@Transactional
-	public void deleteMember(final Long memberId) {
+	public void deleteMember(final Long studentNumber) {
 		// 회원 ID에 해당하는 엔티티 삭제
-		memberRepository.deleteById(memberId);
+		memberRepository.deleteByStudentNumber(studentNumber);
 	}
 
 

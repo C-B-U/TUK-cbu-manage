@@ -23,6 +23,8 @@ public interface CbuMemberRepository extends JpaRepository<CbuMember, Long> {
 
     @Query("select cbuMember.name from CbuMember cbuMember WHERE cbuMember.studentNumber = :studentNumber")
     String findNameByStudentNumber(@Param("studentNumber") Long studentNumber);
+
+    void deleteByStudentNumber(Long studentNumber);
 }
 
 
