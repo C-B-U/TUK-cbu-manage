@@ -70,30 +70,35 @@ const isPasswordValid = computed(() => {
 
 const changePassword = async () => {
     if (isPasswordValid.value && newPassword.value === confirmPassword.value) {
+
         try {
-            const response = await fetch(`${SERVER_URL}/v1/login/password`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    userId: studentNumber.value,
-                    password: newPassword.value
-                })
-            });
+    const requestData = {
+        studentNumber: studentNumber.value,
+        password: newPassword.value
+    };
 
-            const data = await response.json();
+    console.log("📢 서버에 전송할 데이터:", JSON.stringify(requestData, null, 2));
 
-            if (response.ok) {
-                alert("✅ 비밀번호 변경 완료!");
-            } else {
-                alert(`❌ 오류 발생: ${data.message || '비밀번호 변경 실패'}`);
-            }
-        } catch (error) {
-            console.error("❌ 네트워크 오류:", error);
-            alert("❌ 네트워크 오류가 발생했습니다. 다시 시도해주세요.");
-        }
+    const response = await fetch(`${SERVER_URL}/v1/login/password`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(requestData)
+    });
+
+    // ✅ 서버 응답이 200이면 성공 처리
+    if (response.ok) {
+        alert("✅ 비밀번호 변경 완료!");
+    } else {
+        alert(`❌ 오류 발생: 비밀번호 변경 실패 (Status: ${response.status})`);
+    }
+} catch (error) {
+    console.error("❌ 네트워크 오류:", error);
+    alert("❌ 네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+}
+
     }
 };
 </script>

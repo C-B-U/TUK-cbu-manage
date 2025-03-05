@@ -1,36 +1,61 @@
 <template>
-    <v-container class="changea-mail-page">
-        <v-card class="password-change-container">
-            <v-card-title class="text-h5" style="margin-bottom: 10px; font-weight: 700;">비밀번호 변경 안내</v-card-title>
-            <v-card-subtitle style="margin-bottom: 20px;">보안을 위해 비밀번호를 변경해주세요.</v-card-subtitle>
+    <v-container class="email-verification-page">
+        <v-card class="email-verification-container">
+            <v-card-title class="text-h5 title">학교 메일 인증</v-card-title>
+            <v-card-subtitle class="subtitle">학교 이메일을 입력하고 인증을 완료하세요.</v-card-subtitle>
 
             <v-card-text>
                 <v-form>
-                    <v-text-field label="새 비밀번호" v-model="newPassword" :type="showPassword ? 'text' : 'password'"
-                        placeholder="새 비밀번호 입력" outlined dense class="password-input">
-                        <template v-slot:append>
-                            <v-icon @click="showPassword = !showPassword">
-                                {{ showPassword ? 'mdi-eye-off' : 'mdi-eye' }}
-                            </v-icon>
-                        </template>
-                    </v-text-field>
-                    <small class="password-hint">🔹 8자 이상, 영어+숫자+특수문자 중 2개 이상 포함</small>
+                    <!-- 이메일 입력 + 인증번호 보내기 버튼 -->
+                    <v-row>
+                        <v-col cols="9" align="center">
+                            <v-text-field 
+                                class="rounded-input" 
+                                v-model="studentEmail" 
+                                label="학교 이메일" 
+                                suffix="@tukorea.ac.kr"
+                                placeholder="학교 이메일을 입력하세요." 
+                                required 
+                                variant="outlined" 
+                                dense 
+                                :error="emailError"
+                                :error-messages="emailErrorMessage">
+                            </v-text-field>
+                        </v-col>
+                        <v-col cols="3" class="email-btn-col">
+                            <v-btn class="custom-btn" block @click="handleEmailVerification">
+                                인증번호 전송
+                            </v-btn>
+                        </v-col>
+                    </v-row>
 
-                    <v-text-field label="새 비밀번호 확인" v-model="confirmPassword"
-                        :type="showConfirmPassword ? 'text' : 'password'" placeholder="새 비밀번호 확인" outlined dense>
-                        <template v-slot:append>
-                            <v-icon @click="showConfirmPassword = !showConfirmPassword">
-                                {{ showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye' }}
-                            </v-icon>
-                        </template>
-                    </v-text-field>
+                    <!-- 인증번호 입력 필드 (이메일 전송 후 표시) -->
+                    <v-row v-if="isVerificationSent"  justify="space-between">
+                        <v-col cols="9" align="center">
+                            <v-text-field 
+                                class="rounded-input" 
+                                v-model="verificationCode" 
+                                label="인증번호" 
+                                placeholder="인증번호 입력" 
+                                required 
+                                variant="outlined" 
+                                dense
+                                :error="verificationStatus === 'error'" 
+                                :error-messages="verificationStatus === 'error' ? [verificationMessage] : []">
+                            </v-text-field>
+                        </v-col>
+                        <v-col cols="3" class="email-btn-col">
+                            <v-btn class="custom-btn" block @click="handleCodeVerification">
+                                인증하기
+                            </v-btn>
+                        </v-col>
+                    </v-row>
                 </v-form>
             </v-card-text>
 
             <v-card-actions>
-                <v-btn color="primary" block :disabled="!isPasswordValid || newPassword !== confirmPassword"
-                    @click="changePassword" class="large-button">
-                    비밀번호 변경
+                <v-btn block :disabled="!isJoinEnabled" @click="handleComplete" class="custom-btn">
+                    완료
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -38,100 +63,143 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useUserStore } from '@/stores/userStore';
-import { useRoute } from 'vue-router';
+import { ref, defineEmits, nextTick } from "vue";
+import useVerifyEmail from "@/hooks/useVerifyEmail";
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
-const route = useRoute();
-const userStore = useUserStore();
+// 이메일 입력값 및 상태 관리
+const studentEmail = ref("");
+const verificationCode = ref("");
+const verificationStatus = ref<"success" | "error" | "">("");
+const verificationMessage = ref("");
+const isJoinEnabled = ref(false); // 완료 버튼 활성화 여부
 
-const studentNumber = ref(route.params.studentNumber || userStore.studentNumber);
-const newPassword = ref('');
-const confirmPassword = ref('');
-const showPassword = ref(false);
-const showConfirmPassword = ref(false);
+const emit = defineEmits(["completed"]);
 
-const isPasswordValid = computed(() => {
-    const lengthValid = newPassword.value.length >= 8;
-    const hasLetter = /[a-zA-Z]/.test(newPassword.value);
-    const hasDigit = /\d/.test(newPassword.value);
-    const hasSpecialChar = /[^a-zA-Z\d]/.test(newPassword.value);
-    return lengthValid && ((hasLetter && hasDigit) || (hasLetter && hasSpecialChar) || (hasDigit && hasSpecialChar));
-});
+// 이메일 인증 관련 hooks
+const {
+    emailError,
+    emailErrorMessage,
+    isVerificationSent,
+    sendEmailToServer,
+    verifyCodeWithServer,
+} = useVerifyEmail();
 
-const changePassword = async () => {
-    if (isPasswordValid.value && newPassword.value === confirmPassword.value) {
-        console.log("📢 비밀번호 변경 요청 시작");
-        console.log("👉 서버로 보낼 studentNumber:", studentNumber.value);
-        console.log("👉 서버로 보낼 password:", newPassword.value);
-        // ✅ "cbu" 접두사를 제거한 학번 추출
-        
-        try {
-            const response = await fetch(`${SERVER_URL}/v1/login/password`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    userId: studentNumber.value,
-                    password: newPassword.value
-                })
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                alert("✅ 비밀번호 변경 완료!");
-            } else {
-                alert(`❌ 오류 발생: ${data.message || '비밀번호 변경 실패'}`);
-            }
-        } catch (error) {
-            console.error("❌ 네트워크 오류:", error);
-            alert("❌ 네트워크 오류가 발생했습니다. 다시 시도해주세요.");
-        }
+const handleEmailVerification = async () => {
+    const success = await sendEmailToServer(studentEmail.value);
+    if (success) {
+        alert("인증번호가 전송되었습니다!\n이메일을 확인해주세요.");
     }
+};
+
+const handleCodeVerification = async () => {
+    if (!verificationCode.value) {
+        verificationStatus.value = "error";
+        verificationMessage.value = "인증번호를 입력해주세요.";
+        return;
+    }
+    const result = await verifyCodeWithServer(studentEmail.value, verificationCode.value);
+    console.log("📢 인증 응답:", result); // 🔍 서버 응답 확인
+
+    if (result && typeof result === "object" && "success" in result) {
+        verificationStatus.value = result.success ? "success" : "error";
+        verificationMessage.value = result.responseMessage || "인증되었습니다.";
+
+        if (result.success) {
+            isJoinEnabled.value = true; // 완료 버튼 활성화
+            console.log("✅ 완료 버튼 활성화됨:", isJoinEnabled.value); // 🔍 값 변경 확인
+            await nextTick(); // 🔄 Vue의 반응형 상태 업데이트 적용
+        } else {
+            isJoinEnabled.value = false; // 인증 실패 시 비활성화
+            console.log("❌ 완료 버튼 비활성화:", isJoinEnabled.value);
+        }
+    } else {
+        verificationStatus.value = "error";
+        verificationMessage.value = "서버 응답 오류";
+        isJoinEnabled.value = false;
+    }
+};
+
+// 완료 버튼 클릭 시 이메일 확인 및 이벤트 발생
+const handleComplete = () => {
+    let emailWithSuffix = studentEmail.value.trim();
+
+    // 사용자가 이메일을 입력했지만 '@tukorea.ac.kr'이 없으면 추가
+    if (!emailWithSuffix.includes("@")) {
+        emailWithSuffix += "@tukorea.ac.kr";
+    }
+
+    console.log("📢 완료 버튼 클릭 - 입력된 이메일:", emailWithSuffix);
+    console.log("📢 인증 코드:", verificationCode.value);
+
+    emit("completed", { email: emailWithSuffix, verificationCode: verificationCode.value });
 };
 </script>
 
+
 <style scoped>
 
-.change-password-page {
+.email-verification-page {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
-    padding: 0;
+    min-height: 100vh;
+    padding: 16px;
     box-sizing: border-box;
 }
 
-.password-change-container {
+.email-verification-container {
     padding: 40px;
-    width: 90%;
+    width: 100%;
     text-align: center;
     background-color: #fff;
+    border-radius: 12px;
     box-shadow: none;
 }
 
-.password-hint {
-    display: block;
-    text-align: left;
-    color: #555;
-    font-size: 14px;
-    margin-top: -30px;
-    margin-bottom: 40px;
+.title {
+    font-size: 1.7rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
 }
 
-.password-input {
-    width: 100%;
+.subtitle {
     margin-bottom: 20px;
 }
-.large-button {
-    font-size: 18px;
-    padding: 14px;
-    letter-spacing: normal;
+
+.rounded-input {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.email-btn-col {
+    display: flex;
+    align-items: flex-start;
+}
+
+.custom-btn {
+    background-color: var(--mainColor);
+    height: 50px;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    transition: transform 0.2s ease;
+    letter-spacing: 0;
+}
+
+.custom-btn:hover {
+    transform: scale(1.02);
+}
+
+.error-field .v-field__outline {
+    border: 2px solid red !important;
+}
+
+.error-text {
+    color: red !important;
+    font-weight: bold;
 }
 </style>
