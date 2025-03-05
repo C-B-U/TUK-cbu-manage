@@ -23,7 +23,7 @@ export default function useSignUp() {
 
             console.log("📩 서버에 보낼 데이터:", JSON.stringify(payload, null, 2));
 
-            const response = await fetch(`${SERVER_URL}/v1/login`, {
+            const response = await fetch(`${SERVER_URL}/v1/login/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

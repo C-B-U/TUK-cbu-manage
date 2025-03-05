@@ -146,11 +146,6 @@ const handleJoin = async () => {
         ? studentEmail.value
         : `${studentEmail.value}@tukorea.ac.kr`;
 
-    console.log("📢 회원가입 버튼 클릭 - 요청 데이터:");
-    console.log("Email:", emailWithSuffix);
-    console.log("Verification Code:", verificationCode.value);
-    console.log("Password:", "12345678 (기본값)");
-
     await registerUser(
         emailWithSuffix,
         userStore.studentNumber,
