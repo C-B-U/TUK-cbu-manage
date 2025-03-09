@@ -12,7 +12,7 @@
           <v-card-text>
             <component :is="currentComponent" @completed="showModal = true" @verified="handleVerified" />
           </v-card-text>
-          <h4>
+          <h4 class="guide-text">
             지원 시 닉네임 기억이 나지 않는다면? &nbsp;
             <a href="https://www.instagram.com/tukorea_cbu/#" class="custom-link" target="_blank" rel="noopener noreferrer">
               합격자 발표 확인해보기 (클릭!)
@@ -112,6 +112,10 @@ const handleVerified = (data: any) => {
   font-size: 1rem;
   text-transform: uppercase;
   transition: transform 0.2s ease;
+}
+
+.guide-text {
+  margin-top: 20px;
 }
 
 .custom-link {

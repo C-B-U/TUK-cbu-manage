@@ -5,6 +5,7 @@ import MemManagePage from "../pages/MemberManagePage/MemManagePage.vue";
 import LoginPage from "../pages/LoginPage.vue";
 import JoinPage from "../pages/JoinPage.vue";
 import GuidePage from "../pages/FirstGuidePage.vue"
+import PasswordPage from "../pages/ChangePassword.vue"
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     name: "guide",
     component: GuidePage,
   },
+  {
+    path: "/change-password",
+    name: "changepassword",
+    component: PasswordPage,
+  }
 ];
 
 const router = createRouter({
