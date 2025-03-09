@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { useUserStore } from "../stores/userStore"; // Pinia Store 사용
 
 interface LoginParams {
     studentId: string;
@@ -8,7 +9,8 @@ interface LoginParams {
 export function useLogin() {
     const errorMessage = ref<string | null>(null);
     const isLoggedIn = ref<boolean>(false);
-    const userInfo = ref<string | null>(null);
+    const userInfo = ref<any>(null); // JSON 파싱된 데이터 저장
+    const userStore = useUserStore(); // Pinia Store 사용
 
     const handleLogin = async ({ studentId = "", password = "" }: LoginParams): Promise<void> => {
         const SERVER_URL = import.meta.env.VITE_SERVER_URL;
@@ -23,16 +25,11 @@ export function useLogin() {
         // "cbu" 접두사를 제거한 학번 추출
         const studentNumber = studentId.replace(/^cbu/, "");
 
-        // 콘솔 출력 (요청 전 확인)
-        console.log("📢 로그인 요청 시작");
-        console.log("👉 서버로 보낼 studentNumber:", studentNumber);
-        console.log("👉 서버로 보낼 password:", password);
-
         try {
             const response = await fetch(`${SERVER_URL}/v1/login`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json", // JSON 전송을 위한 Content-Type 추가
+                    "Content-Type": "application/json",
                     "Accept": "*/*",
                 },
                 body: JSON.stringify({
@@ -41,24 +38,35 @@ export function useLogin() {
                 }),
             });
 
-            // 요청 후 응답 확인
             console.log("📢 서버 응답 수신 완료");
 
             if (response.ok) {
-                userInfo.value = await response.text(); // 응답이 JSON이 아니라면 text로 처리
+                const rawText = await response.text();
+                let parsedData;
+
+                // JSON 파싱 시도
+                try {
+                    parsedData = JSON.parse(rawText);
+                } catch (error) {
+                    parsedData = { name: rawText, email: null }; // JSON이 아니면 기본값 설정
+                }
+
+                // `email === "null"` 문자열을 `null`로 변환
+                if (parsedData.email === "null") {
+                    parsedData.email = null;
+                }
+
+                // ✅ 로그인 상태 업데이트
+                userInfo.value = parsedData;
                 isLoggedIn.value = true;
                 errorMessage.value = null;
 
-                console.log("로그인 성공! 사용자 이름:", userInfo.value);
-                alert(`로그인 성공! ${userInfo.value}님 환영합니다.`);
-
-            } else {
-                const errorData = await response.json();
-                errorMessage.value = errorData.message || "로그인 실패";
-
-                console.log("로그인 실패:", errorMessage.value);
-                alert(`로그인 실패: ${errorMessage.value}`);
-                isLoggedIn.value = false;
+                // `userStore`에 `name`과 `email`만 업데이트
+                userStore.setUser({
+                    name: parsedData.name,
+                    email: parsedData.email, // `null`이 정상적으로 반영됨
+                });
+                userStore.updateEmail(parsedData.email);
             }
         } catch (error: any) {
             errorMessage.value = "로그인 중 오류가 발생했습니다.";

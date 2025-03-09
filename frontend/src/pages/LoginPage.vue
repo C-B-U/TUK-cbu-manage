@@ -22,7 +22,8 @@
               </v-btn>
             </v-form>
           </v-card-text>
-          <h4 class="guide-text">동아리에 새로 가입하셨나요? &nbsp; <router-link to="/join" class="custom-link">회원가입</router-link>
+          <h4 class="guide-text">씨부엉 입부를 축하합니다! 첫 로그인이라면? &nbsp; <router-link to="/join"
+              class="custom-link">회원가입</router-link>
           </h4>
         </div>
       </v-col>
@@ -32,39 +33,28 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { useLogin } from "@/hooks/useLogin";
 import { useUserStore } from "@/stores/userStore";
-import { useRouter } from "vue-router";
 
 const studentId = ref("");
 const password = ref("");
+const showPassword = ref(false);
 const router = useRouter();
 const userStore = useUserStore();
-const showPassword = ref(false);
-
-const { handleLogin, errorMessage, isLoggedIn, userInfo } = useLogin();
+const { handleLogin, isLoggedIn, userInfo } = useLogin();
 
 const login = async () => {
-  const studentNumber = studentId.value.replace(/^cbu/, "");
-  await handleLogin({ studentId: studentId.value, password: password.value });
+    await handleLogin({ studentId: studentId.value, password: password.value });
 
-  if (isLoggedIn.value) {
+    console.log("🔍 로그인 후 이메일 확인:", userStore.email);
+    console.log("🔑 로그인 후 비밀번호 확인:", password.value);
 
-    userStore.setUser({
-      name: userInfo.value.name,
-      studentNumber: studentNumber
-    });
-
-    if (password.value === "12345678") {
-      router.push({ path: "/private", query: { studentNumber: studentNumber, password: password.value } });
-    } else {
-      router.push("/");
+    if (isLoggedIn.value && (password.value === "12345678" || userStore.email === null)) {
+        console.log("🚀 로그인 버튼 클릭 → /private 이동");
+        router.push("/private");
     }
-  } else {
-    alert(`❌ 로그인 실패: ${errorMessage.value}`);
-  }
 };
-
 </script>
 
 <style scoped>
@@ -122,17 +112,16 @@ const login = async () => {
 
 .guide-text {
   margin-top: 20px;
-  font-size: 0.9rem;
 }
 
 .custom-link {
-  color: var(--mainColor);
+  color: black;
   font-weight: bold;
   text-decoration: none;
 }
 
 .custom-link:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 ::v-deep .rounded-input .v-field__outline {
