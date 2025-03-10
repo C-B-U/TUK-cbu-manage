@@ -13,7 +13,7 @@ public class CbuMemberMapperTest {
 	CbuMemberMapper cbuMemberMapper = new CbuMemberMapper();
 	@Test
 	void mapperTest() {
-		CbuMember cbuMember = new CbuMember(1L, List.of(), "name", "123-456-789", "Software", "2", 2023158029L, 20L, "", true);
+		CbuMember cbuMember = new CbuMember(1L, List.of(), "name", "123-456-789", "Software", "2", 2023158029L, 20L, "", true, null);
 		MemberUpdateDTO memberUpdateDTO;
 
 		memberUpdateDTO = new MemberUpdateDTO(1L, null, null, null, null, null, null, null, null, null, null);
