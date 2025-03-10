@@ -1,14 +1,11 @@
 import { ref } from "vue";
-import { useUserStore } from "../stores/userStore";
 
 export default function useVerifyEmail() {
   const emailError = ref(false);
   const emailErrorMessage = ref("");
   const verificationError = ref(false);
   const verificationErrorMessage = ref("");
-  const isVerificationSent = ref(false);
-
-  const userStore = useUserStore();
+  const isVerificationSent = ref(false)
 
   // 이메일에 "@"가 없으면 기본 도메인 추가
   const addSuffixIfMissing = (email: string): string => {
@@ -77,8 +74,6 @@ export default function useVerifyEmail() {
       const result = await response.json();
 
       if (result.success) {
-        // 이메일이 인증되면 `userStore` 업데이트
-        userStore.updateEmail(fullEmail);
         alert("인증되었습니다!");
       } else {
         alert(`❌ 인증 실패: ${result.responseMessage}`);
