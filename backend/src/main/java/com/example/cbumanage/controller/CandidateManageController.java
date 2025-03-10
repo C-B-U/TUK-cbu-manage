@@ -18,7 +18,7 @@ public class CandidateManageController {
 
     @PostMapping("validate")
     @Operation(summary = "학번과 닉네임을 통한 1차 인증", description = "학번과 닉네임을 가지고 합격자 명단과 일치하는지 확인합니다.")
-    public SuccessCandidate validateCandidate(@RequestBody SuccessCandidateDTO successCandidateDTO) {
+    public SuccessCandidate validateCandidate(@RequestBody SuccessCandidateDTO successCandidateDTO) throws Exception {
         SuccessCandidate successCandidate = candidateManageService.validateCandidate(successCandidateDTO);
         return successCandidate;
     }

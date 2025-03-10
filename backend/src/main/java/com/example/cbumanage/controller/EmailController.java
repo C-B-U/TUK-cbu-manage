@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/mail")
@@ -32,8 +34,11 @@ public class EmailController {
 
     @PostMapping("/update")
     @Operation(summary = "사용자 메일 등록", description = "인증이 완료된 메일을 회원 정보에 업데이트 합니다.")
-    public String updateMail(@RequestBody MemberMailUpdateDTO memberMailUpdateDTO){
+    public String updateMail(@RequestBody MemberMailUpdateDTO memberMailUpdateDTO) throws IOException {
         emailService.updateUserMail(memberMailUpdateDTO);
+
+
+
         return "메일 주소 반영 성공!";
     }
 
