@@ -1,4 +1,4 @@
-import { ref, nextTick } from "vue";
+import { ref } from "vue";
 import { useUserStore } from "../stores/userStore";
 
 interface LoginParams {
@@ -20,41 +20,31 @@ export function useLogin() {
             return;
         }
 
-        const studentNumber = parseInt(studentId.replace(/^cbu/, ""), 10);
-        if (isNaN(studentNumber)) {
-            errorMessage.value = "잘못된 학번 형식입니다.";
-            alert(errorMessage.value);
-            return;
-        }
+        const studentNumber = Number(studentId.replace(/^cbu/, ""));
 
         try {
-            console.log("📢 [로그인 요청] studentNumber:", studentNumber, "password:", password);
-
             const response = await fetch(`${SERVER_URL}/v1/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ studentNumber, password }),
+                body: JSON.stringify({
+                    studentNumber,
+                    password,
+                }),
             });
-
-            console.log("📢 [서버 응답] 상태 코드:", response.status);
 
             if (response.ok) {
                 const result = await response.json();
 
-                console.log("✅ [서버 응답 JSON]:", result);
-
-                // ✅ email 값이 "null"(string)일 경우 `null`로 변환
+                // email 값이 "null"(string)으로 올 경우, null로 변환
                 const emailValue = result.email === "null" ? null : result.email;
 
-                console.log("🔍 [email 값 확인]:", emailValue);
-
-                // ✅ Pinia 상태 업데이트
+                // ✅ 로그인 상태 업데이트 (role 추가)
                 userStore.setUser({
                     name: result.name,
                     studentNumber,
-                    email: emailValue,  // ✅ email 속성 추가
+                    email: emailValue, // email 값을 반영
                 });
 
                 userStore.setAuthStatus({
@@ -65,21 +55,16 @@ export function useLogin() {
                 isLoggedIn.value = true;
                 errorMessage.value = null;
 
-                console.log("✅ 로그인 성공! 저장된 값:", {
+                console.log("✅ 로그인 성공!", {
                     name: result.name,
                     studentNumber,
-                    email: userStore.email,
+                    isAdmin: userStore.isAdmin,
                     isDefaultPassword: userStore.isDefaultPassword,
                     isEmailNull: userStore.isEmailNull,
                 });
-
-                // ✅ `nextTick`을 사용해 상태가 반영된 후 페이지 이동
-                await nextTick();
             }
         } catch (error) {
-            console.error("❌ 로그인 중 오류 발생:", error);
-            errorMessage.value = "서버와의 통신 중 오류가 발생했습니다.";
-            alert(errorMessage.value);
+            errorMessage.value = "로그인 중 오류가 발생했습니다.";
             isLoggedIn.value = false;
         }
     };
