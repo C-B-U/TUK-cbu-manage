@@ -19,4 +19,5 @@ public class MemberDTO {
 	private Long generation;
 	private String note;
 	private Boolean due;
+	private String email;
 }

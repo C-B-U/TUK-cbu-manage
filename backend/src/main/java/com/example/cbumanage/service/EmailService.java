@@ -4,6 +4,8 @@ import com.example.cbumanage.authentication.entity.LoginEntity;
 import com.example.cbumanage.authentication.repository.LoginRepository;
 import com.example.cbumanage.dto.EmailAuthResponseDTO;
 import com.example.cbumanage.dto.MemberMailUpdateDTO;
+import com.example.cbumanage.model.CbuMember;
+import com.example.cbumanage.repository.CbuMemberRepository;
 import com.example.cbumanage.utils.RedisUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -29,6 +31,9 @@ public class EmailService {
 
     @Autowired
     LoginRepository loginRepository;
+
+    @Autowired
+    CbuMemberRepository cbuMemberRepository;
 
     public EmailAuthResponseDTO sendEmail(String toEmail) {
         if (redisUtil.existData(toEmail)) {
@@ -84,10 +89,12 @@ public class EmailService {
     @Transactional
     public void updateUserMail(MemberMailUpdateDTO memberMailUpdateDTO){
         LoginEntity loginEntity = loginRepository.findLoginEntityByStudentNumber(memberMailUpdateDTO.getStudentNumber());
+        CbuMember cbuMember = cbuMemberRepository.findCbuMemberByStudentNumber(memberMailUpdateDTO.getStudentNumber());
 
+        cbuMember.setEmail(memberMailUpdateDTO.getEmail());
         loginEntity.setEmail(memberMailUpdateDTO.getEmail());
         loginRepository.save(loginEntity);
-
+        cbuMemberRepository.save(cbuMember);
     }
 
 }

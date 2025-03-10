@@ -16,7 +16,7 @@ import java.util.List;
 public class CbuMemberMapper {
 
 	public CbuMemberMapper() {
-		if (CbuMember.class.getDeclaredFields().length != 10) {
+		if (CbuMember.class.getDeclaredFields().length != 11) {
 			throw new InvalidMapperSetupException("CbuMember field is changed. Edit mapper and change the size value(" + CbuMember.class.getDeclaredFields().length + ")");
 		}
 	}
@@ -56,10 +56,11 @@ public class CbuMemberMapper {
 		cbuMember.setStudentNumber(memberCreateDTO.getStudentNumber());
 		cbuMember.setGeneration(memberCreateDTO.getGeneration());
 		cbuMember.setNote(memberCreateDTO.getNote());
+		cbuMember.setEmail(null);
 		return cbuMember;
 	}
 	public MemberDTO map(CbuMember cbuMember) {
-		MemberDTO memberDTO = new MemberDTO(cbuMember.getCbuMemberId(), cbuMember.getRole(), cbuMember.getName(), cbuMember.getPhoneNumber(), cbuMember.getMajor(), cbuMember.getGrade(), cbuMember.getStudentNumber(), cbuMember.getGeneration(), cbuMember.getNote(), cbuMember.getDue());
+		MemberDTO memberDTO = new MemberDTO(cbuMember.getCbuMemberId(), cbuMember.getRole(), cbuMember.getName(), cbuMember.getPhoneNumber(), cbuMember.getMajor(), cbuMember.getGrade(), cbuMember.getStudentNumber(), cbuMember.getGeneration(), cbuMember.getNote(), cbuMember.getDue(), cbuMember.getEmail());
 		return memberDTO;
 	}
 	public List<MemberDTO> map(List<CbuMember> cbuMember) {
