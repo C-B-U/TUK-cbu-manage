@@ -1,5 +1,5 @@
-import { ref } from "vue";
-import { useUserStore } from "../stores/userStore"; // Pinia Store 사용
+import { ref, nextTick } from "vue";
+import { useUserStore } from "../stores/userStore";
 
 interface LoginParams {
     studentId: string;
@@ -9,68 +9,76 @@ interface LoginParams {
 export function useLogin() {
     const errorMessage = ref<string | null>(null);
     const isLoggedIn = ref<boolean>(false);
-    const userInfo = ref<any>(null); // JSON 파싱된 데이터 저장
-    const userStore = useUserStore(); // Pinia Store 사용
+    const userStore = useUserStore();
 
     const handleLogin = async ({ studentId = "", password = "" }: LoginParams): Promise<void> => {
         const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-        // 입력값 검증
         if (!studentId || !password) {
             errorMessage.value = "아이디와 비밀번호를 입력하세요.";
             alert(errorMessage.value);
             return;
         }
 
-        // "cbu" 접두사를 제거한 학번 추출
-        const studentNumber = studentId.replace(/^cbu/, "");
+        const studentNumber = parseInt(studentId.replace(/^cbu/, ""), 10);
+        if (isNaN(studentNumber)) {
+            errorMessage.value = "잘못된 학번 형식입니다.";
+            alert(errorMessage.value);
+            return;
+        }
 
         try {
+            console.log("📢 [로그인 요청] studentNumber:", studentNumber, "password:", password);
+
             const response = await fetch(`${SERVER_URL}/v1/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Accept": "*/*",
                 },
-                body: JSON.stringify({
-                    studentNumber: studentNumber,
-                    password: password
-                }),
+                body: JSON.stringify({ studentNumber, password }),
             });
 
-            console.log("📢 서버 응답 수신 완료");
+            console.log("📢 [서버 응답] 상태 코드:", response.status);
 
             if (response.ok) {
-                const rawText = await response.text();
-                let parsedData;
+                const result = await response.json();
 
-                // JSON 파싱 시도
-                try {
-                    parsedData = JSON.parse(rawText);
-                } catch (error) {
-                    parsedData = { name: rawText, email: null }; // JSON이 아니면 기본값 설정
-                }
+                console.log("✅ [서버 응답 JSON]:", result);
 
-                // `email === "null"` 문자열을 `null`로 변환
-                if (parsedData.email === "null") {
-                    parsedData.email = null;
-                }
+                // ✅ email 값이 "null"(string)일 경우 `null`로 변환
+                const emailValue = result.email === "null" ? null : result.email;
 
-                // ✅ 로그인 상태 업데이트
-                userInfo.value = parsedData;
+                console.log("🔍 [email 값 확인]:", emailValue);
+
+                // ✅ Pinia 상태 업데이트
+                userStore.setUser({
+                    name: result.name,
+                    studentNumber,
+                    email: emailValue,  // ✅ email 속성 추가
+                });
+
+                userStore.setAuthStatus({
+                    isDefaultPassword: password === "12345678",
+                    isEmailNull: emailValue === null,
+                });
+
                 isLoggedIn.value = true;
                 errorMessage.value = null;
 
-                // `userStore`에 `name`과 `email`만 업데이트
-                userStore.setUser({
-                    name: parsedData.name,
-                    email: parsedData.email, // `null`이 정상적으로 반영됨
+                console.log("✅ 로그인 성공! 저장된 값:", {
+                    name: result.name,
+                    studentNumber,
+                    email: userStore.email,
+                    isDefaultPassword: userStore.isDefaultPassword,
+                    isEmailNull: userStore.isEmailNull,
                 });
-                userStore.updateEmail(parsedData.email);
+
+                // ✅ `nextTick`을 사용해 상태가 반영된 후 페이지 이동
+                await nextTick();
             }
-        } catch (error: any) {
-            errorMessage.value = "로그인 중 오류가 발생했습니다.";
-            console.error("Login error:", error);
+        } catch (error) {
+            console.error("❌ 로그인 중 오류 발생:", error);
+            errorMessage.value = "서버와의 통신 중 오류가 발생했습니다.";
             alert(errorMessage.value);
             isLoggedIn.value = false;
         }
@@ -79,7 +87,6 @@ export function useLogin() {
     return {
         errorMessage,
         isLoggedIn,
-        userInfo,
         handleLogin,
     };
 }

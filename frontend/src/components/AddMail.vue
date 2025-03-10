@@ -100,8 +100,7 @@ const handleCodeVerification = async () => {
     }
 
     if (result.success) {
-        alert("✅ 인증되었습니다!");
-        isJoinEnabled.value = true; // 완료 버튼 활성화
+        isJoinEnabled.value = true;
         console.log("✅ 완료 버튼 활성화됨:", isJoinEnabled.value);
     } else {
         isJoinEnabled.value = false;
