@@ -21,8 +21,6 @@ export default function useSignUp() {
                 nickname,
             };
 
-            console.log("📩 서버에 보낼 데이터:", JSON.stringify(payload, null, 2));
-
             const response = await fetch(`${SERVER_URL}/v1/login/signup`, {
                 method: "POST",
                 headers: {
@@ -34,7 +32,6 @@ export default function useSignUp() {
             let result;
             if (response.ok) {
                 result = await response.text(); // 200일 때는 텍스트 반환
-                console.log("✅ 회원가입 성공:", result);
             } else {
                 result = await response.json(); // 에러일 때는 JSON 반환
                 throw new Error(result.error || "회원가입 요청 실패");
@@ -47,7 +44,6 @@ export default function useSignUp() {
             signUpError.value = true;
             signUpErrorMessage.value =
                 error.message || "회원가입 중 알 수 없는 오류가 발생했습니다.";
-            console.error("❌ 회원가입 실패:", error);
         }
     };
 

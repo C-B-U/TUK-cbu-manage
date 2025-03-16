@@ -8,6 +8,7 @@ export const useUserStore = defineStore("user", {
         isAdmin: false,
         isDefaultPassword: false,
         isEmailNull: true,
+        emailUpdated: false,
     }),
     actions: {
         setUser(userInfo: { name: string; studentNumber: number; email?: string | null }) {
@@ -21,13 +22,19 @@ export const useUserStore = defineStore("user", {
             this.isDefaultPassword = authStatus.isDefaultPassword;
             this.isEmailNull = authStatus.isEmailNull;
         },
+        updateEmail(newEmail: string) {
+            this.email = newEmail;
+            this.isEmailNull = false;
+            this.emailUpdated = true;
+        },
         clearUser() {
             this.name = "";
             this.studentNumber = 0;
             this.email = null;
-            this.isAdmin = false;  // 로그아웃 시 기본 역할로 변경
+            this.isAdmin = false;
             this.isDefaultPassword = false;
             this.isEmailNull = true;
+            this.emailUpdated = false; // ✅ 로그아웃 시 초기화
         },
     },
 });

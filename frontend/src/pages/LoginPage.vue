@@ -47,18 +47,15 @@ const { handleLogin, isLoggedIn } = useLogin();
 const login = async () => {
     await handleLogin({ studentId: studentId.value, password: password.value });
 
-    console.log("🔍 로그인 후 이메일 확인:", userStore.email);
-    console.log("🔑 로그인 후 비밀번호 확인:", password.value);
-
-    // ✅ `nextTick`으로 상태 업데이트 후 이동 처리
+    // `nextTick`으로 상태 업데이트 후 이동 처리
     await nextTick();
 
-    if (isLoggedIn.value && (password.value === "12345678" || userStore.isEmailNull)) {
-        console.log("🚀 로그인 버튼 클릭 → /private 이동");
-        router.push("/private");
-    } else {
-        console.log("🏠 정상 로그인 → 홈 이동");
-        router.push("/");
+    if (isLoggedIn.value) {
+        if (password.value === "12345678" || userStore.isEmailNull) {
+            router.push("/private");
+        } else {
+            router.push("/");
+        }
     }
 };
 </script>

@@ -77,8 +77,6 @@ const changePassword = async () => {
         password: newPassword.value
     };
 
-    console.log("📢 서버에 전송할 데이터:", JSON.stringify(requestData, null, 2));
-
     const response = await fetch(`${SERVER_URL}/v1/login/password`, {
         method: "PATCH",
         headers: {
@@ -90,13 +88,12 @@ const changePassword = async () => {
 
     // ✅ 서버 응답이 200이면 성공 처리
     if (response.ok) {
-        alert("✅ 비밀번호 변경 완료!");
+        alert("비밀번호 변경 완료!");
     } else {
-        alert(`❌ 오류 발생: 비밀번호 변경 실패 (Status: ${response.status})`);
+        alert(`오류 발생: 비밀번호 변경 실패 (Status: ${response.status})`);
     }
 } catch (error) {
-    console.error("❌ 네트워크 오류:", error);
-    alert("❌ 네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+    alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
 }
 
     }

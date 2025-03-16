@@ -52,10 +52,8 @@ const handleUserVerification = async () => {
   if (result) {
     // 반환된 사용자 정보를 Pinia 스토어에 저장
     userStore.setUser(result);
-    console.log('닉네임 인증 성공!', result);
     emit('verified', result);
   } else {
-    console.log('닉네임 인증 실패.');
     alert('합격자 인증에 실패했습니다. 다시 시도해주세요.');
   }
 };
