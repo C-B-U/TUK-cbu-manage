@@ -6,15 +6,27 @@ export const useUserStore = defineStore("user", {
         studentNumber: 0,
         email: null as string | null,
         isAdmin: false,
+        major: "",
+        grade: "",
         isDefaultPassword: false,
         isEmailNull: true,
         emailUpdated: false,
     }),
     actions: {
-        setUser(userInfo: { name: string; studentNumber: number; email?: string | null }) {
+        setUser(userInfo: {
+            name: string;
+            studentNumber: number;
+            email?: string | null;
+            major?: string;
+            grade?: string;
+        }) {
             this.name = userInfo.name;
             this.studentNumber = userInfo.studentNumber;
             this.email = userInfo.email ?? null;
+
+            // ✅ Ensure major and grade are always defined
+            this.major = userInfo.major ?? "";
+            this.grade = userInfo.grade ?? "";
 
             this.isAdmin = userInfo.name === "관리자" && userInfo.email === "cbuAdmin@tukorea.ac.kr";
         },
@@ -32,6 +44,8 @@ export const useUserStore = defineStore("user", {
             this.studentNumber = 0;
             this.email = null;
             this.isAdmin = false;
+            this.major = "";
+            this.grade = "";
             this.isDefaultPassword = false;
             this.isEmailNull = true;
             this.emailUpdated = false; // ✅ 로그아웃 시 초기화

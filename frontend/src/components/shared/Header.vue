@@ -32,13 +32,12 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/stores/userStore';
+import { useRoute } from 'vue-router';
+import { useUserStore } from '../../stores/userStore';
 
 const userStore = useUserStore();
 const isLoggedIn = computed(() => !!userStore.name);
 const isDropdownOpen = ref(false);
-const router = useRouter();
 
 // ✅ 드롭다운 토글
 const toggleDropdown = () => {

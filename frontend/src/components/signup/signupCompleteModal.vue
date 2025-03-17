@@ -1,5 +1,5 @@
 <template>
-    <v-dialog :model-value="showModal" max-width="550px" persistent
+    <v-dialog :model-value="props.showModal" max-width="550px" persistent
         @update:model-value="emit('update:showModal', $event)">
         <v-card class="custom-card">
             <!-- 헤더 -->
@@ -43,7 +43,7 @@
 
 <script lang="ts" setup>
 import { defineProps, defineEmits, computed } from "vue";
-import { useUserStore } from "@/stores/userStore";
+import { useUserStore } from "../../stores/userStore";
 import { useRouter } from "vue-router";
 
 /* ✅ 직접 import */

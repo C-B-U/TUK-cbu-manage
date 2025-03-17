@@ -47,7 +47,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { useUserStore } from '@/stores/userStore';
+import { useUserStore } from '../stores/userStore';
 import { useRoute } from 'vue-router';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;

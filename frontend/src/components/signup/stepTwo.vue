@@ -75,9 +75,9 @@
 
 <script lang="ts" setup>
 import { ref, defineEmits } from "vue";
-import useVerifyEmail from "@/hooks/useVerifyEmail";
-import { useUserStore } from "@/stores/userStore";
-import useSignUp from "@/hooks/useSignUp";
+import useVerifyEmail from "../../hooks/useVerifyEmail";
+import { useUserStore } from "../../stores/userStore";
+import useSignUp from "../../hooks/useSignUp";
 
 // 이메일 및 인증번호 입력값 관리
 const studentEmail = ref("");
@@ -150,7 +150,7 @@ const handleJoin = async () => {
         emailWithSuffix,
         userStore.studentNumber,
         userStore.name,
-        userStore.nickName
+        ""
     );
 
     if (isSignUpSuccessful.value) {

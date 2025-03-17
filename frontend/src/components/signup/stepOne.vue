@@ -35,8 +35,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import useVerifyUser, { UserInfo } from '@/hooks/useVerifyUser';
-import { useUserStore } from '@/stores/userStore';
+import useVerifyUser, { UserInfo } from '../../hooks/useVerifyUser';
+import { useUserStore } from '../../stores/userStore';
 
 // 학번과 닉네임 입력값 관리
 const studentNumber = ref('');

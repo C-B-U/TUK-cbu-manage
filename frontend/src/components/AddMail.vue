@@ -62,8 +62,8 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import useVerifyEmail from "@/hooks/useVerifyEmail";
-import { useUserStore } from '@/stores/userStore';
+import useVerifyEmail from "../hooks/useVerifyEmail";
+import { useUserStore } from '../stores/userStore';
 
 const userStore = useUserStore();
 const router = useRouter();

@@ -16,7 +16,6 @@
                   </v-icon>
                 </template>
               </v-text-field>
-
               <v-btn type="submit" block large class="mt-4 font-weight-bold custom-btn">
                 로그인
               </v-btn>
@@ -34,8 +33,8 @@
 <script setup>
 import { ref, computed, nextTick } from "vue";
 import { useRouter } from "vue-router";
-import { useLogin } from "@/hooks/useLogin";
-import { useUserStore } from "@/stores/userStore";
+import { useLogin } from "../hooks/useLogin";
+import { useUserStore } from "../stores/userStore";
 
 const studentId = ref("");
 const password = ref("");
