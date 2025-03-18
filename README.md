@@ -1,10 +1,18 @@
-# cbu-manage
+# CBU-Manage - 한국공대 동아리 씨부엉 회원관리 웹사이트
+
+## 🧾 개요
 프로젝트 제목 : 씨부엉 회원관리 사이트<br>
 목적 : 효율적인 씨부엉 동아리 회원관리를 위함<br>
-서비스 링크 : <br>
-
-Team
 <br>
+
+## 📃 프로젝트
+
+### 🔗 Service Link : https://tukcbu.netlify.app/
+<br>
+
+
+## 👥 TEAM
+
 <table width="950">
     <thead>
     </thead>
@@ -56,7 +64,4 @@ Team
     </tr>
     </tbody>
 </table>
-
 <br>
-<br>
-페이지별 기능 소개
