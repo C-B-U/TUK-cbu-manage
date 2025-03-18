@@ -34,23 +34,23 @@ Team
     <tr>
         <th>GitHub</th>
         <td width="100" align="center">
-            <a href="#">
-                <img src="#"/>
+            <a href="https://github.com/ming0o">
+                <img src="http://img.shields.io/badge/ming0o-green?style=social&logo=github"/>
             </a>
         </td>
         <td width="100" align="center">
-            <a href="[#](https://github.com/76Dosu)">
+            <a href="https://github.com/76Dosu">
                 <img src="http://img.shields.io/badge/76Dosu-green?style=social&logo=github"/>
             </a>
         </td>
         <td width="100" align="center">
-            <a href="#">
-                <img src="#"/>
+            <a href="https://github.com/BongSeongEun">
+                <img src="http://img.shields.io/badge/BongSeongEun-green?style=social&logo=github"/>
             </a>
         </td>
         <td width="100" align="center">
-            <a href="#">
-                <img src="#"/>
+            <a href="https://github.com/SH4316">
+                <img src="http://img.shields.io/badge/SH4316-green?style=social&logo=github"/>
             </a>
         </td>
     </tr>
