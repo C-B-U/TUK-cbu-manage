@@ -82,7 +82,7 @@ footer .footer-info-area {
     flex-direction: column;
     align-items: center;
 
-    gap: 0.8rem;
+    gap: 1rem;
 }
 
 .social-area {

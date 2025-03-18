@@ -87,8 +87,8 @@ const handleVerified = (data: any) => {
 }
 
 .step {
-  width: 0.8rem;
-  height: 0.8rem;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
   background-color: #ccc;
   margin: 0 5px;
@@ -109,7 +109,7 @@ const handleVerified = (data: any) => {
   color: #fff;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  font-size: 0.8rem;
+  font-size: 1rem;
   text-transform: uppercase;
   transition: transform 0.2s ease;
 }

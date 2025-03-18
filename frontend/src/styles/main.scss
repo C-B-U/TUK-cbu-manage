@@ -43,7 +43,7 @@ body {
 }
 .pagination li.v-pagination__item {
     border-radius: 4px;
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 .pagination li.v-pagination__item--is-active {
     background-color: var(--mainColor);
@@ -54,7 +54,7 @@ body {
 }
 
 .pagination li.v-pagination__item .v-btn__content {
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 .v-btn--variant-text .v-btn__overlay {
     background-color: transparent !important;

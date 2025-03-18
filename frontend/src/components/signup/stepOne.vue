@@ -71,7 +71,7 @@ const handleUserVerification = async () => {
     color: #fff;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    font-size: 0.8rem;
+    font-size: 1rem;
     text-transform: uppercase;
     transition: transform 0.2s ease;
     letter-spacing: 0;

@@ -165,7 +165,7 @@ const handleComplete = async () => {
     width: 100%;
     text-align: center;
     background-color: #fff;
-    border-radius: 0.8rem;
+    border-radius: 1rem;
     box-shadow: none;
 }
 
@@ -194,7 +194,7 @@ const handleComplete = async () => {
     background-color: var(--mainColor);
     height: 50px;
     color: #fff;
-    border-radius: 0.8rem;
+    border-radius: 1rem;
     box-shadow: none;
     font-size: 1rem;
     text-transform: uppercase;

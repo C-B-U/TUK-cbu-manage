@@ -115,7 +115,7 @@ nav a,
 
 /* "님, 환영합니다!" 스타일 */
 .welcome-text {
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 500;
     color: var(--darkText);
     margin-right: 8px;
