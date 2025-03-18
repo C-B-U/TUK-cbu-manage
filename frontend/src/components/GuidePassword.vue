@@ -154,7 +154,7 @@ const changePassword = async () => {
     background-color: var(--mainColor);
     height: 50px;
     color: #fff;
-    border-radius: 12px;
+    border-radius: 0.8rem;
     box-shadow: none;
     font-size: 1rem;
     text-transform: uppercase;

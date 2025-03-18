@@ -174,13 +174,13 @@ const handleJoin = async () => {
     color: #fff;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    font-size: 1rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
     transition: transform 0.2s ease;
     letter-spacing: 0;
 }
 
-::v-deep .rounded-input .v-field__outline {
+::deep .rounded-input .v-field__outline {
     border-radius: 10px;
 }
 

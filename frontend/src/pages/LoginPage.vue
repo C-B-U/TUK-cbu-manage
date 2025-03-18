@@ -1,7 +1,7 @@
 <template>
   <v-container class="login-page">
     <v-row align-items="center" justify="center" class="login-row">
-      <v-col cols="12" sm="10" md="10" lg="8">
+      <v-col cols="10" sm="8" md="8" lg="6">
         <div class="login-wrapper">
           <h2 class="login-title">로그인</h2>
           <v-card-text>
@@ -81,12 +81,12 @@ const login = async () => {
 .login-wrapper {
   text-align: center;
   padding: 40px;
-  border-radius: 12px;
+  border-radius: 0.8rem;
   background-color: #fff;
 }
 
 .login-title {
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 20px;
   color: #333;
@@ -101,9 +101,9 @@ const login = async () => {
   background-color: var(--mainColor);
   height: 50px;
   color: #fff;
-  border-radius: 12px;
+  border-radius: 0.8rem;
   box-shadow: none;
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   transition: transform 0.2s ease;
   letter-spacing: 0;
@@ -127,7 +127,7 @@ const login = async () => {
   text-decoration: none;
 }
 
-::v-deep .rounded-input .v-field__outline {
+::deep .rounded-input .v-field__outline {
   border-radius: 10px;
 }
 </style>

@@ -1,7 +1,3 @@
-// Vuetify 설정 가져오기
-@use 'vuetify/settings' with ($body-font-family: ('pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif),
-    $font-size-root: 16px);
-
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
 // 공통 전역 스타일
@@ -47,7 +43,7 @@ body {
 }
 .pagination li.v-pagination__item {
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 0.8rem;
 }
 .pagination li.v-pagination__item--is-active {
     background-color: var(--mainColor);
@@ -58,7 +54,7 @@ body {
 }
 
 .pagination li.v-pagination__item .v-btn__content {
-    font-size: 14px;
+    font-size: 0.8rem;
 }
 .v-btn--variant-text .v-btn__overlay {
     background-color: transparent !important;

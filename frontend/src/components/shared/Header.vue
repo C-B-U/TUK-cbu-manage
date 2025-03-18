@@ -81,12 +81,12 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 24px var(--entirePadding);
+    padding: 1.5rem var(--entirePadding);
 }
 
 #header-nav #logo {
     width: auto;
-    height: 32px;
+    height: 2rem;
 }
 
 #header-nav>nav ul,
@@ -96,13 +96,13 @@ header {
 
 nav a,
 #util a {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 500;
     color: var(--darkText);
 }
 
 #util ul {
-    gap: 24px;
+    gap: 1.5rem;
 }
 
 /* 사용자 드롭다운 */
@@ -115,7 +115,7 @@ nav a,
 
 /* "님, 환영합니다!" 스타일 */
 .welcome-text {
-    font-size: 16px;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--darkText);
     margin-right: 8px;
@@ -123,7 +123,7 @@ nav a,
 
 /* 드롭다운 버튼 스타일 */
 .dropdown-btn {
-    font-size: 18px;
+    font-size: 1rem;
     cursor: pointer;
     transition: transform 0.2s ease;
     color: var(--darkText);
@@ -150,7 +150,7 @@ nav a,
 /* 메뉴 스타일 통일 */
 .dropdown-menu a,
 .dropdown-menu button {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 500;
     text-align: left;
     padding: 10px 14px;

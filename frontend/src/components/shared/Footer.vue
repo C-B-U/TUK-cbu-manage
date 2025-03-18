@@ -57,11 +57,11 @@ footer {
 
     display: flex;
     flex-direction: column;
-    gap: 36px;
+    gap: 25px;
 }
 
 #footer-logo {
-    width: 132px;
+    width: 100px;
     height: auto;
 }
 
@@ -73,7 +73,7 @@ footer .footer-info-area {
 
 .footer-info-area p {
     text-align: center;
-    font-size: 14px;
+    font-size: 1rem;
     color: white;
 }
 
@@ -82,7 +82,7 @@ footer .footer-info-area {
     flex-direction: column;
     align-items: center;
 
-    gap: 12px;
+    gap: 0.8rem;
 }
 
 .social-area {
@@ -92,8 +92,8 @@ footer .footer-info-area {
 }
 
 .social-icon {
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
     display: flex;
 }
 
@@ -105,7 +105,7 @@ footer .footer-info-area {
 }
 
 .footer-bottom .copyright {
-    font-size: 12px;
+    font-size: 1rem;
     color: #CCCCCC;
 }
 </style>

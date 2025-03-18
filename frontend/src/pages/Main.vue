@@ -37,12 +37,12 @@ export default {
 }
 
 .contents #title {
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 600;
 }
 
 .contents p {
-    font-size: 16px;
+    font-size: 1rem;
     color: var(--semiDarkText);
 
     margin: 8px 0px 36px 0px;

@@ -79,9 +79,9 @@ const goToLogin = () => {
 <style scoped>
 /* 모달 스타일 */
 .custom-card {
-    padding: 24px;
+    padding: 1.5rem;
     border-radius: 16px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 4px 0.8rem rgba(0, 0, 0, 0.15);
     background-color: white;
     border: 2px solid #ddd;
 }
@@ -95,7 +95,7 @@ const goToLogin = () => {
 .info-box {
     background: #eeeeee;
     padding: 14px 16px;
-    border-radius: 12px;
+    border-radius: 0.8rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -108,18 +108,18 @@ const goToLogin = () => {
 .label {
     font-weight: bold;
     color: #666;
-    font-size: 14px;
+    font-size: 0.8rem;
 }
 
 .value {
-    font-size: 1.1rem;
+    font-size: 0.8rem;
     font-weight: bold;
     color: #333;
 }
 
 .password-value {
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 0.8rem;
 }
 
 /* 하단 버튼 스타일 */
@@ -132,7 +132,7 @@ const goToLogin = () => {
 .custom-btn {
     flex: 1;
     height: 44px;
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: bold;
     border-radius: 8px;
 }
@@ -181,7 +181,7 @@ const goToLogin = () => {
 
 /* 작은 글씨 */
 .small-text {
-    font-size: 12px;
+    font-size: 0.8rem;
     color: #666;
     margin-top: 8px;
 }

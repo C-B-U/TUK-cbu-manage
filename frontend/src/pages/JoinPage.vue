@@ -1,7 +1,7 @@
 <template>
   <v-container class="join-page">
     <v-row align-items="center" justify="center" class="join-row">
-      <v-col cols="12" sm="10" md="10" lg="8">
+      <v-col cols="10" sm="8" md="8" lg="6">
         <div class="join-wrapper">
           <div class="step-indicator">
             <div :class="['step', { active: currentStep === 1 }]"></div>
@@ -72,7 +72,7 @@ const handleVerified = (data: any) => {
 }
 
 .join-title {
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 10px;
   padding: 16px;
@@ -87,8 +87,8 @@ const handleVerified = (data: any) => {
 }
 
 .step {
-  width: 15px;
-  height: 15px;
+  width: 0.8rem;
+  height: 0.8rem;
   border-radius: 50%;
   background-color: #ccc;
   margin: 0 5px;
@@ -105,11 +105,11 @@ const handleVerified = (data: any) => {
 
 .custom-btn {
   background-color: var(--mainColor);
-  height: 56px;
+  height: 40px;
   color: #fff;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   transition: transform 0.2s ease;
 }
