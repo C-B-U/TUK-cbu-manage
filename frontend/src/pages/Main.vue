@@ -3,8 +3,8 @@
 <template>
     <div class="wrap">
         <div class="contents">
-            <h1 id="title">프로그래밍 동아리 <span style="color:var(--mainColor)">씨부엉</span>에 오신 것을 환영합니다.</h1>
-            <p>한국공학대학교 씨부엉 동아리의 공식 웹사이트입니다</p>
+            <h1 id="title"><span style="color:var(--mainColor)">씨부엉</span>에 오신 것을 환영합니다.</h1>
+            <p>한국공학대학교 프로그래밍 동아리 씨부엉의 공식 웹사이트입니다</p>
 
             <!-- 지원기간에 따라 status 변경 active/disabled -->
             <Button id="recruitment-button" status="disabled"></Button>
