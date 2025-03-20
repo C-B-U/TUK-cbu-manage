@@ -16,7 +16,7 @@
       <v-col cols="9">
         <v-text-field
           class="rounded-input"
-          v-model="nickname"
+          v-model="nickName"
           label="지원 시 닉네임"
           placeholder="지원 시 구글폼에 입력한 본인의 닉네임을 적어주세요"
           variant="outlined"
@@ -40,7 +40,7 @@ import { useUserStore } from '../../stores/userStore';
 
 // 학번과 닉네임 입력값 관리
 const studentNumber = ref('');
-const nickname = ref('');
+const nickName = ref('');
 
 const emit = defineEmits<{ (e: 'verified', data: UserInfo): void }>();
 
@@ -48,7 +48,7 @@ const { verifyUser } = useVerifyUser();
 const userStore = useUserStore();
 
 const handleUserVerification = async () => {
-  const result = await verifyUser(studentNumber.value, nickname.value);
+  const result = await verifyUser(studentNumber.value, nickName.value);
   if (result) {
     // 반환된 사용자 정보를 Pinia 스토어에 저장
     userStore.setUser(result);

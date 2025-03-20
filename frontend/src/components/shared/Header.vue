@@ -153,7 +153,7 @@ nav a,
     font-size: 1rem;
     font-weight: 500;
     text-align: left;
-    padding: 10px 14px;
+    padding: 10px 0.875rem;
     width: 100%;
     background: none;
     border: none;

@@ -108,12 +108,12 @@ const changePassword = async () => {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 16px;
+    padding: 1rem;
     box-sizing: border-box;
 }
 
 .password-change-container {
-    padding: 40px;
+    padding: 2.5rem;
     width: 80%;
     text-align: center;
     background-color: #fff;
@@ -128,7 +128,7 @@ const changePassword = async () => {
 }
 
 .subtitle {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .password-input {
@@ -140,8 +140,8 @@ const changePassword = async () => {
     display: block;
     text-align: left;
     color: #555;
-    font-size: 14px;
-    margin-top: -20px;
+    font-size: 0.875rem;
+    margin-top: -1.25rem;
     margin-bottom: 30px;
 }
 

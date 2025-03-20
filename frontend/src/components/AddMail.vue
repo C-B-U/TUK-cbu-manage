@@ -156,12 +156,12 @@ const handleComplete = async () => {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 16px;
+    padding: 1rem;
     box-sizing: border-box;
 }
 
 .email-verification-container {
-    padding: 40px;
+    padding: 2.5rem;
     width: 100%;
     text-align: center;
     background-color: #fff;
@@ -177,7 +177,7 @@ const handleComplete = async () => {
 }
 
 .subtitle {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .rounded-input {
@@ -210,6 +210,6 @@ const handleComplete = async () => {
     font-size: 1.2rem;
     font-weight: bold;
     color: var(--mainColor);
-    margin-top: 20px;
+    margin-top: 1.25rem;
 }
 </style>

@@ -66,7 +66,7 @@ const handleEmailUpdated = () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    padding: 1rem;
     width: 100vw;
     max-width: 100%;
     box-sizing: border-box;

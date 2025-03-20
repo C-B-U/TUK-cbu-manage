@@ -55,7 +55,7 @@ const handleVerified = (data: any) => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 16px;
+  padding: 1rem;
   box-sizing: border-box;
 }
 
@@ -68,14 +68,14 @@ const handleVerified = (data: any) => {
 
 .join-wrapper {
   position: relative;
-  padding-top: 40px;
+  padding-top: 2.5rem;
 }
 
 .join-title {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 10px;
-  padding: 16px;
+  padding: 1rem;
   color: #333;
   text-align: center;
 }
@@ -105,7 +105,7 @@ const handleVerified = (data: any) => {
 
 .custom-btn {
   background-color: var(--mainColor);
-  height: 40px;
+  height: 2.5rem;
   color: #fff;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -115,7 +115,7 @@ const handleVerified = (data: any) => {
 }
 
 .guide-text {
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
 .custom-link {

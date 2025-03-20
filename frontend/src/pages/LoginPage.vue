@@ -1,7 +1,7 @@
 <template>
   <v-container class="login-page">
     <v-row align-items="center" justify="center" class="login-row">
-      <v-col cols="10" sm="8" md="8" lg="6">
+      <v-col cols="10" sm="6" md="6" lg="8">
         <div class="login-wrapper">
           <h2 class="login-title">로그인</h2>
           <v-card-text>
@@ -67,7 +67,7 @@ const login = async () => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 16px;
+  padding: 1rem;
   box-sizing: border-box;
 }
 
@@ -80,7 +80,7 @@ const login = async () => {
 
 .login-wrapper {
   text-align: center;
-  padding: 40px;
+  padding: 2.5rem;
   border-radius: 1rem;
   background-color: #fff;
 }
@@ -88,7 +88,7 @@ const login = async () => {
 .login-title {
   font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   color: #333;
 }
 
@@ -114,7 +114,7 @@ const login = async () => {
 }
 
 .guide-text {
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
 .custom-link {

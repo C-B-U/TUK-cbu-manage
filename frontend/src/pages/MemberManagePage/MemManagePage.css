@@ -1,6 +1,6 @@
 .container {
     margin: auto;
-    padding: 120px var(--entirePadding);
+    padding: 11.25rem var(--entirePadding);
 }
 
 .header {
@@ -30,7 +30,7 @@
 /* 우측 유틸 컨테이너 */
 .right-header {
     display: flex;
-    gap: 20px;
+    gap: 1.25rem;
 }
 
 .sync-button-area {
@@ -42,14 +42,14 @@
     background-color: var(--mainColor);
     border:1px solid var(--mainColor);
     
-    padding: 1rem 1.5rem 1rem 20px;
+    padding: 1rem 1.5rem 1rem 1.25rem;
     border-radius: 999px;
     cursor: pointer;
     transition: all .3s;
 }
 
     .sync-button-area > img {
-        width: 20px;
+        width: 1.25rem;
         height: auto;
     }
 
@@ -75,13 +75,13 @@
     width: fit-content;
 
     border: 1px solid #ccc;
-    padding: 1rem 1.5rem 1rem 20px;
+    padding: 1rem 1.5rem 1rem 1.25rem;
     border-radius: 999px;
     min-width: 300px;
 }
 
     .search-input-area > img {
-        width: 20px;
+        width: 1.25rem;
         height: auto;
     }
 
@@ -106,7 +106,7 @@
 }
 
 .table th {
-    padding:16px 1rem;
+    padding:1rem 1rem;
     background-color: #f5f5f5;
     font-weight: 600;
 }
@@ -124,8 +124,8 @@
     transition: all .3s;
     position: relative;
 
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     background-color: white;
     border-radius: 4px;
     border: 1px solid #ccc;
@@ -182,8 +182,8 @@ tr.selected {
     top: 50%;
     right: 0;
     transform: translate(4px, -50%);
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
 .dropdown-menu {
@@ -200,7 +200,7 @@ tr.selected {
     list-style: none;
     padding: 0;
     margin-top:-8px;
-    width: 120px;
+    width: 11.25rem;
     max-height: 200px;
 
     overflow-y: auto;
@@ -233,8 +233,8 @@ table tbody input {
 
 table tbody label {
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     background: #eeeeee;
     border: 1px solid #eeeeee;
     border-radius: 4px;
@@ -267,12 +267,12 @@ table tbody input[type="checkbox"]:checked + label::before {
 
 .left-buttons {
     display: flex;
-    gap: 20px;
+    gap: 1.25rem;
 }
 
 .right-buttons {
     display: flex;
-    gap: 20px;
+    gap: 1.25rem;
 }
 
 .btn {

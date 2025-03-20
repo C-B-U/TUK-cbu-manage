@@ -80,26 +80,26 @@ const goToLogin = () => {
 /* 모달 스타일 */
 .custom-card {
     padding: 1.5rem;
-    border-radius: 16px;
+    border-radius: 1rem;
     box-shadow: 0px 4px 1rem rgba(0, 0, 0, 0.15);
     background-color: white;
     border: 2px solid #ddd;
 }
 
 .content-container {
-    padding-top: 20px;
+    padding-top: 1.25rem;
     position: relative;
 }
 
 /* 아이디 및 비밀번호 필드 스타일 */
 .info-box {
     background: #eeeeee;
-    padding: 14px 16px;
+    padding: 0.875rem 1rem;
     border-radius: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
     position: relative;
     z-index: 15;
     /* ✅ 필드가 올빼미보다 위에 오도록 설정 */
@@ -126,7 +126,7 @@ const goToLogin = () => {
 .action-buttons {
     display: flex;
     justify-content: space-between;
-    padding: 16px;
+    padding: 1rem;
 }
 
 .custom-btn {
@@ -167,14 +167,14 @@ const goToLogin = () => {
 .right-owl {
     right: -15px;
     /* ✅ 필드 오른쪽에 살짝 걸치게 */
-    top: 40px;
+    top: 2.5rem;
     /* ✅ 필드 중앙보다 살짝 아래 */
     transform: rotate(10deg);
 }
 
 /* 비밀번호 필드 올빼미 (왼쪽 아래) */
 .left-owl {
-    left: -20px;
+    left: -1.25rem;
     top: 100px;
     transform: rotate(0deg);
 }

@@ -55,7 +55,7 @@
                     <td>{{ item.batch }}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.studentId }}</td>
-                    <td>{{ item.nickname }}</td>
+                    <td>{{ item.nickName }}</td>
                     <td>{{ item.email }}</td>
                     <td :class="{ paid: item.paymentStatus, unpaid: !item.paymentStatus }">
                         {{ item.paymentStatus ? "입금" : "미입금" }}
@@ -102,7 +102,7 @@ const data = Array.from({ length: 30 }, (_, i) => ({
     id: i + 1, // 고유 ID
     name: `회원 ${i + 1}`,
     studentId: `20191${Math.floor(10000 + Math.random() * 89999)}`,
-    nickname: `닉네임 ${i + 1}`,
+    nickName: `닉네임 ${i + 1}`,
     email: `user${i + 1}@tukorea.ac.kr`,
     batch: `${Math.floor(1 + Math.random() * 20)}기`,
     paymentStatus: Math.random() > 0.5,

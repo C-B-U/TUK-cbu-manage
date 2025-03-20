@@ -10,17 +10,16 @@ export default function useSignUp() {
         email: string,
         studentNumber: number,
         name: string,
-        nickname: string
+        nickName: string
     ) => {
         try {
             const payload = {
                 email,
-                password: "12345678", // 기본 비밀번호 1234로 고정
+                password: "12345678", // 기본 비밀번호 고정
                 name,
                 studentNumber,
-                nickname,
+                nickname: nickName,
             };
-
             const response = await fetch(`${SERVER_URL}/v1/login/signup`, {
                 method: "POST",
                 headers: {

@@ -87,7 +87,7 @@ footer .footer-info-area {
 
 .social-area {
     display: flex;
-    gap: 16px;
+    gap: 1rem;
     justify-content: center;
 }
 

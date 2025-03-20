@@ -150,7 +150,7 @@ const handleJoin = async () => {
         emailWithSuffix,
         userStore.studentNumber,
         userStore.name,
-        ""
+        userStore.nickName
     );
 
     if (isSignUpSuccessful.value) {
