@@ -1,7 +1,7 @@
 <template>
   <v-container class="login-page">
     <v-row align-items="center" justify="center" class="login-row">
-      <v-col cols="10" sm="6" md="6" lg="8">
+      <v-col cols="10" sm="7" md="7" lg="8">
         <div class="login-wrapper">
           <h2 class="login-title">로그인</h2>
           <v-card-text>
@@ -86,7 +86,7 @@ const login = async () => {
 }
 
 .login-title {
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 2vw, 1.5rem);
   font-weight: bold;
   margin-bottom: 1.25rem;
   color: #333;
@@ -103,7 +103,7 @@ const login = async () => {
   color: #fff;
   border-radius: 1rem;
   box-shadow: none;
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 1vw, 1rem);
   text-transform: uppercase;
   transition: transform 0.2s ease;
   letter-spacing: 0;
@@ -127,7 +127,20 @@ const login = async () => {
   text-decoration: none;
 }
 
-::deep .rounded-input .v-field__outline {
-  border-radius: 10px;
+:deep(.rounded-input .v-input__control) {
+  min-height: clamp(40px, 4vw, 50px) !important;
+}
+
+:deep(.rounded-input input::placeholder) {
+  font-size: clamp(0.5rem, 0.7vw, 0.875rem) !important;
+  color: #aaa;
+}
+
+:deep(.rounded-input .v-icon) {
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+}
+
+.rounded-input .v-field__input {
+  font-size: clamp(0.5rem, 0.7vw, 1rem) !important;
 }
 </style>
