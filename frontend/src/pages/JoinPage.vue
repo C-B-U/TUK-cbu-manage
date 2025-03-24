@@ -1,7 +1,7 @@
 <template>
   <v-container class="join-page">
     <v-row align-items="center" justify="center" class="join-row">
-      <v-col cols="10" sm="7" md="7" lg="8">
+      <v-col cols="10" sm="7" md="7" lg="7">
         <div class="join-wrapper">
           <div class="step-indicator">
             <div :class="['step', { active: currentStep === 1 }]"></div>
