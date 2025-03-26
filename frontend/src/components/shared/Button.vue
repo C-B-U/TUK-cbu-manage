@@ -38,7 +38,7 @@ const handleClick = () => {
 <style scoped>
 .custom-button {
   padding: 1rem 1.5rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   border-radius: 100px;
   cursor: pointer;

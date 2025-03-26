@@ -73,7 +73,7 @@ footer .footer-info-area {
 
 .footer-info-area p {
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: white;
 }
 
@@ -82,12 +82,12 @@ footer .footer-info-area {
     flex-direction: column;
     align-items: center;
 
-    gap: 1rem;
+    gap: 0.9rem;
 }
 
 .social-area {
     display: flex;
-    gap: 1rem;
+    gap: 0.9rem;
     justify-content: center;
 }
 
@@ -105,7 +105,7 @@ footer .footer-info-area {
 }
 
 .footer-bottom .copyright {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #CCCCCC;
 }
 </style>

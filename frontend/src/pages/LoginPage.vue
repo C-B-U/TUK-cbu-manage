@@ -4,7 +4,7 @@
       <v-col cols="10" sm="7" md="7" lg="7">
         <div class="login-wrapper">
           <h2 class="login-title">로그인</h2>
-          <v-card-text>
+          <v-card-text class="text-container">
             <v-form @submit.prevent="login">
               <v-text-field class="rounded-input" v-model="studentId" label="아이디" placeholder="아이디를 입력하세요" required
                 variant="outlined" dense></v-text-field>
@@ -67,7 +67,7 @@ const login = async () => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 1rem;
+  padding: 0.5rem;
   box-sizing: border-box;
 }
 
@@ -94,16 +94,16 @@ const login = async () => {
 
 .input-field {
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 0px;
 }
 
 .custom-btn {
   background-color: var(--mainColor);
-  height: 50px;
+  height: clamp(40px, 4vw, 48px);
   color: #fff;
-  border-radius: 1rem;
+  border-radius: 10px;
   box-shadow: none;
-  font-size: clamp(0.875rem, 1vw, 1rem);
+  font-size: clamp(0.7rem, 0.9vw, 0.9rem);
   text-transform: uppercase;
   transition: transform 0.2s ease;
   letter-spacing: 0;
@@ -115,6 +115,7 @@ const login = async () => {
 
 .guide-text {
   margin-top: 1.25rem;
+  font-size: 0.9rem;
 }
 
 .custom-link {
@@ -128,19 +129,40 @@ const login = async () => {
 }
 
 :deep(.rounded-input .v-input__control) {
-  min-height: clamp(40px, 4vw, 50px) !important;
+  height: clamp(40px, 4vw, 48px) !important;
+  min-height: clamp(40px, 4vw, 48px) !important;
+  display: flex;
+  align-items: center;
+}
+
+:deep(.rounded-input .v-label) {
+  font-size: clamp(0.7rem, 0.9vw, 0.9rem) !important;
+  line-height: 1.2;
 }
 
 :deep(.rounded-input input::placeholder) {
-  font-size: clamp(0.5rem, 0.7vw, 0.875rem) !important;
+  font-size: clamp(0.7rem, 0.9vw, 0.9rem) !important;
   color: #aaa;
+  line-height: 1;
 }
 
 :deep(.rounded-input .v-icon) {
   font-size: clamp(1rem, 1.2vw, 1.25rem);
 }
 
-.rounded-input .v-field__input {
-  font-size: clamp(0.5rem, 0.7vw, 1rem) !important;
+:deep(.rounded-input .v-field__input) {
+  font-size: clamp(0.65rem, 0.8vw, 0.8rem) !important;
+  margin: 0;
+  height: 100%;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
 }
+
+/* 테두리 둥글게 */
+:deep(.rounded-input .v-field__outline) {
+  border-radius: 10px;
+}
+
 </style>

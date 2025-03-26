@@ -180,8 +180,33 @@ const handleJoin = async () => {
     letter-spacing: 0;
 }
 
-::deep .rounded-input .v-field__outline {
-    border-radius: 10px;
+/* 입력창 내부 글자 영역 */
+:deep(.rounded-input .v-field__input) {
+  font-size: clamp(0.65rem, 0.9vw, 0.8rem) !important;
+  padding: 0 !important;
+  margin: 0;
+  height: 100%;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* 라벨 (위에 뜨는 '학번' 글씨) */
+:deep(.rounded-input .v-label) {
+  font-size: clamp(0.7rem, 0.8vw, 0.875rem) !important;
+  line-height: 1.2;
+}
+
+/* placeholder 크기 줄이기 */
+:deep(.rounded-input input::placeholder) {
+  font-size: clamp(0.6rem, 0.8vw, 0.75rem) !important;
+  color: #aaa;
+  line-height: 1;
+}
+
+/* 테두리 둥글게 */
+:deep(.rounded-input .v-field__outline) {
+  border-radius: 10px;
 }
 
 /* 실패 시: 빨간색 테두리 및 안내 메시지 */

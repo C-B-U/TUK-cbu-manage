@@ -9,15 +9,15 @@
           </div>
 
           <h2 class="join-title">회원가입</h2>
-          <v-card-text>
+          <v-card-text class="component-container">
             <component :is="currentComponent" @completed="showModal = true" @verified="handleVerified" />
           </v-card-text>
-          <h4 class="guide-text">
+          <div class="guide-text">
             지원 시 닉네임 기억이 나지 않는다면? &nbsp;
             <a href="https://www.instagram.com/tukorea_cbu/#" class="custom-link" target="_blank" rel="noopener noreferrer">
               합격자 발표 확인해보기 (클릭!)
             </a>
-          </h4>
+          </div>
           <br />
         </div>
       </v-col>
@@ -72,7 +72,7 @@ const handleVerified = (data: any) => {
 }
 
 .join-title {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bold;
   margin-bottom: 10px;
   padding: 1rem;
@@ -116,6 +116,7 @@ const handleVerified = (data: any) => {
 
 .guide-text {
   margin-top: 1.25rem;
+  font-size: 0.9rem;
 }
 
 .custom-link {

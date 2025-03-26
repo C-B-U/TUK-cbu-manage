@@ -21,8 +21,8 @@
 
                     <!-- 드롭다운 메뉴 -->
                     <div v-if="isDropdownOpen" class="dropdown-menu">
-                        <router-link to="/change-password">🔑 비밀번호 변경</router-link>
-                        <button @click="handleLogout">🚪 로그아웃</button>
+                        <router-link to="/change-password" >비밀번호 변경</router-link>
+                        <button @click="handleLogout">로그아웃</button>
                     </div>
                 </div>
             </div>
@@ -96,7 +96,7 @@ header {
 
 nav a,
 #util a {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
     color: var(--darkText);
 }
@@ -115,7 +115,7 @@ nav a,
 
 /* "님, 환영합니다!" 스타일 */
 .welcome-text {
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 500;
     color: var(--darkText);
     margin-right: 8px;
@@ -123,7 +123,7 @@ nav a,
 
 /* 드롭다운 버튼 스타일 */
 .dropdown-btn {
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: transform 0.2s ease;
     color: var(--darkText);
@@ -145,12 +145,13 @@ nav a,
     z-index: 1000;
     text-align: left;
     margin-top: 10px;
+    font-size: 0.9rem;
 }
 
 /* 메뉴 스타일 통일 */
 .dropdown-menu a,
 .dropdown-menu button {
-    font-size: 1rem;
+    font-size: inherit !important;
     font-weight: 500;
     text-align: left;
     padding: 10px 0.875rem;

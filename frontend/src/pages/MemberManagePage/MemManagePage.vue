@@ -65,6 +65,9 @@
             </tbody>
         </table>
 
+        <v-pagination v-model:currentPage="currentPage" :length="totalPages" class="pagination"
+            @update:modelValue="handlePageChange"/>
+            
         <div class="button-group">
             <div class="left-buttons">
                 <button class="btn-outline">활동 상태 변경</button>
@@ -75,9 +78,7 @@
             </div>
         </div>
 
-        <v-pagination v-model:currentPage="currentPage" :length="totalPages" class="pagination"
-            @update:modelValue="handlePageChange"/>
-
+        
     </div>
 </template>
 
