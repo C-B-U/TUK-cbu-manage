@@ -1,21 +1,29 @@
 <template>
   <v-container class="login-page">
     <v-row align-items="center" justify="center" class="login-row">
-      <v-col cols="12" sm="8" md="6" lg="6">
+      <v-col cols="10" sm="7" md="7" lg="7">
         <div class="login-wrapper">
           <h2 class="login-title">로그인</h2>
-          <v-card-text>
-            <v-form @submit.prevent="handleLogin">
-              <v-text-field v-model="name" label="이름" placeholder="이름을 입력하세요" required variant="outlined"
-                dense></v-text-field>
-              <v-text-field v-model="studentId" label="학번" placeholder="학번을 입력하세요" required variant="outlined"
-                dense></v-text-field>
+          <v-card-text class="text-container">
+            <v-form @submit.prevent="login">
+              <v-text-field class="rounded-input" v-model="studentId" label="아이디" placeholder="아이디를 입력하세요" required
+                variant="outlined" dense></v-text-field>
+              <v-text-field class="rounded-input" v-model="password" label="비밀번호"
+                :type="showPassword ? 'text' : 'password'" placeholder="비밀번호를 입력하세요" required variant="outlined" dense>
+                <template v-slot:append-inner>
+                  <v-icon @click="showPassword = !showPassword">
+                    {{ showPassword ? 'mdi-eye-off' : 'mdi-eye' }}
+                  </v-icon>
+                </template>
+              </v-text-field>
               <v-btn type="submit" block large class="mt-4 font-weight-bold custom-btn">
                 로그인
               </v-btn>
             </v-form>
           </v-card-text>
-          <h4 class="guide-text">동아리에 새로 가입하셨나요? &nbsp; <router-link to="/join" class="custom-link">회원가입</router-link></h4>
+          <h4 class="guide-text">씨부엉 입부를 축하합니다! 첫 로그인이라면? &nbsp; <router-link to="/join"
+              class="custom-link">회원가입</router-link>
+          </h4>
         </div>
       </v-col>
     </v-row>
@@ -23,18 +31,34 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed, nextTick } from "vue";
+import { useRouter } from "vue-router";
+import { useLogin } from "../hooks/useLogin";
+import { useUserStore } from "../stores/userStore";
 
-const name = ref("");
 const studentId = ref("");
+const password = ref("");
+const showPassword = ref(false);
+const router = useRouter();
+const userStore = useUserStore();
+const { handleLogin, isLoggedIn } = useLogin();
 
-const handleLogin = () => {
-  console.log("Login Attempt:", {
-    name: name.value,
-    studentId: studentId.value,
-  });
+const login = async () => {
+    await handleLogin({ studentId: studentId.value, password: password.value });
+
+    // `nextTick`으로 상태 업데이트 후 이동 처리
+    await nextTick();
+
+    if (isLoggedIn.value) {
+        if (password.value === "12345678" || userStore.isEmailNull) {
+            router.push("/private");
+        } else {
+            router.push("/");
+        }
+    }
 };
 </script>
+
 
 <style scoped>
 .login-page {
@@ -43,7 +67,7 @@ const handleLogin = () => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 16px;
+  padding: 0.5rem;
   box-sizing: border-box;
 }
 
@@ -54,17 +78,44 @@ const handleLogin = () => {
   align-items: center;
 }
 
+.login-wrapper {
+  text-align: center;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  background-color: #fff;
+}
+
 .login-title {
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 2vw, 1.5rem);
   font-weight: bold;
-  margin-bottom: 10px;
-  padding: 16px;
+  margin-bottom: 1.25rem;
   color: #333;
-  text-align: start;
+}
+
+.input-field {
+  width: 100%;
+  margin-bottom: 0px;
+}
+
+.custom-btn {
+  background-color: var(--mainColor);
+  height: clamp(40px, 4vw, 48px);
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: none;
+  font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+  text-transform: uppercase;
+  transition: transform 0.2s ease;
+  letter-spacing: 0;
+}
+
+.custom-btn:hover {
+  transform: scale(1.02);
 }
 
 .guide-text {
-  margin-top: 30px;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
 }
 
 .custom-link {
@@ -77,18 +128,41 @@ const handleLogin = () => {
   text-decoration: none;
 }
 
-.custom-btn {
-  background-color: #515151;
-  height: 56px;
-  color: #fff;
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  font-size: 1rem;
-  text-transform: uppercase;
-  transition: transform 0.2s ease;
+:deep(.rounded-input .v-input__control) {
+  height: clamp(40px, 4vw, 48px) !important;
+  min-height: clamp(40px, 4vw, 48px) !important;
+  display: flex;
+  align-items: center;
 }
 
-.v-btn {
-  letter-spacing: normal !important;
+:deep(.rounded-input .v-label) {
+  font-size: clamp(0.7rem, 0.9vw, 0.9rem) !important;
+  line-height: 1.2;
 }
+
+:deep(.rounded-input input::placeholder) {
+  font-size: clamp(0.7rem, 0.9vw, 0.9rem) !important;
+  color: #aaa;
+  line-height: 1;
+}
+
+:deep(.rounded-input .v-icon) {
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+}
+
+:deep(.rounded-input .v-field__input) {
+  font-size: clamp(0.65rem, 0.8vw, 0.8rem) !important;
+  margin: 0;
+  height: 100%;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+/* 테두리 둥글게 */
+:deep(.rounded-input .v-field__outline) {
+  border-radius: 10px;
+}
+
 </style>
