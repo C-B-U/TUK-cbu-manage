@@ -33,7 +33,7 @@
             Designer
         </td>
         <td width="150" align="center">
-            Backend
+            Backend <br> DevOps 
         </td>
         <td width="150" align="center">
             Backend (Mentee)
