@@ -1,6 +1,6 @@
 .container {
     margin: auto;
-    padding: 120px var(--entirePadding);
+    padding: 1rem var(--entirePadding);
 }
 
 .header {
@@ -8,9 +8,47 @@
     justify-content: space-between;
     align-items: center;
 
-    margin-bottom:24px;
+    margin-bottom: 1.5rem;
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    margin: 15px 0;
+
+}
+
+:deep(.v-pagination__item) {
+    min-width: 45px;
+    height: 50px;
+    padding: 0 6px;
+    font-size: 0 !important;
+    border-radius: 8px;
+}
+
+:deep(.v-pagination__item span) {
+    font-size: 0.85rem !important;
+    /* 진짜 숫자 텍스트 */
+    line-height: 1;
+}
+
+:deep(.v-pagination__prev),
+:deep(.v-pagination__next) {
+    min-width: 32px;
+    height: 32px;
+}
+
+:deep(.v-pagination__item--is-active) {
+    background-color: var(--mainColor) !important;
+    color: white !important;
+}
+
+:deep(.v-pagination__item .v-btn__overlay) {
+    background-color: transparent !important;
+  }
+  
 /* 전체 부원 수 */
 .left-header {
     flex: 1;
@@ -19,7 +57,7 @@
 }
 
 .left-header .total-count {
-    font-size: 28px;
+    font-size: 1.5rem;
     font-weight: 600;
 }
 
@@ -30,74 +68,80 @@
 /* 우측 유틸 컨테이너 */
 .right-header {
     display: flex;
-    gap: 20px;
+    gap: 1.25rem;
 }
 
 .sync-button-area {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 0.5rem;
     width: fit-content;
 
     background-color: var(--mainColor);
-    border:1px solid var(--mainColor);
-    
-    padding: 12px 24px 12px 20px;
+    border: 1px solid var(--mainColor);
+
+    padding: 0.4rem 1rem 0.4rem 0.75rem;
+    /* 👈 줄임 */
     border-radius: 999px;
     cursor: pointer;
-    transition: all .3s;
+    transition: all 0.3s;
 }
 
-    .sync-button-area > img {
-        width: 20px;
-        height: auto;
-    }
+.sync-button-area>img {
+    width: 1rem;
+    /* 👈 줄임 */
+    height: auto;
+}
 
-    .sync-button-area > button {
-        color: white;
-        font-size: 14px;
-        font-weight: 600;
+.sync-button-area>button {
+    color: white;
+    font-size: 0.8rem;
+    /* 👈 줄임 */
+    font-weight: 600;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
 
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-    }
-
-    .sync-button-area:hover {
-        background-color: var(--mainHover);
-        border:1px solid var(--mainHover);
-    }
+.sync-button-area:hover {
+    background-color: var(--mainHover);
+    border: 1px solid var(--mainHover);
+}
 
 .search-input-area {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 0.5rem;
     width: fit-content;
 
     border: 1px solid #ccc;
-    padding: 12px 24px 12px 20px;
+    padding: 0.5rem 1rem 0.5rem 0.75rem;
+    /* 👈 줄임 */
     border-radius: 999px;
-    min-width: 300px;
+    min-width: 240px;
+    /* 👈 줄임 */
 }
 
-    .search-input-area > img {
-        width: 20px;
-        height: auto;
-    }
+.search-input-area>img {
+    width: 1rem;
+    /* 👈 줄임 */
+    height: auto;
+}
 
-    .search-input-area > input {
-        border:none;
-        font-size: 14px;
-        width: 100%;
-    }
+.search-input-area>input {
+    border: none;
+    font-size: 0.85rem;
+    /* 👈 줄임 */
+    width: 100%;
+}
 
-    .search-input-area > input:focus {
-        outline: none;
-    }
+.search-input-area>input:focus {
+    outline: none;
+}
 
-    .search-input-area > input::placeholder {
-        color: #767676;
-    }
+.search-input-area>input::placeholder {
+    color: #767676;
+}
 
 /*  */
 .table {
@@ -106,16 +150,18 @@
 }
 
 .table th {
-    padding:16px 12px;
+    padding: 1rem 1rem;
     background-color: #f5f5f5;
     font-weight: 600;
 }
-    .table th:first-child {
-        border-radius: 8px 0px 0px 8px;
-    }
-    .table th:last-child {
-        border-radius: 0px 8px 8px 0px;
-    }
+
+.table th:first-child {
+    border-radius: 8px 0px 0px 8px;
+}
+
+.table th:last-child {
+    border-radius: 0px 8px 8px 0px;
+}
 
 .entireChoice-button {
     display: block;
@@ -124,8 +170,8 @@
     transition: all .3s;
     position: relative;
 
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     background-color: white;
     border-radius: 4px;
     border: 1px solid #ccc;
@@ -135,6 +181,7 @@
     background-color: var(--mainColor);
     border: 1px solid var(--mainColor);
 }
+
 .entireChoice-button-area button.selected::before {
     content: url(@/assets/check.svg);
     position: absolute;
@@ -145,10 +192,10 @@
 }
 
 .table td {
-    padding: 24px 12px;
+    padding: 1.5rem 1rem;
     text-align: center;
-    font-size: 14px;
-    border-bottom:1px solid #eee;
+    font-size: 0.8rem;
+    border-bottom: 1px solid #eee;
 }
 
 tr {
@@ -162,6 +209,7 @@ tr.selected {
 .paid {
     color: var(--mainColor)
 }
+
 .unpaid {
     color: red;
 }
@@ -182,8 +230,8 @@ tr.selected {
     top: 50%;
     right: 0;
     transform: translate(4px, -50%);
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
 .dropdown-menu {
@@ -193,26 +241,27 @@ tr.selected {
 
     background: white;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
-    border:1px solid #f9f9f9;
+    border: 1px solid #f9f9f9;
     border-radius: 8px;
 
     z-index: 10;
     list-style: none;
     padding: 0;
-    margin-top:-8px;
-    width: 120px;
+    margin-top: -8px;
+    width: 11.25rem;
     max-height: 200px;
 
     overflow-y: auto;
     -ms-overflow-style: none;
 }
-.dropdown-menu::-webkit-scrollbar{
-    display:none;
-  }
+
+.dropdown-menu::-webkit-scrollbar {
+    display: none;
+}
 
 .dropdown-menu li {
-    padding: 12px 0px;
-    font-size: 14px;
+    padding: 1rem 0px;
+    font-size: 1rem;
     cursor: pointer;
     text-align: center;
 }
@@ -233,8 +282,8 @@ table tbody input {
 
 table tbody label {
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     background: #eeeeee;
     border: 1px solid #eeeeee;
     border-radius: 4px;
@@ -244,12 +293,12 @@ table tbody label {
     position: relative;
 }
 
-table tbody input[type="checkbox"]:checked + label {
+table tbody input[type="checkbox"]:checked+label {
     background: var(--mainColor);
     border: 1px solid var(--mainColor);
 }
 
-table tbody input[type="checkbox"]:checked + label::before {
+table tbody input[type="checkbox"]:checked+label::before {
     content: url(@/assets/check.svg);
     position: absolute;
     top: 0;
@@ -258,56 +307,52 @@ table tbody input[type="checkbox"]:checked + label::before {
     height: 18px;
 }
 
-/*  */
+/* 하단 버튼 묶음 */
 .button-group {
     display: flex;
     justify-content: space-between;
-    margin: 24px 0px 48px 0px;
+    margin: 1rem 0 2rem 0;
+    /* 상하 여백 살짝 줄임 */
 }
 
-.left-buttons {
-    display: flex;
-    gap: 20px;
-}
-
+.left-buttons,
 .right-buttons {
     display: flex;
-    gap: 20px;
+    gap: 0.75rem;
+    /* gap 줄임 */
 }
 
-.btn {
-    width: fit-content;
-    color: white;
-    font-size: 14px;
-    font-weight: 600;
-
-    background-color: var(--mainColor);
-    border:1px solid var(--mainColor);
-    
-    padding: 12px 24px;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: all .3s;
-}
-    .btn:hover {
-        background-color: var(--mainHover);
-        border:1px solid var(--mainHover);
-    }
-
+.btn,
 .btn-outline {
     width: fit-content;
-    color: #333333;
-    font-size: 14px;
+    font-size: 0.8rem;
     font-weight: 600;
-
-    border: 1px solid #CCC;
-    background: white;
-
-    padding: 12px 24px;
     border-radius: 999px;
     cursor: pointer;
-    transition: all .3s;
+    transition: all 0.3s;
+    padding: 0.5rem 1rem;
+    /* ✨ 작게 조정 */
 }
-    .btn-outline:hover {
-        background-color: #EEE;
-    }
+
+/* 기본 버튼 */
+.btn {
+    color: white;
+    background-color: var(--mainColor);
+    border: 1px solid var(--mainColor);
+}
+
+.btn:hover {
+    background-color: var(--mainHover);
+    border: 1px solid var(--mainHover);
+}
+
+/* 아웃라인 버튼 */
+.btn-outline {
+    color: #333;
+    background: white;
+    border: 1px solid #CCC;
+}
+
+.btn-outline:hover {
+    background-color: #EEE;
+}

@@ -1,4 +1,5 @@
-import { ref, nextTick } from "vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/userStore";
 
 interface LoginParams {
@@ -10,6 +11,7 @@ export function useLogin() {
     const errorMessage = ref<string | null>(null);
     const isLoggedIn = ref<boolean>(false);
     const userStore = useUserStore();
+    const router = useRouter();
 
     const handleLogin = async ({ studentId = "", password = "" }: LoginParams): Promise<void> => {
         const SERVER_URL = import.meta.env.VITE_SERVER_URL;
@@ -20,41 +22,31 @@ export function useLogin() {
             return;
         }
 
-        const studentNumber = parseInt(studentId.replace(/^cbu/, ""), 10);
-        if (isNaN(studentNumber)) {
-            errorMessage.value = "잘못된 학번 형식입니다.";
-            alert(errorMessage.value);
-            return;
-        }
+        const studentNumber = Number(studentId.replace(/^cbu/, ""));
 
         try {
-            console.log("📢 [로그인 요청] studentNumber:", studentNumber, "password:", password);
-
             const response = await fetch(`${SERVER_URL}/v1/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ studentNumber, password }),
+                body: JSON.stringify({
+                    studentNumber,
+                    password,
+                }),
             });
-
-            console.log("📢 [서버 응답] 상태 코드:", response.status);
 
             if (response.ok) {
                 const result = await response.json();
 
-                console.log("✅ [서버 응답 JSON]:", result);
-
-                // ✅ email 값이 "null"(string)일 경우 `null`로 변환
+                // email 값이 "null"(string)으로 올 경우, null로 변환
                 const emailValue = result.email === "null" ? null : result.email;
 
-                console.log("🔍 [email 값 확인]:", emailValue);
-
-                // ✅ Pinia 상태 업데이트
+                // ✅ 로그인 상태 업데이트 (role 추가)
                 userStore.setUser({
                     name: result.name,
                     studentNumber,
-                    email: emailValue,  // ✅ email 속성 추가
+                    email: emailValue, // email 값을 반영
                 });
 
                 userStore.setAuthStatus({
@@ -65,24 +57,37 @@ export function useLogin() {
                 isLoggedIn.value = true;
                 errorMessage.value = null;
 
-                console.log("✅ 로그인 성공! 저장된 값:", {
-                    name: result.name,
-                    studentNumber,
-                    email: userStore.email,
-                    isDefaultPassword: userStore.isDefaultPassword,
-                    isEmailNull: userStore.isEmailNull,
-                });
+                router.push("/");
+            } else {
+                // 서버 응답이 400~500 범위지만 JSON 응답을 처리할 수 있는 경우
+                const errorResult = await response.json();
 
-                // ✅ `nextTick`을 사용해 상태가 반영된 후 페이지 이동
-                await nextTick();
+                if (errorResult.message) {
+                    let alertMessage = "로그인 중 오류가 발생했습니다. 다시 시도해주세요.";
+
+                    if (errorResult.message === "Invalid password") {
+                        alertMessage = "비밀번호가 올바르지 않습니다.\n기억이 나지 않을 시 관리자에게 문의해주세요.";
+                    } else if (errorResult.message === "Member isn't exist") {
+                        alertMessage = "해당 멤버가 존재하지 않습니다.\n관리자에게 문의해주세요.";
+                    }
+
+                    errorMessage.value = alertMessage;
+                    alert(alertMessage);
+                    isLoggedIn.value = false;
+                } else {
+                    errorMessage.value = "로그인 중 오류가 발생했습니다. 다시 시도해주세요.";
+                    alert(errorMessage.value);
+                    isLoggedIn.value = false;
+                }
+
+                isLoggedIn.value = false;
             }
         } catch (error) {
-            console.error("❌ 로그인 중 오류 발생:", error);
-            errorMessage.value = "서버와의 통신 중 오류가 발생했습니다.";
+            errorMessage.value = "로그인 중 네트워크 오류가 발생했습니다. 다시 시도해주세요.";
             alert(errorMessage.value);
             isLoggedIn.value = false;
         }
-    };
+    }
 
     return {
         errorMessage,

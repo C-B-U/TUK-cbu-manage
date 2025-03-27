@@ -1,53 +1,51 @@
 <template>
-  <!-- 버튼 속성과 클래스 동적 제어 -->
-  <button :class="['custom-button', buttonClass]" :type="type">
+  <button 
+    class="custom-button"
+    :class="buttonClass"
+    @click="handleClick"
+    :disabled="!userStore.isAdmin"
+  >
     {{ buttonText }}
   </button>
 </template>
 
-<script lang="ts" setup>
-import { ButtonType, ButtonStatus } from '@/types';
-import { computed } from 'vue';
+<script setup>
+import { computed } from "vue";
+import { useUserStore } from "../../stores/userStore";
+import { useRouter } from "vue-router";
 
-// Props 정의 및 기본값 설정
-const props = withDefaults(defineProps<{
-  type?: ButtonType;
-  status?: ButtonStatus;
-}>(), {
-  type: 'button',
-  status: 'default',
-});
+const userStore = useUserStore();
+const router = useRouter();
 
-// 클래스와 텍스트 동적 계산
+// ✅ 버튼 스타일 동적 클래스
 const buttonClass = computed(() =>
-  ({
-    active: 'custom-button--active',
-    disabled: 'custom-button--disabled',
-    default: '',
-  }[props.status] || '')
+  userStore.isAdmin ? "custom-button--active" : "custom-button--disabled"
 );
 
+// ✅ 버튼 텍스트 동적 설정
 const buttonText = computed(() =>
-  ({
-    active: '동아리 지원하기',
-    disabled: '신청기간이 아닙니다',
-    default: 'Button',
-  }[props.status] || 'Button')
+  userStore.isAdmin ? "멤버 관리로 이동" : "신청기간이 아닙니다"
 );
+
+// ✅ 클릭 이벤트 (관리자만 이동 가능)
+const handleClick = () => {
+  if (userStore.isAdmin) {
+    router.push("/memberManage");
+  }
+};
 </script>
 
 <style scoped>
 .custom-button {
-  padding: 12px 24px;
-  font-size: 16px;
+  padding: 1rem 1.5rem;
+  font-size: 0.9rem;
   font-weight: 600;
-
   border-radius: 100px;
-
   cursor: pointer;
   transition: all 0.3s;
 }
 
+/* ✅ 관리자 버튼 */
 .custom-button--active {
   border: 1px solid var(--mainColor);
   background-color: var(--mainColor);
@@ -59,9 +57,11 @@ const buttonText = computed(() =>
   background-color: var(--mainHover);
 }
 
+/* ✅ 일반 사용자 버튼 */
 .custom-button--disabled {
   border: 1px solid #CCCCCC;
   background-color: #CCCCCC;
   color: var(--semiDarkText);
+  cursor: not-allowed;
 }
 </style>

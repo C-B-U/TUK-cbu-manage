@@ -3,8 +3,8 @@
 <template>
     <div class="wrap">
         <div class="contents">
-            <h1 id="title">코딩 동아리 <span style="color:var(--mainColor)">씨부엉</span>에 오신 것을 환영합니다.</h1>
-            <p>한국공학대학교 씨부엉 동아리의 효율적인 회원관리를 위한 웹사이트입니다</p>
+            <div class="page-title"><span style="color:var(--mainColor)">씨부엉</span>에 오신 것을 환영합니다.</div>
+            <p>한국공학대학교 프로그래밍 동아리 씨부엉의 공식 웹사이트입니다</p>
 
             <!-- 지원기간에 따라 status 변경 active/disabled -->
             <Button id="recruitment-button" status="disabled"></Button>
@@ -36,13 +36,13 @@ export default {
     background-position: center;
 }
 
-.contents #title {
-    font-size: 32px;
+.page-title {
+    font-size: 1.5rem;
     font-weight: 600;
 }
 
 .contents p {
-    font-size: 16px;
+    font-size: 1rem;
     color: var(--semiDarkText);
 
     margin: 8px 0px 36px 0px;

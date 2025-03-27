@@ -43,9 +43,6 @@ export default function useVerifyUser() {
                 nickName,
             };
 
-            // 콘솔 출력: 서버로 전송되는 데이터 확인
-            console.log("서버로 전송할 데이터:", payload);
-
             // 서버 요청
             const response = await fetch(`${SERVER_URL}/v1/validate`, {
                 method: "Post",
@@ -59,7 +56,6 @@ export default function useVerifyUser() {
                 // 응답 본문을 텍스트로 읽음
                 const text = await response.text();
                 if (!text) {
-                    console.error("Empty response from server");
                     alert("서버로부터 빈 응답을 받았습니다.");
                     return null;
                 }

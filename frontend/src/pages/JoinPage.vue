@@ -1,7 +1,7 @@
 <template>
   <v-container class="join-page">
     <v-row align-items="center" justify="center" class="join-row">
-      <v-col cols="12" sm="10" md="10" lg="8">
+      <v-col cols="10" sm="7" md="7" lg="7">
         <div class="join-wrapper">
           <div class="step-indicator">
             <div :class="['step', { active: currentStep === 1 }]"></div>
@@ -9,15 +9,15 @@
           </div>
 
           <h2 class="join-title">회원가입</h2>
-          <v-card-text>
+          <v-card-text class="component-container">
             <component :is="currentComponent" @completed="showModal = true" @verified="handleVerified" />
           </v-card-text>
-          <h4 class="guide-text">
+          <div class="guide-text">
             지원 시 닉네임 기억이 나지 않는다면? &nbsp;
             <a href="https://www.instagram.com/tukorea_cbu/#" class="custom-link" target="_blank" rel="noopener noreferrer">
               합격자 발표 확인해보기 (클릭!)
             </a>
-          </h4>
+          </div>
           <br />
         </div>
       </v-col>
@@ -55,7 +55,7 @@ const handleVerified = (data: any) => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 16px;
+  padding: 1rem;
   box-sizing: border-box;
 }
 
@@ -68,14 +68,14 @@ const handleVerified = (data: any) => {
 
 .join-wrapper {
   position: relative;
-  padding-top: 40px;
+  padding-top: 2.5rem;
 }
 
 .join-title {
-  font-size: 1.7rem;
+  font-size: 1.3rem;
   font-weight: bold;
   margin-bottom: 10px;
-  padding: 16px;
+  padding: 1rem;
   color: #333;
   text-align: center;
 }
@@ -87,8 +87,8 @@ const handleVerified = (data: any) => {
 }
 
 .step {
-  width: 15px;
-  height: 15px;
+  width: 1rem;
+  height: 1rem;
   border-radius: 50%;
   background-color: #ccc;
   margin: 0 5px;
@@ -105,7 +105,7 @@ const handleVerified = (data: any) => {
 
 .custom-btn {
   background-color: var(--mainColor);
-  height: 56px;
+  height: 2.5rem;
   color: #fff;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -115,7 +115,8 @@ const handleVerified = (data: any) => {
 }
 
 .guide-text {
-  margin-top: 20px;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
 }
 
 .custom-link {

@@ -1,10 +1,10 @@
 <template>
   <v-container class="login-page">
     <v-row align-items="center" justify="center" class="login-row">
-      <v-col cols="12" sm="10" md="10" lg="8">
+      <v-col cols="10" sm="7" md="7" lg="7">
         <div class="login-wrapper">
           <h2 class="login-title">로그인</h2>
-          <v-card-text>
+          <v-card-text class="text-container">
             <v-form @submit.prevent="login">
               <v-text-field class="rounded-input" v-model="studentId" label="아이디" placeholder="아이디를 입력하세요" required
                 variant="outlined" dense></v-text-field>
@@ -16,7 +16,6 @@
                   </v-icon>
                 </template>
               </v-text-field>
-
               <v-btn type="submit" block large class="mt-4 font-weight-bold custom-btn">
                 로그인
               </v-btn>
@@ -34,8 +33,8 @@
 <script setup>
 import { ref, computed, nextTick } from "vue";
 import { useRouter } from "vue-router";
-import { useLogin } from "@/hooks/useLogin";
-import { useUserStore } from "@/stores/userStore";
+import { useLogin } from "../hooks/useLogin";
+import { useUserStore } from "../stores/userStore";
 
 const studentId = ref("");
 const password = ref("");
@@ -47,18 +46,15 @@ const { handleLogin, isLoggedIn } = useLogin();
 const login = async () => {
     await handleLogin({ studentId: studentId.value, password: password.value });
 
-    console.log("🔍 로그인 후 이메일 확인:", userStore.email);
-    console.log("🔑 로그인 후 비밀번호 확인:", password.value);
-
-    // ✅ `nextTick`으로 상태 업데이트 후 이동 처리
+    // `nextTick`으로 상태 업데이트 후 이동 처리
     await nextTick();
 
-    if (isLoggedIn.value && (password.value === "12345678" || userStore.isEmailNull)) {
-        console.log("🚀 로그인 버튼 클릭 → /private 이동");
-        router.push("/private");
-    } else {
-        console.log("🏠 정상 로그인 → 홈 이동");
-        router.push("/");
+    if (isLoggedIn.value) {
+        if (password.value === "12345678" || userStore.isEmailNull) {
+            router.push("/private");
+        } else {
+            router.push("/");
+        }
     }
 };
 </script>
@@ -71,7 +67,7 @@ const login = async () => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 16px;
+  padding: 0.5rem;
   box-sizing: border-box;
 }
 
@@ -84,30 +80,30 @@ const login = async () => {
 
 .login-wrapper {
   text-align: center;
-  padding: 40px;
-  border-radius: 12px;
+  padding: 2.5rem;
+  border-radius: 1rem;
   background-color: #fff;
 }
 
 .login-title {
-  font-size: 1.7rem;
+  font-size: clamp(1rem, 2vw, 1.5rem);
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   color: #333;
 }
 
 .input-field {
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 0px;
 }
 
 .custom-btn {
   background-color: var(--mainColor);
-  height: 50px;
+  height: clamp(40px, 4vw, 48px);
   color: #fff;
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: none;
-  font-size: 1rem;
+  font-size: clamp(0.7rem, 0.9vw, 0.9rem);
   text-transform: uppercase;
   transition: transform 0.2s ease;
   letter-spacing: 0;
@@ -118,7 +114,8 @@ const login = async () => {
 }
 
 .guide-text {
-  margin-top: 20px;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
 }
 
 .custom-link {
@@ -131,7 +128,41 @@ const login = async () => {
   text-decoration: none;
 }
 
-::v-deep .rounded-input .v-field__outline {
+:deep(.rounded-input .v-input__control) {
+  height: clamp(40px, 4vw, 48px) !important;
+  min-height: clamp(40px, 4vw, 48px) !important;
+  display: flex;
+  align-items: center;
+}
+
+:deep(.rounded-input .v-label) {
+  font-size: clamp(0.7rem, 0.9vw, 0.9rem) !important;
+  line-height: 1.2;
+}
+
+:deep(.rounded-input input::placeholder) {
+  font-size: clamp(0.7rem, 0.9vw, 0.9rem) !important;
+  color: #aaa;
+  line-height: 1;
+}
+
+:deep(.rounded-input .v-icon) {
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+}
+
+:deep(.rounded-input .v-field__input) {
+  font-size: clamp(0.65rem, 0.8vw, 0.8rem) !important;
+  margin: 0;
+  height: 100%;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+/* 테두리 둥글게 */
+:deep(.rounded-input .v-field__outline) {
   border-radius: 10px;
 }
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <v-dialog :model-value="showModal" max-width="550px" persistent
+    <v-dialog :model-value="props.showModal" max-width="550px" persistent
         @update:model-value="emit('update:showModal', $event)">
         <v-card class="custom-card">
             <!-- 헤더 -->
@@ -43,7 +43,7 @@
 
 <script lang="ts" setup>
 import { defineProps, defineEmits, computed } from "vue";
-import { useUserStore } from "@/stores/userStore";
+import { useUserStore } from "../../stores/userStore";
 import { useRouter } from "vue-router";
 
 /* ✅ 직접 import */
@@ -79,27 +79,27 @@ const goToLogin = () => {
 <style scoped>
 /* 모달 스타일 */
 .custom-card {
-    padding: 24px;
-    border-radius: 16px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0px 4px 1rem rgba(0, 0, 0, 0.15);
     background-color: white;
     border: 2px solid #ddd;
 }
 
 .content-container {
-    padding-top: 20px;
+    padding-top: 1.25rem;
     position: relative;
 }
 
 /* 아이디 및 비밀번호 필드 스타일 */
 .info-box {
     background: #eeeeee;
-    padding: 14px 16px;
-    border-radius: 12px;
+    padding: 0.875rem 1rem;
+    border-radius: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
     position: relative;
     z-index: 15;
     /* ✅ 필드가 올빼미보다 위에 오도록 설정 */
@@ -108,25 +108,25 @@ const goToLogin = () => {
 .label {
     font-weight: bold;
     color: #666;
-    font-size: 14px;
+    font-size: 1rem;
 }
 
 .value {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
     color: #333;
 }
 
 .password-value {
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 /* 하단 버튼 스타일 */
 .action-buttons {
     display: flex;
     justify-content: space-between;
-    padding: 16px;
+    padding: 1rem;
 }
 
 .custom-btn {
@@ -167,21 +167,21 @@ const goToLogin = () => {
 .right-owl {
     right: -15px;
     /* ✅ 필드 오른쪽에 살짝 걸치게 */
-    top: 40px;
+    top: 2.5rem;
     /* ✅ 필드 중앙보다 살짝 아래 */
     transform: rotate(10deg);
 }
 
 /* 비밀번호 필드 올빼미 (왼쪽 아래) */
 .left-owl {
-    left: -20px;
+    left: -1.25rem;
     top: 100px;
     transform: rotate(0deg);
 }
 
 /* 작은 글씨 */
 .small-text {
-    font-size: 12px;
+    font-size: 1rem;
     color: #666;
     margin-top: 8px;
 }

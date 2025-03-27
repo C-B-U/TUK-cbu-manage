@@ -47,7 +47,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { useUserStore } from '@/stores/userStore';
+import { useUserStore } from '../stores/userStore';
 import { useRoute } from 'vue-router';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
@@ -77,8 +77,6 @@ const changePassword = async () => {
         password: newPassword.value
     };
 
-    console.log("📢 서버에 전송할 데이터:", JSON.stringify(requestData, null, 2));
-
     const response = await fetch(`${SERVER_URL}/v1/login/password`, {
         method: "PATCH",
         headers: {
@@ -90,13 +88,12 @@ const changePassword = async () => {
 
     // ✅ 서버 응답이 200이면 성공 처리
     if (response.ok) {
-        alert("✅ 비밀번호 변경 완료!");
+        alert("비밀번호 변경 완료!");
     } else {
-        alert(`❌ 오류 발생: 비밀번호 변경 실패 (Status: ${response.status})`);
+        alert(`오류 발생: 비밀번호 변경 실패 (Status: ${response.status})`);
     }
 } catch (error) {
-    console.error("❌ 네트워크 오류:", error);
-    alert("❌ 네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+    alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
 }
 
     }
@@ -111,12 +108,12 @@ const changePassword = async () => {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 16px;
+    padding: 1rem;
     box-sizing: border-box;
 }
 
 .password-change-container {
-    padding: 40px;
+    padding: 2.5rem;
     width: 80%;
     text-align: center;
     background-color: #fff;
@@ -131,7 +128,7 @@ const changePassword = async () => {
 }
 
 .subtitle {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .password-input {
@@ -143,8 +140,8 @@ const changePassword = async () => {
     display: block;
     text-align: left;
     color: #555;
-    font-size: 14px;
-    margin-top: -20px;
+    font-size: 0.875rem;
+    margin-top: -1.25rem;
     margin-bottom: 30px;
 }
 
@@ -157,7 +154,7 @@ const changePassword = async () => {
     background-color: var(--mainColor);
     height: 50px;
     color: #fff;
-    border-radius: 12px;
+    border-radius: 1rem;
     box-shadow: none;
     font-size: 1rem;
     text-transform: uppercase;

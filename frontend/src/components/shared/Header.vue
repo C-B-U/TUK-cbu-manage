@@ -5,14 +5,6 @@
                 <img id="logo" src="@/assets/logo.png" alt="로고이미지" />
             </router-link>
 
-            <nav>
-                <ul>
-                    <li v-for="item in navItems" :key="item.path">
-                        <router-link :to="item.path">{{ item.name }}</router-link>
-                    </li>
-                </ul>
-            </nav>
-
             <div id="util">
                 <ul v-if="!isLoggedIn">
                     <li v-for="item in utilItems" :key="item.path">
@@ -29,8 +21,8 @@
 
                     <!-- 드롭다운 메뉴 -->
                     <div v-if="isDropdownOpen" class="dropdown-menu">
-                        <router-link to="/change-password">🔑 비밀번호 변경</router-link>
-                        <button @click="handleLogout">🚪 로그아웃</button>
+                        <router-link to="/change-password" >비밀번호 변경</router-link>
+                        <button @click="handleLogout">로그아웃</button>
                     </div>
                 </div>
             </div>
@@ -40,13 +32,12 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/stores/userStore';
+import { useRoute } from 'vue-router';
+import { useUserStore } from '../../stores/userStore';
 
 const userStore = useUserStore();
 const isLoggedIn = computed(() => !!userStore.name);
 const isDropdownOpen = ref(false);
-const router = useRouter();
 
 // ✅ 드롭다운 토글
 const toggleDropdown = () => {
@@ -70,9 +61,6 @@ const isBlockHeader = computed(() => {
     return blockPaths.includes(route.path);
 });
 
-// 네비게이션 항목 정의
-const navItems = [{ name: '회원 관리', path: '/memberManage' }];
-
 // 로그인 전 메뉴
 const utilItems = [{ name: '로그인', path: '/login' }, { name: '회원가입', path: '/join' }];
 </script>
@@ -93,12 +81,12 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 24px var(--entirePadding);
+    padding: 1.5rem var(--entirePadding);
 }
 
 #header-nav #logo {
     width: auto;
-    height: 32px;
+    height: 2rem;
 }
 
 #header-nav>nav ul,
@@ -108,13 +96,13 @@ header {
 
 nav a,
 #util a {
-    font-size: 16px;
+    font-size: 0.9rem;
     font-weight: 500;
     color: var(--darkText);
 }
 
 #util ul {
-    gap: 24px;
+    gap: 1.5rem;
 }
 
 /* 사용자 드롭다운 */
@@ -127,7 +115,7 @@ nav a,
 
 /* "님, 환영합니다!" 스타일 */
 .welcome-text {
-    font-size: 16px;
+    font-size: 0.85rem;
     font-weight: 500;
     color: var(--darkText);
     margin-right: 8px;
@@ -135,7 +123,7 @@ nav a,
 
 /* 드롭다운 버튼 스타일 */
 .dropdown-btn {
-    font-size: 18px;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: transform 0.2s ease;
     color: var(--darkText);
@@ -157,15 +145,16 @@ nav a,
     z-index: 1000;
     text-align: left;
     margin-top: 10px;
+    font-size: 0.9rem;
 }
 
 /* 메뉴 스타일 통일 */
 .dropdown-menu a,
 .dropdown-menu button {
-    font-size: 16px;
+    font-size: inherit !important;
     font-weight: 500;
     text-align: left;
-    padding: 10px 14px;
+    padding: 10px 0.875rem;
     width: 100%;
     background: none;
     border: none;

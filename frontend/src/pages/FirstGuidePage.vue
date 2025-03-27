@@ -44,7 +44,7 @@
 
 <script setup>
 import { computed } from "vue";
-import { useUserStore } from "@/stores/userStore";
+import { useUserStore } from "../stores/userStore";
 import { useRouter } from 'vue-router';
 import GuidePassword from "../components/GuidePassword.vue";
 import AddMail from "../components/AddMail.vue";
@@ -66,7 +66,7 @@ const handleEmailUpdated = () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    padding: 1rem;
     width: 100vw;
     max-width: 100%;
     box-sizing: border-box;

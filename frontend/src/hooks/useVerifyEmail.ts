@@ -29,7 +29,6 @@ export default function useVerifyEmail() {
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error("❌ 서버 응답 오류:", errorText);
         throw new Error(`서버 오류 발생: ${response.status} ${errorText}`);
       }
 
