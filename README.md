@@ -30,7 +30,7 @@
             Frontend <br> DevOps 
         </td>
         <td width="150" align="center">
-            Designer
+            Designer <br> Publisher
         </td>
         <td width="150" align="center">
             Backend <br> DevOps 
