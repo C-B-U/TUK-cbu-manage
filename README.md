@@ -7,7 +7,7 @@
 
 ## 📃 프로젝트
 
-### 🔗 Service Link : https://tukcbu.netlify.app/
+### 🔗 Service Link : 도메인 적용 후 수정
 <br>
 
 
@@ -33,10 +33,10 @@
             Designer
         </td>
         <td width="150" align="center">
-            Senior Backend
+            Backend
         </td>
         <td width="150" align="center">
-            Junior Backend
+            Backend (Mentee)
         </td>
     </tr>
     <tr>
