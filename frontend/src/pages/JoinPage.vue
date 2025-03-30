@@ -68,30 +68,30 @@ const handleVerified = (data: any) => {
 
 .join-wrapper {
   position: relative;
-  padding-top: 2.5rem;
+  /* padding-top: 2.5rem; */
 }
 
 .join-title {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  padding: 1rem;
-  color: #333;
+  font-size: clamp(2rem, 2vw, 2.8rem);
+  font-weight: 600;
+  color: var(--darkText);
   text-align: center;
+
+  margin-bottom: 2.4rem;
 }
 
 .step-indicator {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 1.6rem;
+  gap: 8px;
 }
 
 .step {
-  width: 1rem;
-  height: 1rem;
+  width: 1.2rem;
+  height: 1.2rem;
   border-radius: 50%;
   background-color: #ccc;
-  margin: 0 5px;
   display: flex;
   justify-content: center;
   align-items: center;

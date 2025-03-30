@@ -38,9 +38,11 @@ const handleClick = () => {
 <style scoped>
 .custom-button {
   padding: 1.2rem 2.4rem;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 600;
-  border-radius: 100px;
+  line-height: normal;
+
+  border-radius: 999px;
   cursor: pointer;
   transition: all 0.3s;
 }

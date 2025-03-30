@@ -1,7 +1,7 @@
 <template>
   <v-container class="login-page">
-    <v-row align-items="center" justify="center" class="login-row">
-      <v-col cols="10" sm="7" md="7" lg="7">
+    <v-row align-items="center" class="login-row">
+      <v-col class="login-col">
         <div class="login-wrapper">
           <h2 class="login-title">로그인</h2>
           <v-card-text class="text-container">
@@ -16,12 +16,12 @@
                   </v-icon>
                 </template>
               </v-text-field>
-              <v-btn type="submit" block large class="mt-4 font-weight-bold custom-btn">
+              <v-btn type="submit" block large class="mt-4 custom-btn">
                 로그인
               </v-btn>
             </v-form>
           </v-card-text>
-          <h4 class="guide-text">씨부엉 입부를 축하합니다! 첫 로그인이라면? &nbsp; <router-link to="/join"
+          <h4 class="guide-text">씨부엉 입부를 축하합니다! 첫 로그인이라면? &nbsp;<router-link to="/join"
               class="custom-link">회원가입</router-link>
           </h4>
         </div>
@@ -61,14 +61,17 @@ const login = async () => {
 
 
 <style scoped>
+.v-container {
+  padding: 0;
+  max-width: 720px;
+}
+
 .login-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 0.5rem;
-  box-sizing: border-box;
 }
 
 .login-row {
@@ -76,20 +79,29 @@ const login = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  margin: 0px;
+}
+
+.login-col {
+  padding: 0px;
 }
 
 .login-wrapper {
   text-align: center;
-  padding: 2.5rem;
-  border-radius: 1rem;
+  /* border-radius: 1rem; */
   background-color: #fff;
 }
 
 .login-title {
-  font-size: clamp(1rem, 2vw, 1.5rem);
-  font-weight: bold;
-  margin-bottom: 1.25rem;
-  color: #333;
+  font-size: clamp(2rem, 2vw, 2.8rem);
+  font-weight: 600;
+  margin-bottom: 2.4rem; /* 로그인 라이브러리 사용함에 따라 간격 조정 */
+  color: var(--darkText);
+}
+
+.text-container {
+  padding: 0px;
 }
 
 .input-field {
@@ -99,29 +111,32 @@ const login = async () => {
 
 .custom-btn {
   background-color: var(--mainColor);
-  height: clamp(40px, 4vw, 48px);
+  /* height: clamp(40px, 4vw, 48px); */
+  height: fit-content;
+  padding: 12px 24px;
   color: #fff;
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: none;
-  font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+  font-size: clamp(1.4rem, 2vw, 1.6rem);
+  letter-spacing: -0.025rem;
+
   text-transform: uppercase;
-  transition: transform 0.2s ease;
-  letter-spacing: 0;
+  transition: all 0.3s;
 }
 
 .custom-btn:hover {
-  transform: scale(1.02);
+  background-color: var(--mainHover);
 }
 
 .guide-text {
-  margin-top: 1.25rem;
-  font-size: 0.9rem;
+  margin-top: 1.6rem;
+  font-size: 1.4rem;
+  color: var(--semiDarkText);
 }
 
 .custom-link {
-  color: black;
-  font-weight: bold;
-  text-decoration: none;
+  color: var(--darkText);
+  font-weight: 600;
 }
 
 .custom-link:hover {
@@ -136,28 +151,23 @@ const login = async () => {
 }
 
 :deep(.rounded-input .v-label) {
-  font-size: clamp(0.7rem, 0.9vw, 0.9rem) !important;
-  line-height: 1.2;
+  font-size: clamp(1.4rem, 1vw, 1.6rem) !important;
 }
 
 :deep(.rounded-input input::placeholder) {
-  font-size: clamp(0.7rem, 0.9vw, 0.9rem) !important;
-  color: #aaa;
-  line-height: 1;
+  font-size: clamp(1.4rem, 1vw, 1.6rem) !important;
+  color: var(--semiDarkText);
 }
 
 :deep(.rounded-input .v-icon) {
-  font-size: clamp(1rem, 1.2vw, 1.25rem);
+  font-size: clamp(1.4rem, 1.2vw, 1.6rem);
 }
 
 :deep(.rounded-input .v-field__input) {
-  font-size: clamp(0.65rem, 0.8vw, 0.8rem) !important;
-  margin: 0;
+  font-size: clamp(1.4rem, 0.8vw, 1.6rem) !important;
   height: 100%;
-  line-height: 1;
   display: flex;
   align-items: center;
-  padding-left: 20px;
 }
 
 /* 테두리 둥글게 */
