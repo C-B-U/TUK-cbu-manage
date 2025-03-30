@@ -52,12 +52,12 @@ const socialLinks = [
 <style scoped>
 footer {
     width: 100%;
-    padding: 48px var(--entirePadding);
+    padding: 3.6rem var(--entirePadding);
     background-color: #555555;
 
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 2.4rem;
 }
 
 #footer-logo {
@@ -73,7 +73,7 @@ footer .footer-info-area {
 
 .footer-info-area p {
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 1.4rem;
     color: white;
 }
 
@@ -82,18 +82,18 @@ footer .footer-info-area {
     flex-direction: column;
     align-items: center;
 
-    gap: 0.9rem;
+    gap: 1.2rem;
 }
 
 .social-area {
     display: flex;
-    gap: 0.9rem;
+    gap: 1.6rem;
     justify-content: center;
 }
 
 .social-icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2.4rem;
+    height: 2.4rem;
     display: flex;
 }
 
@@ -105,7 +105,7 @@ footer .footer-info-area {
 }
 
 .footer-bottom .copyright {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     color: #CCCCCC;
 }
 </style>

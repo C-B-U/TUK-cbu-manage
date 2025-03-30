@@ -3,7 +3,7 @@
 <template>
     <div class="wrap">
         <div class="contents">
-            <div class="page-title"><span style="color:var(--mainColor)">씨부엉</span>에 오신 것을 환영합니다.</div>
+            <div class="page-title"><span style="color:var(--mainColor); font-weight:600;">씨부엉</span>에 오신 것을 환영합니다.</div>
             <p>한국공학대학교 프로그래밍 동아리 씨부엉의 공식 웹사이트입니다</p>
 
             <!-- 지원기간에 따라 status 변경 active/disabled -->
@@ -37,12 +37,13 @@ export default {
 }
 
 .page-title {
-    font-size: 1.5rem;
+    font-size: 2.4rem;
     font-weight: 600;
+    color: var(--darkText);
 }
 
 .contents p {
-    font-size: 1rem;
+    font-size: 1.6rem;
     color: var(--semiDarkText);
 
     margin: 8px 0px 36px 0px;
