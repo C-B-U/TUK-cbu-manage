@@ -111,8 +111,8 @@ const login = async () => {
 
 .custom-btn {
   background-color: var(--mainColor);
-  /* height: clamp(40px, 4vw, 48px); */
-  height: fit-content;
+  height: clamp(40px, 4vw, 48px);
+  /* height: fit-content; */
   padding: 12px 24px;
   margin: 0px !important; /* 에러 처리 전까지 간격 조정 */
 
