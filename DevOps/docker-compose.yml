@@ -9,6 +9,8 @@ services:
       - "8080"
     env_file:
     - ../backend/.env
+    depends_on:
+      - redis
 
   nginx:
     build:
@@ -20,10 +22,15 @@ services:
       - "80:80"
     depends_on:
       - backend
-    environment:
-      - SSL_CERT_PATH=${SSL_CERT_PATH}
-      - SSL_KEY_PATH=${SSL_KEY_PATH}
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - /etc/letsencrypt:/etc/letsencrypt:ro
 
+  redis:
+    image: redis:latest
+    container_name: redis
+    networks:
+      - cbu-net
 networks:
   cbu-net:
     driver: bridge
