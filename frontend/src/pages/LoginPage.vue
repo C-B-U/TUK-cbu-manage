@@ -151,11 +151,11 @@ const login = async () => {
 }
 
 :deep(.rounded-input .v-label) {
-  font-size: clamp(1.4rem, 1vw, 1.6rem) !important;
+  font-size: clamp(1.4rem, 1vw, 1.4rem) !important;
 }
 
 :deep(.rounded-input input::placeholder) {
-  font-size: clamp(1.4rem, 1vw, 1.6rem) !important;
+  font-size: clamp(1.4rem, 1vw, 1.4rem) !important;
   color: var(--semiDarkText);
 }
 
@@ -165,14 +165,27 @@ const login = async () => {
 
 :deep(.rounded-input .v-field__input) {
   font-size: clamp(1.4rem, 0.8vw, 1.6rem) !important;
-  height: 100%;
   display: flex;
   align-items: center;
+  border-radius: 12px;
+  padding:0px16px;
 }
 
 /* 테두리 둥글게 */
 :deep(.rounded-input .v-field__outline) {
-  border-radius: 10px;
+  border-radius: 12px;
+}
+
+:deep(.v-text-field .v-input__details) {
+  padding: 12px 0px 0px 8px;
+}
+
+:deep(.v-text-field .v-input__details .v-messages) {
+  font-size: 1.4rem;
+  color: #FF4E4E;
+  text-align: left;
+
+  opacity: 1;
 }
 
 </style>
