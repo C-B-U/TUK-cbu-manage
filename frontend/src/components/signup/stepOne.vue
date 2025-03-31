@@ -13,7 +13,7 @@
 
     <!-- 닉네임 입력 + 합격자 확인 버튼 -->
     <v-row class="row-fix" align-items="center" justify="space-between">
-      <v-col cols="9">
+      <v-col col="9" class="stepOne-col">
         <v-text-field
           class="rounded-input"
           v-model="nickName"
@@ -24,7 +24,7 @@
           hide-details
         ></v-text-field>
       </v-col>
-      <v-col cols="3" class="pa-0 d-flex align-center">
+      <v-col col="2" class="pa-0 d-flex align-center">
         <v-btn class="custom-btn" block type="submit">
           합격자 확인
         </v-btn>
@@ -65,25 +65,35 @@ const handleUserVerification = async () => {
   align-items: flex-start;
 }
 
+.stepOne-col {
+  padding: 0px;
+  margin: 0px;
+}
+
 .custom-btn {
-    background-color: var(--mainColor);
-    width: 100%;
-    height: clamp(40px, 4vw, 48px);
-    color: #fff;
-    border-radius: 10px;
-    box-shadow: none;
-    font-size: clamp(0.7rem, 0.9vw, 0.9rem);
-    text-transform: uppercase;
-    transition: transform 0.2s ease;
-    letter-spacing: 0;
-    white-space: nowrap;
+  background-color: var(--mainColor);
+  height: 100%;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: none;
+  font-size: clamp(1.4rem, 2vw, 1.6rem);
+  letter-spacing: -0.025rem;
+
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.custom-btn:hover {
+  background-color: var(--mainHover);
 }
 
 .row-fix {
-  flex-wrap: wrap;
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100%;
+  margin: 0;
+  gap: 16px;
+}
+
+.row-fix > div:first-child {
+  flex:3;
 }
 
 /* 입력창 컨트롤 높이와 정렬 맞춤 */
@@ -92,36 +102,31 @@ const handleUserVerification = async () => {
   min-height: clamp(40px, 4vw, 48px) !important;
   display: flex;
   align-items: center;
-  padding: 0 10px;
 }
 
 /* 입력창 내부 글자 영역 */
 :deep(.rounded-input .v-field__input) {
-  font-size: clamp(0.65rem, 0.9vw, 0.8rem) !important;
-  margin: 0;
-  height: 100%;
-  line-height: 1;
+  font-size: clamp(1.4rem, 0.8vw, 1.6rem) !important;
   display: flex;
   align-items: center;
-  padding-left: 20px;
+  border-radius: 12px;
+  padding:0px 16px;
 }
 
 /* 라벨 (위에 뜨는 '학번' 글씨) */
 :deep(.rounded-input .v-label) {
-  font-size: clamp(0.7rem, 0.9vw, 0.9rem) !important;
-  line-height: 1.2;
+  font-size: clamp(1.4rem, 1vw, 1.4rem) !important;
 }
 
 /* placeholder 크기 줄이기 */
 :deep(.rounded-input input::placeholder) {
-  font-size: clamp(0.7rem, 0.9vw, 0.9rem) !important;
-  color: #aaa;
-  line-height: 1;
+  font-size: clamp(1.4rem, 1vw, 1.4rem) !important;
+  color: var(--semiDarkText);
 }
 
 /* 테두리 둥글게 */
 :deep(.rounded-input .v-field__outline) {
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 </style>

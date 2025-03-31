@@ -1,7 +1,7 @@
 <template>
   <v-container class="join-page">
     <v-row align-items="center" justify="center" class="join-row">
-      <v-col cols="10" sm="7" md="7" lg="7">
+      <v-col class="join-col">
         <div class="join-wrapper">
           <div class="step-indicator">
             <div :class="['step', { active: currentStep === 1 }]"></div>
@@ -49,14 +49,17 @@ const handleVerified = (data: any) => {
 </script>
 
 <style scoped>
+.v-container {
+  padding: 0;
+  max-width: 600px;
+}
+
 .join-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 1rem;
-  box-sizing: border-box;
 }
 
 .join-row {
@@ -64,6 +67,12 @@ const handleVerified = (data: any) => {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  margin: 0px;
+}
+
+.join-col {
+  padding: 0px;
 }
 
 .join-wrapper {
@@ -105,27 +114,85 @@ const handleVerified = (data: any) => {
 
 .custom-btn {
   background-color: var(--mainColor);
-  height: 2.5rem;
+  /* height: clamp(40px, 4vw, 48px); */
+  height: fit-content;
+  padding: 12px 24px;
   color: #fff;
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  font-size: 1rem;
+  border-radius: 12px;
+  box-shadow: none;
+  font-size: clamp(1.4rem, 2vw, 1.6rem);
+  letter-spacing: -0.025rem;
+
   text-transform: uppercase;
-  transition: transform 0.2s ease;
+  transition: all 0.3s;
+}
+
+.custom-btn:hover {
+  background-color: var(--mainHover);
 }
 
 .guide-text {
-  margin-top: 1.25rem;
-  font-size: 0.9rem;
+  margin-top: 1.6rem;
+  font-size: 1.4rem;
+  color: var(--semiDarkText);
 }
 
 .custom-link {
-  color: black;
-  font-weight: bold;
-  text-decoration: none;
+  color: var(--darkText);
+  font-weight: 600;
 }
 
 .custom-link:hover {
   text-decoration: none;
+}
+
+.v-card-text {
+  padding: 0px;
+}
+
+:deep(.rounded-input .v-input__control) {
+  height: clamp(40px, 4vw, 48px) !important;
+  min-height: clamp(40px, 4vw, 48px) !important;
+  display: flex;
+  align-items: center;
+  padding: 0px;
+}
+
+:deep(.rounded-input .v-label) {
+  font-size: clamp(1.4rem, 1vw, 1.4rem) !important;
+}
+
+:deep(.rounded-input input::placeholder) {
+  font-size: clamp(1.4rem, 1vw, 1.4rem) !important;
+  color: var(--semiDarkText);
+}
+
+:deep(.rounded-input .v-icon) {
+  font-size: clamp(1.4rem, 1.2vw, 1.6rem);
+}
+
+:deep(.rounded-input .v-field__input) {
+  font-size: clamp(1.4rem, 0.8vw, 1.6rem) !important;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  padding:0px 16px;
+}
+
+/* 테두리 둥글게 */
+:deep(.rounded-input .v-field__outline) {
+  border-radius: 12px;
+}
+
+:deep(.v-text-field .v-input__details) {
+  padding: 12px 0px 0px 8px;
+}
+
+:deep(.v-text-field .v-input__details .v-messages) {
+  font-size: 1.4rem;
+  color: #FF4E4E;
+  text-align: left;
+
+  opacity: 1;
 }
 </style>

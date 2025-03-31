@@ -63,7 +63,7 @@ const login = async () => {
 <style scoped>
 .v-container {
   padding: 0;
-  max-width: 720px;
+  max-width: 600px;
 }
 
 .login-page {
@@ -168,7 +168,7 @@ const login = async () => {
   display: flex;
   align-items: center;
   border-radius: 12px;
-  padding:0px16px;
+  padding:0px 16px;
 }
 
 /* 테두리 둥글게 */
