@@ -114,6 +114,8 @@ const login = async () => {
   /* height: clamp(40px, 4vw, 48px); */
   height: fit-content;
   padding: 12px 24px;
+  margin: 0px !important; /* 에러 처리 전까지 간격 조정 */
+
   color: #fff;
   border-radius: 12px;
   box-shadow: none;
