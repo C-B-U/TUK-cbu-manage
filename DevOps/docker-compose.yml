@@ -1,26 +1,29 @@
 version: "3.8"
 
 services:
-  frontend:
-    build: ../frontend
-    container_name: frontend
-
   backend:
     build: ../backend
-    image: souljump/cbumanage
     container_name: backend
-    ports:
-      - 8080:8080
+    image: souljump/cbumanage
+    expose:
+      - "8080"
+    env_file:
+    - ../backend/.env
 
   nginx:
-    image: nginx:latest
+    build:
+      context: ../
+      dockerfile: DevOps/nginx/Dockerfile
     container_name: nginx
     ports:
-      - "80:80"
       - "443:443"
-    volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./nginx/ssl:/etc/nginx/ssl
+      - "80:80"
     depends_on:
-      - frontend
       - backend
+    environment:
+      - SSL_CERT_PATH=${SSL_CERT_PATH}
+      - SSL_KEY_PATH=${SSL_KEY_PATH}
+
+networks:
+  cbu-net:
+    driver: bridge
