@@ -77,7 +77,7 @@ const changePassword = async () => {
         password: newPassword.value
     };
 
-    const response = await fetch(`${SERVER_URL}/v1/login/password`, {
+    const response = await fetch(`${SERVER_URL}/login/password`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",

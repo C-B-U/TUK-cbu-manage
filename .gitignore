@@ -19,3 +19,6 @@ backend/src/main/java/com/example/cbumanage/service/CreateLoginEntity.java
 
 DevOps/nginx/ssl/
 DevOps/.env
+
+DevOps/docker-compose.prod.yml
+DevOps/.env.prod

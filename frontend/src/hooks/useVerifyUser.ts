@@ -44,7 +44,7 @@ export default function useVerifyUser() {
             };
 
             // 서버 요청
-            const response = await fetch(`${SERVER_URL}/v1/validate`, {
+            const response = await fetch(`${SERVER_URL}/validate`, {
                 method: "Post",
                 headers: {
                     "Content-Type": "application/json",

@@ -18,7 +18,7 @@ export default function useVerifyEmail() {
   const sendEmailToServer = async (mail: string): Promise<boolean> => {
     try {
       const fullEmail = addSuffixIfMissing(mail);
-      const requestUrl = `${SERVER_URL}/v1/mail/send?address=${encodeURIComponent(fullEmail)}`;
+      const requestUrl = `${SERVER_URL}/mail/send?address=${encodeURIComponent(fullEmail)}`;
 
       const response = await fetch(requestUrl, {
         method: "POST",
@@ -55,7 +55,7 @@ export default function useVerifyEmail() {
   ): Promise<{ success: boolean; responseMessage: string }> => {
     try {
       const fullEmail = addSuffixIfMissing(email);
-      const url = `${SERVER_URL}/v1/mail/verify?address=${encodeURIComponent(fullEmail)}&authCode=${encodeURIComponent(code)}`;
+      const url = `${SERVER_URL}/mail/verify?address=${encodeURIComponent(fullEmail)}&authCode=${encodeURIComponent(code)}`;
 
       const response = await fetch(url, {
 

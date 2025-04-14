@@ -125,7 +125,7 @@ const handleComplete = async () => {
     }
 
     try {
-        const response = await fetch(`${SERVER_URL}/v1/mail/update`, {
+        const response = await fetch(`${SERVER_URL}/mail/update`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -25,7 +25,7 @@ export function useLogin() {
         const studentNumber = Number(studentId.replace(/^cbu/, ""));
 
         try {
-            const response = await fetch(`${SERVER_URL}/v1/login`, {
+            const response = await fetch(`${SERVER_URL}/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

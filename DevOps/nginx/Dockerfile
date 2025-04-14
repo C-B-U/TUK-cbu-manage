@@ -1,21 +1,11 @@
-# Stage 1: Build Vue frontend
-FROM node:18-alpine as builder
-WORKDIR /app
-
-COPY frontend ./frontend
-WORKDIR /app/frontend
-
-RUN npm install && npm run build
-
-# Stage 2: Serve with Nginx
 FROM nginx:stable-alpine
 
-# 인증서 복사
-COPY DevOps/nginx/ssl/cert.pem /etc/nginx/ssl/cert.pem
-COPY DevOps/nginx/ssl/key.pem /etc/nginx/ssl/key.pem
+WORKDIR /etc/nginx
 
-# Nginx 설정 복사
-COPY DevOps/nginx/default.conf /etc/nginx/conf.d/default.conf
+# SSL 인증서 복사
+COPY ssl /etc/nginx/ssl
 
-# 빌드된 정적 파일 복사
-COPY --from=builder /app/frontend/dist /usr/share/nginx/html
+# 설정파일 복사
+COPY default.conf.template /etc/nginx/conf.d/default.conf.template
+
+CMD ["/bin/sh", "-c", "envsubst '$$SSL_CERT_PATH $$SSL_KEY_PATH' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]

@@ -7,6 +7,11 @@ services:
     image: souljump/cbumanage
     expose:
       - "8080"
+    env_file:
+      - .env.dev
+    volumes:
+      - ../DevOps/config/application.properties:/backend/src/main/resources/application.properties
+      - ../DevOps/config/cbumanage.json:/backend/src/main/resources/cbumanage.json
     depends_on:
       - redis
 
@@ -18,10 +23,11 @@ services:
     ports:
       - "443:443"
       - "80:80"
+    env_file:
+      - .env.dev    # dev 서버
     depends_on:
       - backend
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
       - /etc/letsencrypt:/etc/letsencrypt:ro
 
   redis:

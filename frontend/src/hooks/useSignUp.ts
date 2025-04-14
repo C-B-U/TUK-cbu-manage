@@ -20,7 +20,7 @@ export default function useSignUp() {
                 studentNumber,
                 nickname: nickName,
             };
-            const response = await fetch(`${SERVER_URL}/v1/login/signup`, {
+            const response = await fetch(`${SERVER_URL}/login/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

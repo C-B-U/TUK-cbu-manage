@@ -5,8 +5,8 @@ server {
     ssl_certificate     ${SSL_CERT_PATH};
     ssl_certificate_key ${SSL_KEY_PATH};
 
-    location /api/v1/ {
-        proxy_pass http://backend:8080/api/v1;
+    location /api/ {
+        proxy_pass http://backend:8080;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
