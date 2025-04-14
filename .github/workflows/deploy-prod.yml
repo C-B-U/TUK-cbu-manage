@@ -1,10 +1,9 @@
 name: Deploy Frontend
-run: echo "server ip: ${{ secrets.SERVER_IP }}"
 
 on:
   push:
     branches:
-      - main  # main 브랜치 푸쉬 시 자동 실행
+      - main
 
 jobs:
   deploy:
@@ -14,6 +13,9 @@ jobs:
     - name: Checkout source
       uses: actions/checkout@v3
 
+    - name: Check SERVER_IP
+      run: echo "SERVER_IP = ${{ secrets.SERVER_IP }}"
+
     - name: Build frontend
       run: |
         cd frontend
@@ -22,7 +24,7 @@ jobs:
         npm run build
 
     - name: Remove old dist on server
-      uses: appleboy/ssh-action@v1.0.3
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SERVER_USER }}
@@ -40,7 +42,7 @@ jobs:
         target: "/root/TUK-cbu-manage/frontend/dist"
 
     - name: Restart Docker Compose
-      uses: appleboy/ssh-action@v1.0.3
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SERVER_USER }}
