@@ -1,13 +1,17 @@
-name: Deploy Frontend
+name: Deploy Production
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Deploy Frontend", "Deploy Backend"]  # 프론트엔드와 백엔드 배포가 완료된 후 실행
+    types:
+      - completed
     branches:
       - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # 이전 워크플로우가 성공한 경우에만 실행
 
     steps:
     - name: Checkout source
@@ -16,32 +20,7 @@ jobs:
     - name: Check SERVER_IP
       run: echo "SERVER_IP = ${{ secrets.SERVER_IP }}"
 
-    - name: Build frontend
-      run: |
-        cd frontend
-        echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" > .env.production
-        npm ci
-        npm run build
-
-    - name: Remove old dist on server
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SERVER_IP }}
-        username: ${{ secrets.SERVER_USER }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        script: |
-          rm -rf /root/TUK-cbu-manage/frontend/dist
-
-    - name: Upload new dist to server
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.SERVER_IP }}
-        username: ${{ secrets.SERVER_USER }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        source: "frontend/dist/*"
-        target: "/root/TUK-cbu-manage/frontend/dist"
-
-    - name: Restart Docker Compose
+    - name: Deploy to Production
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SERVER_IP }}
@@ -49,4 +28,5 @@ jobs:
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
           cd /root/TUK-cbu-manage/DevOps
-          docker-compose -f docker-compose.prod.yml up --build -d
+          docker-compose -f docker-compose.prod.yml down  # 기존 컨테이너 중지
+          docker-compose -f docker-compose.prod.yml up --build -d  # 전체 서비스 재시작

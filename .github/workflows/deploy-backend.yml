@@ -1,0 +1,14 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'  # backend 디렉토리의 변경사항만 감지
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # ... 백엔드 관련 배포 스텝들
