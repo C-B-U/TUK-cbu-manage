@@ -69,7 +69,7 @@ public class EmailService {
     @PostConstruct
     public void init() throws IOException, GeneralSecurityException {
         // 1. service_account.json 을 resources 폴더에서 읽어오기
-        InputStream in = getClass().getResourceAsStream("/cbumanage-450907-8f01c9ed326c.json");
+        InputStream in = getClass().getResourceAsStream("/cbumanage-464308-f2bb67f5d410.json");
         if (in == null) {
             throw new FileNotFoundException("service_account.json 파일을 찾을 수 없습니다.");
         }
