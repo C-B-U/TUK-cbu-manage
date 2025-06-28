@@ -2,10 +2,12 @@ version: "3.8"
 
 services:
   frontend:
-    build: ../frontend
+    build:
+      context: ../frontend
+      target: production
     container_name: frontend
-    expose:
-      - "80"
+    ports:
+      - "3000:80"
     networks:
       - cbu-net
 
@@ -38,12 +40,9 @@ services:
     ports:
       - "443:443"
       - "80:80"
-    env_file:
-      - .env.dev
-      - .env
     depends_on:
-      - frontend
       - backend
+      - frontend
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     networks:

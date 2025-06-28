@@ -1,6 +1,9 @@
 FROM nginx:stable-alpine
-WORKDIR /etc/nginx
 
-COPY default.conf.template /etc/nginx/conf.d/default.conf.template
+# nginx 설정 복사
+COPY default.conf.template /etc/nginx/conf.d/default.conf
 
-CMD ["/bin/sh", "-c", "envsubst '$$SSL_CERT_PATH $$SSL_KEY_PATH' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+# 정적 파일은 frontend 컨테이너에서 서빙하므로 제거
+# COPY dist/ /usr/share/nginx/html
+
+EXPOSE 80 443
