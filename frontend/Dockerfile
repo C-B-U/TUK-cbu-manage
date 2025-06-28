@@ -1,5 +1,8 @@
-# Build stage
-FROM node:18-alpine AS build
+FROM nginx:stable-alpine
+
+# Node.js 설치
+RUN apk add --no-cache nodejs npm
+
 WORKDIR /app
 
 # .env 파일이 있는 경우에만 복사 (선택적)
@@ -13,10 +16,9 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Production stage
-FROM nginx:stable-alpine
-# Copy built files from build stage
-COPY --from=build /app/dist /usr/share/nginx/html
+# Copy built files to nginx directory
+RUN cp -r dist/* /usr/share/nginx/html/
+
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
