@@ -11,8 +11,8 @@
                         <v-row>
                             <v-col cols="9" align="center">
                                 <v-text-field class="rounded-input" v-model="studentEmail" label="학교 이메일"
-                                    suffix="@tukorea.ac.kr" placeholder="학교 이메일을 입력하세요." required variant="outlined" dense
-                                    :error="emailError" :error-messages="emailErrorMessage" hide-details="auto">
+                                    suffix="@tukorea.ac.kr" placeholder="학교 이메일을 입력하세요." required variant="outlined"
+                                    dense :error="emailError" :error-messages="emailErrorMessage" hide-details="auto">
                                 </v-text-field>
                             </v-col>
                             <v-col cols="3" class="email-btn-col">
@@ -67,12 +67,12 @@ import { useUserStore } from '../stores/userStore';
 
 const userStore = useUserStore();
 const router = useRouter();
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+const SERVER_URL = import.meta.env.VITE_API_URL;
 
 // 이메일 입력값 및 상태 관리
 const studentEmail = ref("");
 const verificationCode = ref("");
-const verificationStatus = ref<"success" | "error" | "">("");
+const verificationStatus = ref < "success" | "error" | "" > ("");
 const verificationMessage = ref("");
 const isJoinEnabled = ref(false); // 완료 버튼 활성화 여부
 
