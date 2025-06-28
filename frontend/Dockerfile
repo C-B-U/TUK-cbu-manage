@@ -2,12 +2,11 @@
 FROM node:18-alpine as build
 WORKDIR /app
 
+COPY .env .env
 COPY package*.json ./
 RUN npm install
 
-COPY .env .env
 COPY . .
-
 RUN npm run build
 
 # Serve stage
