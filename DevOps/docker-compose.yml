@@ -1,6 +1,14 @@
 version: "3.8"
 
 services:
+  frontend:
+    build: ../frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+    networks:
+      - cbu-net
+
   backend:
     build: ../backend
     container_name: backend
@@ -32,6 +40,7 @@ services:
       - "80:80"
     depends_on:
       - backend
+      - frontend
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     networks:
