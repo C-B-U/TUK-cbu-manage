@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/userStore";
+import { API_ENDPOINTS } from "../utils/api";
 
 interface LoginParams {
     studentId: string;
@@ -14,8 +15,6 @@ export function useLogin() {
     const router = useRouter();
 
     const handleLogin = async ({ studentId = "", password = "" }: LoginParams): Promise<void> => {
-        const SERVER_URL = import.meta.env.VITE_API_URL;
-
         if (!studentId || !password) {
             errorMessage.value = "아이디와 비밀번호를 입력하세요.";
             alert(errorMessage.value);
@@ -25,7 +24,7 @@ export function useLogin() {
         const studentNumber = Number(studentId.replace(/^cbu/, ""));
 
         try {
-            const response = await fetch(`${SERVER_URL}/login`, {
+            const response = await fetch(API_ENDPOINTS.LOGIN, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

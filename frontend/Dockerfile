@@ -5,9 +5,6 @@ RUN apk add --no-cache nodejs npm
 
 WORKDIR /app
 
-# 환경변수 설정
-ENV VITE_API_URL=/api/v1
-
 # .env 파일이 있는 경우에만 복사 (선택적)
 COPY .env* ./
 
@@ -17,6 +14,9 @@ RUN npm install
 
 # Copy source code
 COPY . .
+
+# 빌드 시 환경변수 설정
+ENV VITE_API_URL=/api/v1
 RUN npm run build
 
 # Copy built files to nginx directory
