@@ -6,6 +6,8 @@ services:
     container_name: frontend
     expose:
       - "80"
+    env_file:
+      - .env
 
   backend:
     build: ../backend
@@ -36,6 +38,7 @@ services:
       - "80:80"
     env_file:
       - .env.dev
+      - .env
     depends_on:
       - frontend
       - backend
