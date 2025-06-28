@@ -10,15 +10,10 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# 정적 파일만 서빙하는 간단한 서버 사용
-FROM node:18-alpine
-WORKDIR /app
-
-# serve 패키지 설치 (확실히 설치되도록)
-RUN npm install -g serve
-
-# 빌드 결과물 복사
-COPY --from=build /app/dist ./dist
+# 빌드 결과물을 명확히 지정
+FROM nginx:stable-alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
-CMD ["serve", "-s", "dist", "-l", "80"]
+CMD ["nginx", "-g", "daemon off;"]
