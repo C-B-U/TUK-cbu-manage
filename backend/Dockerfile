@@ -1,8 +1,24 @@
-FROM openjdk:17
-WORKDIR /backend
+FROM eclipse-temurin:17-jdk AS build
 
-COPY build/libs/cbuManage-0.0.1-SNAPSHOT.jar app.jar
+WORKDIR /app
 
-EXPOSE 8080
+# Gradle wrapper 복사
+COPY gradlew .
+COPY gradle gradle
+
+# 소스 복사
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+
+# 🔥 반드시 clean 포함해서 빌드
+RUN ./gradlew clean build -x test --no-daemon
+
+# -----------------------------------
+FROM eclipse-temurin:17-jre
+
+WORKDIR /app
+
+COPY --from=build /app/build/libs/*.jar app.jar
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
-

@@ -1,5 +1,4 @@
 # 환경변수 파일
-.env.*
 config/*
 
 # nginx 빌드 후 파일

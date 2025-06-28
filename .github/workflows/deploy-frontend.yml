@@ -19,7 +19,7 @@ jobs:
     - name: Setup Node.js    # Node.js 설정 추가
       uses: actions/setup-node@v3
       with:
-        node-version: '16'
+        node-version: '18'
 
     - name: Check SERVER_IP
       run: echo "SERVER_IP = ${{ secrets.SERVER_IP }}"
