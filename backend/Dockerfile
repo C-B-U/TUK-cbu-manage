@@ -22,9 +22,5 @@ WORKDIR /app
 
 COPY --from=build /app/build/libs/*.jar app.jar
 
-<<<<<<< HEAD
 EXPOSE 8080
-=======
-# 포그라운드에서 실행하도록 수정
->>>>>>> origin/frontend-devops
 ENTRYPOINT ["java", "-jar", "app.jar"]
