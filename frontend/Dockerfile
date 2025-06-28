@@ -14,7 +14,7 @@ RUN npm run build
 FROM node:18-alpine
 WORKDIR /app
 
-# serve 패키지 설치
+# serve 패키지 설치 (확실히 설치되도록)
 RUN npm install -g serve
 
 # 빌드 결과물 복사
