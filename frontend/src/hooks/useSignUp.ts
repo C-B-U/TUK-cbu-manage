@@ -4,7 +4,7 @@ export default function useSignUp() {
     const signUpError = ref(false);
     const signUpErrorMessage = ref("");
     const isSignUpSuccessful = ref(false);
-    const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+    const SERVER_URL = import.meta.env.VITE_API_URL;
 
     const registerUser = async (
         email: string,

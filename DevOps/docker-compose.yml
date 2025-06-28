@@ -6,8 +6,8 @@ services:
     container_name: frontend
     expose:
       - "80"
-    env_file:
-      - .env
+    networks:
+      - cbu-net
 
   backend:
     build: ../backend
@@ -21,6 +21,8 @@ services:
       - ../DevOps/config/cbumanage.json:/backend/src/main/resources/cbumanage.json
     depends_on:
       - redis
+    networks:
+      - cbu-net
 
   redis:
     image: redis:latest
@@ -44,6 +46,8 @@ services:
       - backend
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
+    networks:
+      - cbu-net
 
 networks:
   cbu-net:

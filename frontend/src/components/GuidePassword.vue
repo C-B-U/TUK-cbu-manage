@@ -6,12 +6,8 @@
 
             <v-card-text>
                 <v-form>
-                    <v-text-field 
-                        label="새 비밀번호" 
-                        v-model="newPassword" 
-                        :type="showPassword ? 'text' : 'password'"
-                        placeholder="새 비밀번호 입력" 
-                        variant="outlined" dense class="password-input">
+                    <v-text-field label="새 비밀번호" v-model="newPassword" :type="showPassword ? 'text' : 'password'"
+                        placeholder="새 비밀번호 입력" variant="outlined" dense class="password-input">
                         <template v-slot:append-inner>
                             <v-icon @click="showPassword = !showPassword" class="password-toggle-icon">
                                 {{ showPassword ? 'mdi-eye-off' : 'mdi-eye' }}
@@ -20,12 +16,9 @@
                     </v-text-field>
                     <small class="password-hint">🔹 8자 이상, 영어+숫자+특수문자 중 2개 이상 포함</small>
 
-                    <v-text-field 
-                        label="새 비밀번호 확인" 
-                        v-model="confirmPassword"
-                        :type="showConfirmPassword ? 'text' : 'password'" 
-                        placeholder="새 비밀번호 확인" 
-                        variant="outlined" dense class="password-input">
+                    <v-text-field label="새 비밀번호 확인" v-model="confirmPassword"
+                        :type="showConfirmPassword ? 'text' : 'password'" placeholder="새 비밀번호 확인" variant="outlined"
+                        dense class="password-input">
                         <template v-slot:append-inner>
                             <v-icon @click="showConfirmPassword = !showConfirmPassword" class="password-toggle-icon">
                                 {{ showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye' }}
@@ -36,8 +29,8 @@
             </v-card-text>
 
             <v-card-actions>
-                <v-btn block :disabled="!isPasswordValid || newPassword !== confirmPassword"
-                    @click="changePassword" class="custom-btn">
+                <v-btn block :disabled="!isPasswordValid || newPassword !== confirmPassword" @click="changePassword"
+                    class="custom-btn">
                     비밀번호 변경
                 </v-btn>
             </v-card-actions>
@@ -50,7 +43,7 @@ import { ref, computed } from 'vue';
 import { useUserStore } from '../stores/userStore';
 import { useRoute } from 'vue-router';
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+const SERVER_URL = import.meta.env.VITE_API_URL;
 const route = useRoute();
 const userStore = useUserStore();
 
@@ -72,36 +65,35 @@ const changePassword = async () => {
     if (isPasswordValid.value && newPassword.value === confirmPassword.value) {
 
         try {
-    const requestData = {
-        studentNumber: studentNumber.value,
-        password: newPassword.value
-    };
+            const requestData = {
+                studentNumber: studentNumber.value,
+                password: newPassword.value
+            };
 
-    const response = await fetch(`${SERVER_URL}/login/password`, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify(requestData)
-    });
+            const response = await fetch(`${SERVER_URL}/login/password`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(requestData)
+            });
 
-    // ✅ 서버 응답이 200이면 성공 처리
-    if (response.ok) {
-        alert("비밀번호 변경 완료!");
-    } else {
-        alert(`오류 발생: 비밀번호 변경 실패 (Status: ${response.status})`);
-    }
-} catch (error) {
-    alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
-}
+            // ✅ 서버 응답이 200이면 성공 처리
+            if (response.ok) {
+                alert("비밀번호 변경 완료!");
+            } else {
+                alert(`오류 발생: 비밀번호 변경 실패 (Status: ${response.status})`);
+            }
+        } catch (error) {
+            alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+        }
 
     }
 };
 </script>
 
 <style scoped>
-
 .change-password-page {
     display: flex;
     flex-direction: column;

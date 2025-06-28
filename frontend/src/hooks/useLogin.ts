@@ -14,7 +14,7 @@ export function useLogin() {
     const router = useRouter();
 
     const handleLogin = async ({ studentId = "", password = "" }: LoginParams): Promise<void> => {
-        const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+        const SERVER_URL = import.meta.env.VITE_API_URL;
 
         if (!studentId || !password) {
             errorMessage.value = "아이디와 비밀번호를 입력하세요.";

@@ -14,7 +14,7 @@ export default function useVerifyUser() {
     const verificationError = ref(false); // 에러 상태
     const verificationErrorMessage = ref(""); // 에러 메시지
 
-    const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+    const SERVER_URL = import.meta.env.VITE_API_URL;
 
     const verifyUser = async (
         studentNumber: string,

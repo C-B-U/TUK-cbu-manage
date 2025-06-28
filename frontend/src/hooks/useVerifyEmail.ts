@@ -12,7 +12,7 @@ export default function useVerifyEmail() {
     return email.includes("@") ? email : `${email}@tukorea.ac.kr`;
   };
 
-  const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+  const SERVER_URL = import.meta.env.VITE_API_URL;
 
   // 인증번호 전송
   const sendEmailToServer = async (mail: string): Promise<boolean> => {
