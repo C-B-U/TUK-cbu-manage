@@ -22,3 +22,6 @@ DevOps/.env
 
 DevOps/docker-compose.prod.yml
 DevOps/.env.prod
+DevOps/.env.dev
+
+frontend/.env.production
